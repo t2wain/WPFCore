@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFCore.App", "WPFCore.App\WPFCore.App.csproj", "{FAEAE0C2-D4AC-4FA2-96F5-F7B45FEA0A64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFCore.Shared.UI", "WPFCore.Shared.UI\WPFCore.Shared.UI.csproj", "{E8CE426E-F933-4476-9BF1-A54278E9C02B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFCore.Data", "WPFCore.Data\WPFCore.Data.csproj", "{3F28DA53-6D37-4276-9509-42CC04EC062D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFCore.Test", "WPFCore.Test\WPFCore.Test.csproj", "{882D39B1-C2B3-42AE-8C04-D96EA5F7369D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFCore.ElectIndex", "WPFCore.ElectIndex\WPFCore.ElectIndex.csproj", "{12F5A294-CCDD-462D-B870-36F578EB1CC3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFCore.App2", "WPFCore.App2\WPFCore.App2.csproj", "{667F7D38-857B-4BE4-86AA-056F3FE843C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFCore.Data.OleDb", "WPFCore.Data.OleDb\WPFCore.Data.OleDb.csproj", "{B261CCB7-3AFE-4C10-96E8-68E4F1D78978}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAEAE0C2-D4AC-4FA2-96F5-F7B45FEA0A64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAEAE0C2-D4AC-4FA2-96F5-F7B45FEA0A64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAEAE0C2-D4AC-4FA2-96F5-F7B45FEA0A64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAEAE0C2-D4AC-4FA2-96F5-F7B45FEA0A64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8CE426E-F933-4476-9BF1-A54278E9C02B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8CE426E-F933-4476-9BF1-A54278E9C02B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8CE426E-F933-4476-9BF1-A54278E9C02B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8CE426E-F933-4476-9BF1-A54278E9C02B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F28DA53-6D37-4276-9509-42CC04EC062D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F28DA53-6D37-4276-9509-42CC04EC062D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F28DA53-6D37-4276-9509-42CC04EC062D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F28DA53-6D37-4276-9509-42CC04EC062D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{882D39B1-C2B3-42AE-8C04-D96EA5F7369D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{882D39B1-C2B3-42AE-8C04-D96EA5F7369D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{882D39B1-C2B3-42AE-8C04-D96EA5F7369D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{882D39B1-C2B3-42AE-8C04-D96EA5F7369D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12F5A294-CCDD-462D-B870-36F578EB1CC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12F5A294-CCDD-462D-B870-36F578EB1CC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12F5A294-CCDD-462D-B870-36F578EB1CC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12F5A294-CCDD-462D-B870-36F578EB1CC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667F7D38-857B-4BE4-86AA-056F3FE843C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667F7D38-857B-4BE4-86AA-056F3FE843C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667F7D38-857B-4BE4-86AA-056F3FE843C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667F7D38-857B-4BE4-86AA-056F3FE843C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B261CCB7-3AFE-4C10-96E8-68E4F1D78978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B261CCB7-3AFE-4C10-96E8-68E4F1D78978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B261CCB7-3AFE-4C10-96E8-68E4F1D78978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B261CCB7-3AFE-4C10-96E8-68E4F1D78978}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0FA1D78E-6EBF-4D1F-B1C2-30BC450CB046}
+	EndGlobalSection
+EndGlobal
