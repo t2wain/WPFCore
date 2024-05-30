@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace WPFCore.Shared.UI.Report
+namespace WPFCore.Data.Report
 {
     [Serializable]
     public class ReportDefinition
@@ -42,7 +42,7 @@ namespace WPFCore.Shared.UI.Report
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             if (this.Parameters != null)
                 foreach (ColumnDefinition p in this.Parameters)
-                    parameters.Add(p.FieldName, p.Filter);
+                    parameters.Add(p.FieldName!, p.Filter!);
             return parameters;
         }
 
@@ -61,7 +61,7 @@ namespace WPFCore.Shared.UI.Report
             if (this.Columns == null)
                 this.Columns = new List<ColumnDefinition>();
             else this.Columns.Clear();
-            foreach (ColumnDefinition col in def.Columns)
+            foreach (ColumnDefinition col in def.Columns!)
             {
                 ColumnDefinition ncol = new ColumnDefinition();
                 ncol.SetData(col);
@@ -72,7 +72,7 @@ namespace WPFCore.Shared.UI.Report
             if (this.Parameters == null)
                 this.Parameters = new List<ColumnDefinition>();
             else this.Parameters.Clear();
-            foreach (ColumnDefinition col in def.Parameters)
+            foreach (ColumnDefinition col in def.Parameters!)
             {
                 ColumnDefinition ncol = new ColumnDefinition();
                 ncol.SetData(col);

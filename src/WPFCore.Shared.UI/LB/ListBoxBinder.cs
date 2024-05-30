@@ -6,6 +6,10 @@ using WPFCore.Shared.UI.TV;
 
 namespace WPFCore.Shared.UI.LB
 {
+    /// <summary>
+    /// Setup event handlers and command bindings for the ListBox control
+    /// and retrieve the view model from the DataContext.
+    /// </summary>
     public class ListBoxBinder : IDisposable
     {
         private ListBox? _lvw;

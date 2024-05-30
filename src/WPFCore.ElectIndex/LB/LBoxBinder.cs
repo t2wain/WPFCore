@@ -6,6 +6,10 @@ using NT = WPFCore.ElectIndex.TV.TIndexNodeEnum;
 
 namespace WPFCore.ElectIndex.LB
 {
+    /// <summary>
+    /// Setup event handlers and command bindings for the ListBox control
+    /// and retrieve the view model from the DataContext.
+    /// </summary>
     public class LBoxBinder : ListBoxBinder
     {
         protected override void OnDoubleClick(object sender, RoutedEventArgs e)

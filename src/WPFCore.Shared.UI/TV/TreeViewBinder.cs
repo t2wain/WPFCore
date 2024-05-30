@@ -5,6 +5,10 @@ using System.Windows.Input;
 
 namespace WPFCore.Shared.UI.TV
 {
+    /// <summary>
+    /// Setup event handlers and command bindings for the TreeView control
+    /// and retrieve the view model from the DataContext.
+    /// </summary>
     public class TreeViewBinder : IDisposable
     {
         private TreeView? _tvw;

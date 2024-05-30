@@ -7,6 +7,7 @@ namespace WPFCore.ElectIndex.TV
 {
     /// <summary>
     /// Setup event handlers and command bindings for the TreeView control
+    /// and retrieve the view model from the DataContext.
     /// </summary>
     public class TreeIndexBinder : TreeViewBinder
     {

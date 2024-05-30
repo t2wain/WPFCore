@@ -2,25 +2,16 @@
 
 namespace WPFCore.Shared.UI.LB
 {
-    public class ListBoxItemVM : ObservableObject
+    public partial class ListBoxItemVM : ObservableObject
     {
 
         public string ID { get; set; }
 
+        [ObservableProperty]
         private string _name;
-        public string Name
-        {
-            get { return this._name; }
-            set { SetProperty<string>(ref this._name, value, "Name"); }
-        }
 
-
+        [ObservableProperty]
         private bool _isSelected = false;
-        public bool IsSelected
-        {
-            get { return this._isSelected; }
-            set { SetProperty<bool>(ref this._isSelected, value, "IsSelected"); }
-        }
 
         public ListBoxVM Parent { get; set; }
 

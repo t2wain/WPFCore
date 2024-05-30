@@ -44,7 +44,7 @@ namespace WPFCore.Shared.UI.TV
             base.OnPropertyChanged(args);
             switch (args.PropertyName)
             {
-                case "Children":
+                case nameof(this.Children):
                     this.ChildrenView = new ListCollectionView(this.Children);
                     break;
             }

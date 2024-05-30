@@ -1,10 +1,9 @@
 ﻿using ADOLib;
 using System.Data;
 using System.Data.Common;
-using System.IO;
 using System.Xml.Serialization;
 
-namespace WPFCore.Shared.UI.Report
+namespace WPFCore.Data.Report
 {
     public class ReportUtil
     {
@@ -34,7 +33,7 @@ namespace WPFCore.Shared.UI.Report
                         this.SetParameterValues(db, cmd.Parameters, report.GetSelectParameters());
                         break;
                 }
-                vw = db.ExecuteTable(cmd, report.DatabaseView).DefaultView;
+                vw = db.ExecuteTable(cmd, report.DatabaseView!).DefaultView;
             }
 
             return vw;
@@ -60,7 +59,7 @@ namespace WPFCore.Shared.UI.Report
         public ReportDefinition GetReportDefinition(IDatabase db, DataView dv)
         {
             ReportDefinition def = new ReportDefinition();
-            def.DatabaseView = dv.Table.TableName;
+            def.DatabaseView = dv.Table!.TableName;
             def.Columns = this.GetColumns(dv);
             def.Parameters = this.GetUpdatedParameters(db, def);
             return def;
@@ -69,7 +68,7 @@ namespace WPFCore.Shared.UI.Report
         private List<ColumnDefinition> GetColumns(DataView dv)
         {
             List<ColumnDefinition> lstColumns = new List<ColumnDefinition>();
-            DataTable t = dv.Table;
+            DataTable t = dv.Table!;
             foreach (DataColumn c in t.Columns)
             {
                 ColumnDefinition col = new ColumnDefinition();

@@ -8,12 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DLG\" />
-    <Folder Include="TV\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <ProjectReference Include="..\WPFCore.Shared.UI\WPFCore.Shared.UI.csproj" />
   </ItemGroup>
 
 </Project>
