@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WPFCore.Data\WPFCore.Data.csproj" />
     <ProjectReference Include="..\WPFCore.ElectIndex\WPFCore.ElectIndex.csproj" />
+    <ProjectReference Include="..\WPFCore.Menu\WPFCore.Menu.csproj" />
     <ProjectReference Include="..\WPFCore.Shared.UI\WPFCore.Shared.UI.csproj" />
   </ItemGroup>
 

@@ -16,6 +16,7 @@ namespace WPFCore.App2
             {
                 var vm = app.Provider.GetRequiredService<UTreeLBoxVM>();
                 this._tvw.Init(vm);
+                this._mainMenu.Init();
             }
             //this.Loaded += OnLoaded;
         }

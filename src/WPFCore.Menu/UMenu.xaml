@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="WPFCore.Menu.UMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFCore.Menu"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="800">
+    <UserControl.Background>
+        <SolidColorBrush Color="{x:Static SystemColors.ControlColor}"></SolidColorBrush>
+    </UserControl.Background>
+    <UserControl.Resources>
+    </UserControl.Resources>
+    <Grid>
+        <Menu x:Name="_mainMenu" ItemsSource="{Binding}">
+            <Menu.ItemContainerStyle>
+                <Style TargetType="{x:Type MenuItem}">
+                    <Setter Property="Command" Value="{Binding Command}" />
+                </Style>
+            </Menu.ItemContainerStyle>
+            <Menu.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type local:SELMenuItemVM}" ItemsSource="{Binding Path=Children}">
+                    <TextBlock Text="{Binding Name}"/>
+                </HierarchicalDataTemplate>
+            </Menu.ItemTemplate>
+
+            <!--<MenuItem Header="File"></MenuItem>
+            <MenuItem Header="Edit"></MenuItem>
+            <MenuItem Header="View"></MenuItem>
+            <MenuItem Header="Actions"></MenuItem>
+            <MenuItem Header="Tools"></MenuItem>
+            <MenuItem Header="Smart Plant"></MenuItem>
+            <MenuItem Header="Reports"></MenuItem>
+            <MenuItem Header="Window"></MenuItem>
+            <MenuItem Header="Help"></MenuItem>-->
+        </Menu>
+    </Grid>
+</UserControl>

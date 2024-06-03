@@ -6,6 +6,9 @@
         Dummy,
         NoResult,
         Loading,
+
+        #region Loads
+
         ElectricalEquipment,
         Loads,
         Motors,
@@ -30,12 +33,18 @@
         WeldingOutlet,
         OtherElectricalEquipment,
         OEE,
+
+        #endregion
+
+        #region Equipment
+
         OffsitePowerSupplies,
         Generators,
         Generator,
         BatterBanks,
         ConvertingEquipment,
         BatterChargers,
+
         OtherConvertingEquipment,
         Transformers,
         Transformer,
@@ -44,6 +53,7 @@
         VariableFrequencyDrives,
         VFD,
         CurrentLimitingReactors,
+
         PowerDistributionEquipment,
         PowerDistributionBoards,
         PDB,
@@ -51,24 +61,39 @@
         Circuit,
         DisconnectElectricalEquipment,
         FreeStandingBuses,
+
         Instruments,
         Signals,
+
+        #endregion
+
+        #region Wiring
+
         WiringEquipment,
+
         Panels,
         Cabinets,
         ControlStations,
         LocalPanels,
         JunctionBoxes,
+
         Cables,
         PowerCables,
         ControlCables,
         GroundingCables,
         InstrumentCables,
         SingleCoreCableAssemblies,
+
         Busways,
         Drums,
         CableWays,
+
+        #endregion
+
         ProcessEquipment,
+
+        #region Document
+
         Documents,
         SingleLineDiagrams,
         SchematicDrawings,
@@ -78,5 +103,7 @@
         PDBLayoutDrawings,
         WiringDiagrams,
         CableBlockDiagrams
+
+        #endregion
     }
 }

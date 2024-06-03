@@ -4,21 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:utv="clr-namespace:WPFCore.ElectIndex.TV;assembly=WPFCore.ElectIndex"
+        xmlns:mnu="clr-namespace:WPFCore.Menu;assembly=WPFCore.Menu"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="150" MaxWidth="350"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <utv:UTreeView x:Name="_tvw"
-            Margin="0 0 5 0">
-        </utv:UTreeView>
-        <GridSplitter 
-            Grid.Column="0"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Stretch"
-            Width="5">
-        </GridSplitter>
-    </Grid>
+    <DockPanel>
+        <mnu:UMenu x:Name="_mainMenu" Padding="0 5" DockPanel.Dock="Top"></mnu:UMenu>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="150" MaxWidth="350"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <utv:UTreeView x:Name="_tvw"
+                    Grid.Row="1"
+                    Margin="0 0 5 0">
+            </utv:UTreeView>
+            <GridSplitter 
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Stretch"
+                    Width="5">
+            </GridSplitter>
+        </Grid>
+    </DockPanel>
 </Window>
