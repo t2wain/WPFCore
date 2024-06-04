@@ -60,11 +60,11 @@
 
         #region Actions
 
-        DesignPDBStructre,
+        DesignPDBStructure,
         BatchLoadAssociation,
         TotalBusLoadValidation,
         CalculateBusLoad,
-            SelectedPDBorBuses,
+            SelectedPDBforBuses,
             AllPlantBuses,
         AssociateBusWithPDB,
         DissociateBusFromPDB,
@@ -78,7 +78,7 @@
         Dissociate,
         MoveItems,
         SwitchPlantOperationCase,
-            SwitchActiveOperatinCase,
+            SwitchActiveOperatingCase,
             SwitchModeRuleDriven,
         Cables,
             BatchSizeCables,
@@ -94,12 +94,12 @@
             SynchronizeGlandAssociations,
             BatchCableConnection,
             BatchCableDissociationFromDrums,
-            InserPowerCable,
+            InsertPowerCable,
         ParallelEquipmentAssistant,
         OutOfDateCompositeDrawingsSummaryReport,
         FixInconsistencies,
         RegisterReport,
-        ManageOperatinCases,
+        ManageOperatingCases,
 
         #endregion
 
@@ -119,7 +119,7 @@
 
         #region SmartPlant
 
-        PUblishPlantGroups,
+        PublishPlantGroups,
         Publish,
         FindDocumentToPublish,
         SmartPlant_Retrieve,

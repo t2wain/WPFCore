@@ -20,7 +20,7 @@
             </Menu.ItemContainerStyle>
             <Menu.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type local:SELMenuItemVM}" ItemsSource="{Binding Path=Children}">
-                    <TextBlock Text="{Binding Name}"/>
+                    <TextBlock Padding="2" Text="{Binding Name}"/>
                 </HierarchicalDataTemplate>
             </Menu.ItemTemplate>
 
