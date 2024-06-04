@@ -28,6 +28,8 @@ namespace WPFCore.Menu
             return parentCmd switch
             {
                 CT.File => GetFileSubMenu(),
+                CT.New => GetFileNewSubMenu(),
+                CT.Open => GetFileOpenSubMenu(),
                 CT.Edit => GetEditSubMenu(),
                 CT.View => GetViewSubMenu(),
                 CT.Display => GetViewDisplaySubMenu(),
@@ -53,13 +55,38 @@ namespace WPFCore.Menu
         protected List<INotifyPropertyChanged> GetFileSubMenu() =>
             new List<INotifyPropertyChanged>()
             {
-                CreateMenuItem("New", CT.New),
-                CreateMenuItem("Open", CT.Open),
+                CreateSubMenu("New", CT.New),
+                CreateSubMenu("Open", CT.Open),
                 CreateMenuItem("Close", CT.Close),
+                CreateSeparator(),
                 CreateMenuItem("Save As...", CT.SaveAs),
-                CreateMenuItem("Tools", CT.Tools),
-                CreateMenuItem("Preferences...", CT.Preferences),  
+                CreateSeparator(),
+                CreateMenuItem("Preferences...", CT.Preferences),
+                CreateSeparator(),
                 CreateMenuItem("Exit", CT.Exit),
+            };
+
+        protected List<INotifyPropertyChanged> GetFileNewSubMenu() =>
+            new List<INotifyPropertyChanged>()
+            {
+                CreateMenuItem("Item...", CT.Item),
+                CreateMenuItem("Multiple Item...", CT.MultipleItem),
+                CreateMenuItem("SLD...", CT.New_SLD),
+                CreateMenuItem("Template", CT.New_Template),
+                CreateMenuItem("Custom Folder...", CT.CustomFolder),
+            };
+
+        protected List<INotifyPropertyChanged> GetFileOpenSubMenu() =>
+            new List<INotifyPropertyChanged>()
+            {
+                CreateMenuItem("Plant Group...", CT.PlantGroup),
+                CreateMenuItem("Drawing", CT.Drawing),
+                CreateMenuItem("PDB Layout", CT.PDBLayout),
+                CreateMenuItem("SLD", CT.Open_SLD),
+                CreateMenuItem("Last Saved Document", CT.LastSavedDocument),
+                CreateMenuItem("External Drawing...", CT.ExternalDrawing),
+                CreateMenuItem("Template...", CT.Open_Template),
+                CreateMenuItem("Log Files...", CT.LogFiles),
             };
 
         #endregion
@@ -72,13 +99,16 @@ namespace WPFCore.Menu
                 CreateMenuItem("Cut", CT.Cut),
                 CreateMenuItem("Copy", CT.Copy),
                 CreateMenuItem("Paste", CT.Paste),
+                CreateSeparator(),
                 CreateMenuItem("Delete", CT.Delete),
                 CreateMenuItem("Select All", CT.SelectAll),
+                CreateSeparator(),
                 CreateMenuItem("Duplicate", CT.Duplicate),
-                CreateMenuItem("Rename", CT.Rename),
+                CreateMenuItem("Rename...", CT.Rename),
+                CreateSeparator(),
                 CreateMenuItem("Document Properties...", CT.DocumentProperties),
                 CreateMenuItem("Common Properties...", CT.CommonProperties),
-                CreateMenuItem("Transformer Connection And Tapping", CT.TransformerConnectionAndTapping),
+                CreateMenuItem("Transformer Connection And Tapping...", CT.TransformerConnectionAndTapping),
             };
 
         #endregion
@@ -89,12 +119,14 @@ namespace WPFCore.Menu
             new List<INotifyPropertyChanged>()
             {
                 CreateMenuItem("Refresh", CT.Refresh),
+                CreateSeparator(),
                 CreateMenuItem("Show Selected Electrical Branch Only", CT.ShowSelectedElectricalBranchOnly),
                 CreateMenuItem("Show In New Window", CT.ShowInNewWindow),
                 CreateMenuItem("Show Items of All Plant Groups", CT.ShowItemsOfAllPlantGroups),
                 CreateMenuItem("Show Related Items", CT.ShowRelatedItems),
+                CreateSeparator(),
                 CreateSubMenu("Display", CT.Display),
-                CreateMenuItem("Toolbars", CT.Toolbars),
+                CreateMenuItem("Toolbars...", CT.Toolbars),
             };
 
         protected List<INotifyPropertyChanged> GetViewDisplaySubMenu() =>
@@ -113,27 +145,35 @@ namespace WPFCore.Menu
         protected List<INotifyPropertyChanged> GetActionSubMenu() =>
             new List<INotifyPropertyChanged>()
             {
-                CreateMenuItem("Design PDB Structure", CT.DesignPDBStructure),
-                CreateMenuItem("Batch Load Association", CT.BatchLoadAssociation),
+                CreateMenuItem("Design PDB Structure...", CT.DesignPDBStructure),
+                CreateSeparator(),
+                CreateMenuItem("Batch Load Association...", CT.BatchLoadAssociation),
                 CreateMenuItem("Total Bus Load Validation", CT.TotalBusLoadValidation),
                 CreateSubMenu("Calculate Bus Load", CT.CalculateBusLoad),
                 CreateMenuItem("Dissociate Bus From PDB", CT.DissociateBusFromPDB),
-                CreateMenuItem("Set Circuit Sequence", CT.SetCircuitSequence),
-                CreateMenuItem("Generate SLD For PDB", CT.GenerateSLDforPDB),
-                CreateMenuItem("Generate Schematic", CT.GenerateSchematic),
-                CreateMenuItem("Define Document Reference", CT.DefineDocumentReference),
-                CreateMenuItem("Associate Document", CT.AssociateDocument),
-                CreateMenuItem("Global Revision", CT.GlobalRevision),
-                CreateMenuItem("Associate/Dissociate CustomSymbols", CT.AssociateDissociateCustomSymbols),
-                CreateMenuItem("Move Items", CT.MoveItems),
-                CreateSubMenu("Switch Plant Operation Case", CT.SwitchPlantOperationCase),
-                CreateSubMenu("Cables", CT.Cables),
-                CreateMenuItem("Parallel Equipment Assistant", CT.ParallelEquipmentAssistant),
-                CreateMenuItem("Out Of Date Composite Drawings Summary Report", CT.OutOfDateCompositeDrawingsSummaryReport),
-                CreateMenuItem("Fix Inconsistencies", CT.FixInconsistencies),
-                CreateMenuItem("Register Report", CT.RegisterReport),
-                CreateMenuItem("Manage Operating Cases", CT.ManageOperatingCases),
+                CreateSeparator(),
+                CreateMenuItem("Set Circuit Sequence...", CT.SetCircuitSequence),
+                CreateSeparator(),
+                CreateMenuItem("Generate SLD For PDB...", CT.GenerateSLDforPDB),
+                CreateMenuItem("Generate Schematic...", CT.GenerateSchematic),
+                CreateSeparator(),
+                CreateMenuItem("Define Document Reference...", CT.DefineDocumentReference),
+                CreateMenuItem("Associate Document...", CT.AssociateDocument),
+                CreateMenuItem("Global Revision...", CT.GlobalRevision),
+                CreateMenuItem("Associate/Dissociate CustomSymbols...", CT.AssociateDissociateCustomSymbols),
+                CreateSeparator(),
                 CreateMenuItem("Dissociate", CT.Dissociate),
+                CreateMenuItem("Move Items...", CT.MoveItems),
+                CreateSubMenu("Switch Plant Operation Case", CT.SwitchPlantOperationCase),
+                CreateSeparator(),
+                CreateSubMenu("Cables", CT.Cables),
+                CreateMenuItem("Parallel Equipment Assistant...", CT.ParallelEquipmentAssistant),
+                CreateSeparator(),
+                CreateMenuItem("Out-of-Date Composite Drawings Summary Report...", CT.OutOfDateCompositeDrawingsSummaryReport),
+                CreateMenuItem("Fix Inconsistencies...", CT.FixInconsistencies),
+                CreateSeparator(),
+                CreateMenuItem("Register Report...", CT.RegisterReport),
+                CreateMenuItem("Manage Operating Cases...", CT.ManageOperatingCases),
             };
 
         protected List<INotifyPropertyChanged> GetActionBusLoadSubMenu() =>
@@ -146,27 +186,27 @@ namespace WPFCore.Menu
         protected List<INotifyPropertyChanged> GetActionCaseSubMenu() =>
             new List<INotifyPropertyChanged>()
             {
-                CreateMenuItem("Switch Active Operating Case", CT.SwitchActiveOperatingCase),
-                CreateMenuItem("Switch Mode Rule Driven", CT.SwitchModeRuleDriven),
+                CreateMenuItem("Switch Active Operating Case...", CT.SwitchActiveOperatingCase),
+                CreateMenuItem("Switch Mode (Rule Driven)...", CT.SwitchModeRuleDriven),
             };
 
         protected List<INotifyPropertyChanged> GetActionCablesSubMenu() =>
             new List<INotifyPropertyChanged>()
             {
-                CreateMenuItem("Batch Size Cables", CT.BatchSizeCables),
-                CreateMenuItem("Replace Cable Structure", CT.ReplaceCableStructure),
-                CreateMenuItem("Apply Reference Data To Cables", CT.ApplyReferenceDataToCables),
-                CreateMenuItem("Assign Drums To Cables", CT.AssignDrumsToCables),
-                CreateMenuItem("Predefined Routes", CT.PredefinedRoutes),
-                CreateMenuItem("Batch Cable Routing", CT.BatchCableRouting),
-                CreateMenuItem("Define Color Pattern", CT.DefineColorPattern),
+                CreateMenuItem("Batch Size Cables...", CT.BatchSizeCables),
+                CreateMenuItem("Replace Cable Structure...", CT.ReplaceCableStructure),
+                CreateMenuItem("Apply Reference Data To Cables...", CT.ApplyReferenceDataToCables),
+                CreateMenuItem("Assign Drums To Cables...", CT.AssignDrumsToCables),
+                CreateMenuItem("Predefined Routes...", CT.PredefinedRoutes),
+                CreateMenuItem("Batch Cable Routing...", CT.BatchCableRouting),
+                CreateMenuItem("Define Color Pattern...", CT.DefineColorPattern),
                 CreateMenuItem("Refresh Load Data For Power Cables", CT.RefreshLoadDataforPowerCables),
                 CreateMenuItem("Associate Cables With Equipment Circuits", CT.AssociateCablesWithEquipmentCircuits),
-                CreateMenuItem("Batch Cable Side And Gland Associations", CT.BatchCableSideAndGlandAssociations),
-                CreateMenuItem("Synchronize Gland Associations", CT.SynchronizeGlandAssociations),
-                CreateMenuItem("Batch Cable Connection", CT.BatchCableConnection),
+                CreateMenuItem("Batch Cable Side And Gland Associations...", CT.BatchCableSideAndGlandAssociations),
+                CreateMenuItem("Synchronize Gland Associations...", CT.SynchronizeGlandAssociations),
+                CreateMenuItem("Batch Cable Connection...", CT.BatchCableConnection),
                 CreateMenuItem("Batch Cable Dissociation From Drums", CT.BatchCableDissociationFromDrums),
-                CreateMenuItem("Insert Power Cable", CT.InsertPowerCable),
+                CreateMenuItem("Insert Power Cable...", CT.InsertPowerCable),
             };
 
         #endregion
@@ -176,13 +216,17 @@ namespace WPFCore.Menu
         protected List<INotifyPropertyChanged> GetToolsSubMenu() =>
             new List<INotifyPropertyChanged>()
             {
-                CreateMenuItem("Apply Options", CT.ApplyOptions),
-                CreateMenuItem("Update Select Lists", CT.UpdateSelectLists),
-                CreateMenuItem("Customize", CT.Customize),
-                CreateMenuItem("Options", CT.Options),
-                CreateMenuItem("Apply Naming Convention", CT.ApplyNamingConvention),
+                CreateMenuItem("Apply Options...", CT.ApplyOptions),
+                CreateSeparator(),
+                CreateMenuItem("Update Select Lists...", CT.UpdateSelectLists),
+                CreateSeparator(),
+                CreateMenuItem("Customize...", CT.Customize),
+                CreateMenuItem("Options...", CT.Options),
+                CreateMenuItem("Apply Naming Convention...", CT.ApplyNamingConvention),
+                CreateSeparator(),
                 CreateSubMenu("ETAP Interface", CT.ETAPInterface),
-                CreateMenuItem("Smart Completion Lookup", CT.SmartCompletionLookup),
+                CreateSeparator(),
+                CreateMenuItem("Smart Completion Lookup...", CT.SmartCompletionLookup),
             };
 
         protected List<INotifyPropertyChanged> GetToolsETAPSubMenu() =>
@@ -201,15 +245,20 @@ namespace WPFCore.Menu
             new List<INotifyPropertyChanged>()
             {
                 CreateMenuItem("Publish Plant Groups", CT.PublishPlantGroups),
-                CreateMenuItem("Publish", CT.Publish),
-                CreateMenuItem("Find Document To Publish", CT.FindDocumentToPublish),
-                CreateMenuItem("Delete", CT.Delete),
-                CreateMenuItem("Retrieve", CT.SmartPlant_Retrieve),
-                CreateMenuItem("Compare With Published Version", CT.CompareWithPublishedVersion),
-                CreateMenuItem("Uncorrelate", CT.Uncorrelate),
-                CreateMenuItem("Publish To External Analyzing Tool", CT.PublishToExternalAnalyzingTool),
-                CreateMenuItem("ToDoList", CT.ToDoList),
-                CreateMenuItem("Browser", CT.Browser),
+                CreateSeparator(),
+                CreateMenuItem("Publish...", CT.Publish),
+                CreateMenuItem("Find Document To Publish...", CT.FindDocumentToPublish),
+                CreateMenuItem("Retrieve...", CT.SmartPlant_Retrieve),
+                CreateMenuItem("Compare With Published Version...", CT.CompareWithPublishedVersion),
+                CreateSeparator(),
+                CreateMenuItem("Uncorrelate...", CT.Uncorrelate),
+                CreateSeparator(),
+                CreateMenuItem("Publish To External Analyzing Tool...", CT.PublishToExternalAnalyzingTool),
+                CreateSeparator(),
+                CreateMenuItem("To Do List...", CT.ToDoList),
+                CreateSeparator(),
+                CreateMenuItem("Browser...", CT.Browser),
+                CreateSeparator(),
                 CreateMenuItem("UpgradeSchema", CT.UpgradeSchema),
             };
 
@@ -220,11 +269,12 @@ namespace WPFCore.Menu
         protected List<INotifyPropertyChanged> GetReportsSubMenu() =>
             new List<INotifyPropertyChanged>()
             {
-                CreateMenuItem("New", CT.Report_New),
-                CreateMenuItem("Edit", CT.Report_Edit),
-                CreateMenuItem("Delete", CT.Report_Delete),
-                CreateMenuItem("Plant Reports", CT.PlantReports),
-                CreateMenuItem("My Reports", CT.MyReports),
+                CreateMenuItem("New...", CT.Report_New),
+                CreateMenuItem("Edit...", CT.Report_Edit),
+                CreateMenuItem("Delete...", CT.Report_Delete),
+                CreateSeparator(),
+                CreateMenuItem("Plant Reports...", CT.PlantReports),
+                CreateMenuItem("My Reports...", CT.MyReports),
             };
 
         #endregion
@@ -243,11 +293,13 @@ namespace WPFCore.Menu
         protected List<INotifyPropertyChanged> GetWindowNewSubMenu() =>
             new List<INotifyPropertyChanged>()
             {
-                CreateMenuItem("Engineering Data Editor", CT.EngineeringDataEditor),
+                CreateMenuItem("Engineering Data Editor...", CT.EngineeringDataEditor),
+                CreateSeparator(),
                 CreateMenuItem("Electrical Index", CT.ElectricalIndex),
                 CreateMenuItem("Electrical Engineer", CT.ElectricalEngineer),
                 CreateMenuItem("Reference Data Explorer", CT.ReferenceDataExplorer),
-                CreateMenuItem("Reference Electrical Engineer", CT.ReferenceElectricalEngineer),
+                CreateMenuItem("Reference Electrical Engineer...", CT.ReferenceElectricalEngineer),
+                CreateSeparator(),
                 CreateMenuItem("Project Management", CT.ProjectManagement),
             };
 
@@ -259,7 +311,9 @@ namespace WPFCore.Menu
             new List<INotifyPropertyChanged>()
             {
                 CreateMenuItem("Integraph Smart Electrical Help", CT.IntegraphSmartElectricalHelp),
+                CreateSeparator(),
                 CreateMenuItem("Technical User Forum", CT.TechnicalUserForum),
+                CreateSeparator(),
                 CreateMenuItem("About Integraph Smart Electrical", CT.AboutIntegraphSmartElectrical),
             };
 

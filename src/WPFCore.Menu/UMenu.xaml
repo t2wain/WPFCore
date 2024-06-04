@@ -10,29 +10,47 @@
         <SolidColorBrush Color="{x:Static SystemColors.ControlColor}"></SolidColorBrush>
     </UserControl.Background>
     <UserControl.Resources>
+        <!-- Container selector -->
+        <DataTemplate x:Key="SeparatorTemplate">
+            <Separator />
+        </DataTemplate>
+        <DataTemplate x:Key="MenuItemTemplate">
+            <MenuItem />
+        </DataTemplate>
+        <local:MenuItemContainerTemplateSelector
+            x:Key="ContainerSelector"
+            MenuItemTemplate="{StaticResource MenuItemTemplate}"
+            SeparatorTemplate="{StaticResource SeparatorTemplate}">
+        </local:MenuItemContainerTemplateSelector>
+        
+        <!-- DataTemplate selector -->
+        <HierarchicalDataTemplate 
+            x:Key="MenuItemDataTemplate" 
+            DataType="{x:Type local:SELMenuItemVM}" 
+            ItemsSource="{Binding Path=Children}">
+            <TextBlock Padding="2" Text="{Binding Name}"></TextBlock>
+        </HierarchicalDataTemplate>
+        <local:MenuItemTemplateSelector 
+            x:Key="TemplateSelector"
+            MenuItemTemplate="{StaticResource MenuItemDataTemplate}">
+        </local:MenuItemTemplateSelector>
+        
+        <!-- Style selector -->
+        <Style x:Key="MenuItemStyle" TargetType="{x:Type MenuItem}">
+            <Setter Property="Command" Value="{Binding Command}" />
+            <Setter Property="UsesItemContainerTemplate" Value="True" />
+            <Setter Property="ItemContainerTemplateSelector" Value="{StaticResource ContainerSelector}" />
+        </Style>
+        <local:MenuItemContainerStyleSelector 
+            x:Key="StyleSelector" 
+            MenuItemStyle="{StaticResource MenuItemStyle}" />
     </UserControl.Resources>
     <Grid>
-        <Menu x:Name="_mainMenu" ItemsSource="{Binding}">
-            <Menu.ItemContainerStyle>
-                <Style TargetType="{x:Type MenuItem}">
-                    <Setter Property="Command" Value="{Binding Command}" />
-                </Style>
-            </Menu.ItemContainerStyle>
-            <Menu.ItemTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type local:SELMenuItemVM}" ItemsSource="{Binding Path=Children}">
-                    <TextBlock Padding="2" Text="{Binding Name}"/>
-                </HierarchicalDataTemplate>
-            </Menu.ItemTemplate>
-
-            <!--<MenuItem Header="File"></MenuItem>
-            <MenuItem Header="Edit"></MenuItem>
-            <MenuItem Header="View"></MenuItem>
-            <MenuItem Header="Actions"></MenuItem>
-            <MenuItem Header="Tools"></MenuItem>
-            <MenuItem Header="Smart Plant"></MenuItem>
-            <MenuItem Header="Reports"></MenuItem>
-            <MenuItem Header="Window"></MenuItem>
-            <MenuItem Header="Help"></MenuItem>-->
-        </Menu>
+        <Menu x:Name="_mainMenu" 
+            ItemsSource="{Binding}" 
+            UsesItemContainerTemplate="True" 
+            ItemContainerTemplateSelector="{StaticResource ContainerSelector}"
+            ItemTemplateSelector="{StaticResource TemplateSelector}"
+            ItemContainerStyleSelector="{StaticResource StyleSelector}" />
     </Grid>
 </UserControl>
