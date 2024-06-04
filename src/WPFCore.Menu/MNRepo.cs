@@ -160,7 +160,7 @@ namespace WPFCore.Menu
                 CreateMenuItem("Define Document Reference...", CT.DefineDocumentReference),
                 CreateMenuItem("Associate Document...", CT.AssociateDocument),
                 CreateMenuItem("Global Revision...", CT.GlobalRevision),
-                CreateMenuItem("Associate/Dissociate CustomSymbols...", CT.AssociateDissociateCustomSymbols),
+                CreateMenuItem("Associate/Dissociate Custom Symbols...", CT.AssociateDissociateCustomSymbols),
                 CreateSeparator(),
                 CreateMenuItem("Dissociate", CT.Dissociate),
                 CreateMenuItem("Move Items...", CT.MoveItems),
