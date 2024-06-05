@@ -1,6 +1,6 @@
 ﻿namespace WPFCore.ElectIndex.TV
 {
-    // allow each tree node to maintain business data
+    // TODO: allow each tree node to maintain business data
     public class TNodeData
     {
         public TIndexNodeEnum NodeType { get; set; }

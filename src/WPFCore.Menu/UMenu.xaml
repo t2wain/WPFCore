@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFCore.Menu"
+             xmlns:mnu="clr-namespace:WPFCore.Shared.UI.MNU;assembly=WPFCore.Shared.UI"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="800">
     <UserControl.Background>
@@ -17,11 +18,11 @@
         <DataTemplate x:Key="MenuItemTemplate">
             <MenuItem />
         </DataTemplate>
-        <local:MenuItemContainerTemplateSelector
+        <mnu:MenuItemContainerTemplateSelector
             x:Key="ContainerSelector"
             MenuItemTemplate="{StaticResource MenuItemTemplate}"
             SeparatorTemplate="{StaticResource SeparatorTemplate}">
-        </local:MenuItemContainerTemplateSelector>
+        </mnu:MenuItemContainerTemplateSelector>
         
         <!-- DataTemplate selector -->
         <HierarchicalDataTemplate 
@@ -30,10 +31,10 @@
             ItemsSource="{Binding Path=Children}">
             <TextBlock Padding="2" Text="{Binding Name}"></TextBlock>
         </HierarchicalDataTemplate>
-        <local:MenuItemTemplateSelector 
+        <mnu:MenuItemTemplateSelector 
             x:Key="TemplateSelector"
             MenuItemTemplate="{StaticResource MenuItemDataTemplate}">
-        </local:MenuItemTemplateSelector>
+        </mnu:MenuItemTemplateSelector>
         
         <!-- Style selector -->
         <Style x:Key="MenuItemStyle" TargetType="{x:Type MenuItem}">
@@ -41,7 +42,7 @@
             <Setter Property="UsesItemContainerTemplate" Value="True" />
             <Setter Property="ItemContainerTemplateSelector" Value="{StaticResource ContainerSelector}" />
         </Style>
-        <local:MenuItemContainerStyleSelector 
+        <mnu:MenuItemContainerStyleSelector 
             x:Key="StyleSelector" 
             MenuItemStyle="{StaticResource MenuItemStyle}" />
     </UserControl.Resources>

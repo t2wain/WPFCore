@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using WPFCore.ElectIndex.TV;
 using WPFCore.Shared.UI.LB;
@@ -6,19 +7,18 @@ using NT = WPFCore.ElectIndex.TV.TIndexNodeEnum;
 
 namespace WPFCore.ElectIndex.LB
 {
-    public class LBoxVM : ListBoxVM
+    /// <summary>
+    /// View model for ListBox
+    /// </summary>
+    public partial class LBoxVM : ListBoxVM
     {
         public LBoxVM()
         {
             this.Init();
         }
 
-        INotifyPropertyChanged? _nodeData;
-        public INotifyPropertyChanged? CurrentIndexNode
-        {
-            get { return this._nodeData; }
-            set { SetProperty(ref this._nodeData, value); }
-        }
+        [ObservableProperty]
+        INotifyPropertyChanged? _currentIndexNode;
 
         public override void PopulateData()
         {
@@ -49,6 +49,7 @@ namespace WPFCore.ElectIndex.LB
                         break;
                 }
             }
+            this.ItemCount = this.ListItems.Count;
         }
 
         protected override List<RoutedUICommand> GetContextCommands()

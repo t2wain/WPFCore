@@ -2,6 +2,11 @@
 
 UMenu displays a main menu object (Menu).
 
+The following files implement data specific features:
+
+- MenuCommandEnum
+- MNRepo
+
 ## Data Binding
 
 The menu is based on view model data binding (collection of SELMenuItemVM). Each menu item is identified by MenuCommandEnum. Each submenu is populated dynamically when it is first opened. The SELMenuBinder setup an event handler for the menu opening event to retrieve the child menu items. The MNRepo is a repository of the menu items.

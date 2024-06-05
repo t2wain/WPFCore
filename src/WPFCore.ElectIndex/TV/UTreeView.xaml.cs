@@ -18,6 +18,9 @@ namespace WPFCore.ElectIndex.TV
         private TreeIndexBinder _tvwBind = null!;
         private LBoxBinder _lbxBind = null!;
 
+        /// <summary>
+        /// Setup view models and configure control bindings
+        /// </summary>
         public void Init(UTreeLBoxVM vm)
         {
             this.DataContext = vm;

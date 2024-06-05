@@ -20,12 +20,7 @@ namespace WPFCore.ElectIndex.TV
             this.InitData();
         }
 
-
-        // populate root nodes
-        protected void InitData()
-        {
-            this.Root =  new ObservableCollection<INotifyPropertyChanged>(this._repo.GetIndexRoot(this).Result);
-        }
+        #region Command bindings
 
         public override bool IsContextMenuAllow(INotifyPropertyChanged di)
         {
@@ -99,6 +94,16 @@ namespace WPFCore.ElectIndex.TV
             return allow;
         }
 
+        #endregion
+
+        #region Retrieve nodes
+
+        // populate root nodes
+        protected void InitData()
+        {
+            this.Root =  new ObservableCollection<INotifyPropertyChanged>(this._repo.GetIndexRoot(this).Result);
+        }
+
         internal INotifyPropertyChanged CreateLoadingNode() =>
             _repo.CreateLoadingNode();
 
@@ -112,6 +117,10 @@ namespace WPFCore.ElectIndex.TV
             else return Task.FromResult(new List<INotifyPropertyChanged>() { });
         }
 
+        #endregion
+
+        #region Raise events
+
         virtual public void RaiseSelectedItemChildrenDataRefreshed()
         {
             this.OnPropertyChanged(SelectedItemChildrenRefreshed);
@@ -121,5 +130,7 @@ namespace WPFCore.ElectIndex.TV
         {
 
         }
+
+        #endregion
     }
 }

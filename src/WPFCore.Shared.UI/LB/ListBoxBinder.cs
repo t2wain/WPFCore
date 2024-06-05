@@ -26,9 +26,12 @@ namespace WPFCore.Shared.UI.LB
 
         protected ListBoxVM? VM { get; set; }
 
+        RoutedEventHandler _h1 = null!;
+
         virtual protected void InitListView(ListBox lv)
         {
-            lv.AddHandler(Control.MouseDoubleClickEvent, new RoutedEventHandler(this.OnDoubleClick));
+            _h1 = new RoutedEventHandler(this.OnDoubleClick);
+            lv.AddHandler(Control.MouseDoubleClickEvent, _h1);
             this.ConfigCommands(lv);
 
             if (lv.DataContext is ListBoxVM vm)
@@ -109,7 +112,7 @@ namespace WPFCore.Shared.UI.LB
         {
             if (this._lvw != null)
             {
-                this._lvw.RemoveHandler(Control.MouseDoubleClickEvent, new RoutedEventHandler(this.OnDoubleClick));
+                this._lvw.RemoveHandler(Control.MouseDoubleClickEvent, _h1);
                 this._lvw.CommandBindings.Clear();
                 if (this.VM != null)
                     this.VM.PropertyChanged -= this.ListenPropertyChangedOnVM;

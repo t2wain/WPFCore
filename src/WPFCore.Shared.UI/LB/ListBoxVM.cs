@@ -19,7 +19,10 @@ namespace WPFCore.Shared.UI.LB
         private ObservableCollection<INotifyPropertyChanged> _listItems = null!;
 
         [ObservableProperty]
-        private ICollectionView? _listItemsView;
+        private ListCollectionView? _listItemsView;
+
+        [ObservableProperty]
+        private int _itemCount = 0;
 
         public ObservableCollection<RoutedUICommand> ListBoxContextMenu { get; set; } = null!;
 

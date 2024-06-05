@@ -1,8 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using WPFCore.Shared.UI.MNU;
 
-namespace WPFCore.Menu
+namespace WPFCore.Shared.UI.MNU
 {
     public class MenuItemTemplateSelector : DataTemplateSelector
     {

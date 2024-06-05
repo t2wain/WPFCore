@@ -1,6 +1,6 @@
 ﻿namespace WPFCore.ElectIndex.TV
 {
-    // allow each tree node to maintain filter info
+    // TODO: allow each tree node to maintain filter info
     public class NodeFilter
     {
         //public PlanPackageFilter PackageFilter { get; set; }

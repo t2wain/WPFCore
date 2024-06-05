@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:utv="clr-namespace:WPFCore.ElectIndex.TV;assembly=WPFCore.ElectIndex"
         xmlns:mnu="clr-namespace:WPFCore.Menu;assembly=WPFCore.Menu"
+        xmlns:sb="clr-namespace:WPFCore.Shared.UI.SB;assembly=WPFCore.Shared.UI"
         mc:Ignorable="d"
         Title="Sample WPF Core Application" Height="450" Width="800">
     <DockPanel>
         <mnu:UMenu x:Name="_mainMenu" Padding="0 5" DockPanel.Dock="Top"></mnu:UMenu>
+        <sb:UStatusBar x:Name="_sb" DockPanel.Dock="Bottom"></sb:UStatusBar>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MinWidth="150" MaxWidth="350"></ColumnDefinition>

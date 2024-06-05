@@ -29,6 +29,14 @@ namespace WPFCore.Shared.UI.TV
         // populate from UI DataContext
         protected TreeViewVM? VM { get; set; }
 
+        RoutedEventHandler _h1 = null!;
+        RoutedEventHandler _h2 = null!;
+        RoutedEventHandler _h3 = null!;
+        RoutedEventHandler _h4 = null!;
+        RoutedEventHandler _h5 = null!;
+        RoutedEventHandler _h6 = null!;
+        RoutedEventHandler _h7 = null!;
+
         virtual protected void InitTreeView(TreeView tv)
         {
             // Configure handlers for TreeView events
@@ -36,13 +44,26 @@ namespace WPFCore.Shared.UI.TV
             tv.MouseDown += this.OnMouseDown;
 
             // Configure handlers for TreeViewItem events
-            tv.AddHandler(TreeViewItem.CollapsedEvent, new RoutedEventHandler(this.OnItemCollapsed));
-            tv.AddHandler(TreeViewItem.ExpandedEvent, new RoutedEventHandler(this.OnItemExpand));
-            tv.AddHandler(TreeViewItem.UnselectedEvent, new RoutedEventHandler(this.OnItemUnSelected));
-            tv.AddHandler(TreeViewItem.SelectedEvent, new RoutedEventHandler(this.OnItemSelected));
-            tv.AddHandler(UIElement.MouseRightButtonDownEvent, new RoutedEventHandler(this.OnItemMouseRightButtonDown));
-            tv.AddHandler(FrameworkElement.ContextMenuOpeningEvent, new RoutedEventHandler(this.OnContextMenuOpen));
-            tv.AddHandler(Control.MouseDoubleClickEvent, new RoutedEventHandler(this.OnDoubleClick));
+            _h1 = new RoutedEventHandler(this.OnItemCollapsed);
+            tv.AddHandler(TreeViewItem.CollapsedEvent, _h1);
+
+            _h2 = new RoutedEventHandler(this.OnItemExpand);
+            tv.AddHandler(TreeViewItem.ExpandedEvent, _h2);
+
+            _h3 = new RoutedEventHandler(this.OnItemUnSelected);
+            tv.AddHandler(TreeViewItem.UnselectedEvent, _h3);
+
+            _h4 = new RoutedEventHandler(this.OnItemSelected);
+            tv.AddHandler(TreeViewItem.SelectedEvent, _h4);
+
+            _h5 = new RoutedEventHandler(this.OnItemMouseRightButtonDown);
+            tv.AddHandler(UIElement.MouseRightButtonDownEvent, _h5);
+
+            _h6 = new RoutedEventHandler(this.OnContextMenuOpen);
+            tv.AddHandler(FrameworkElement.ContextMenuOpeningEvent, _h6);
+
+            _h7 = new RoutedEventHandler(this.OnDoubleClick);
+            tv.AddHandler(Control.MouseDoubleClickEvent, _h7);
             
             // setup command bindings
             // to listen to routed command
@@ -176,13 +197,13 @@ namespace WPFCore.Shared.UI.TV
                 tv.MouseDown -= this.OnMouseDown;
 
                 // Configure handlers for TreeViewItem events
-                tv.RemoveHandler(TreeViewItem.CollapsedEvent, new RoutedEventHandler(this.OnItemCollapsed));
-                tv.RemoveHandler(TreeViewItem.ExpandedEvent, new RoutedEventHandler(this.OnItemExpand));
-                tv.RemoveHandler(TreeViewItem.UnselectedEvent, new RoutedEventHandler(this.OnItemUnSelected));
-                tv.RemoveHandler(TreeViewItem.SelectedEvent, new RoutedEventHandler(this.OnItemSelected));
-                tv.RemoveHandler(UIElement.MouseRightButtonDownEvent, new RoutedEventHandler(this.OnItemMouseRightButtonDown));
-                tv.RemoveHandler(FrameworkElement.ContextMenuOpeningEvent, new RoutedEventHandler(this.OnContextMenuOpen));
-                tv.RemoveHandler(Control.MouseDoubleClickEvent, new RoutedEventHandler(this.OnDoubleClick));
+                tv.RemoveHandler(TreeViewItem.CollapsedEvent, _h1);
+                tv.RemoveHandler(TreeViewItem.ExpandedEvent, _h2);
+                tv.RemoveHandler(TreeViewItem.UnselectedEvent, _h3);
+                tv.RemoveHandler(TreeViewItem.SelectedEvent, _h4);
+                tv.RemoveHandler(UIElement.MouseRightButtonDownEvent, _h5);
+                tv.RemoveHandler(FrameworkElement.ContextMenuOpeningEvent, _h6);
+                tv.RemoveHandler(Control.MouseDoubleClickEvent, _h7);
 
                 tv.CommandBindings.Clear();
                 this._tvw = null;

@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using WPFCore.Shared.UI.TV;
-using NT = WPFCore.ElectIndex.TV.TIndexNodeEnum;
 
 namespace WPFCore.ElectIndex.TV
 {

@@ -1,6 +1,6 @@
 ﻿## UTreeView Custom Control
 
-This control consist of a TreeView and a ListBox WPF controls. The TreeView display a deeply nested hierarchy set of data and the ListBox display the child set of data of the selected tree node.
+This control consist of a TreeView and a ListBox WPF controls. The TreeView display a deeply nested hierarchy set of data and the ListBox display the child set of data of the selected tree node. The TreeView and ListBox controls can be resized by dragging the borders of the controls. 
 
 The TreeView has a Context menu with several RoutedUICommand commands:
 
@@ -14,3 +14,8 @@ The ListBox has a Context menu with the following RoutedUICommand commands:
 - Unselect All (Ctrl+A)
 
 All data binding are based on the MVVM pattern. The ViewModel class is based on the CommunityToolkit.Mvvm library.
+
+The followig files implement data specific features:
+
+- TIndexNodeEnum
+- TVRepo

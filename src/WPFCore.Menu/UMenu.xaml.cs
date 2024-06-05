@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace WPFCore.Menu
 {
@@ -7,9 +8,18 @@ namespace WPFCore.Menu
     /// </summary>
     public partial class UMenu : UserControl
     {
+        private SELMenuBinder? _binder;
+
         public UMenu()
         {
             InitializeComponent();
+            this.Unloaded += OnUnloaded;
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            _binder?.Dispose();
+            _binder = null;
         }
 
         public MNRepo? Repo { get; set; }
@@ -17,8 +27,8 @@ namespace WPFCore.Menu
         public void Init()
         {
             Repo = new MNRepo();
-            var binder = new SELMenuBinder(Repo);
-            binder.MenuControl = this._mainMenu;
+            _binder = new SELMenuBinder(Repo);
+            _binder.MenuControl = this._mainMenu;
             this.DataContext = Repo.GetMain();
         }
 

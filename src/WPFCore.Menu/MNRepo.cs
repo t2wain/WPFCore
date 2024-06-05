@@ -5,6 +5,9 @@ using MT = WPFCore.Shared.UI.MNU.MenuTypeEnum;
 
 namespace WPFCore.Menu
 {
+    /// <summary>
+    /// A repository of menu items and parent/child relationships
+    /// </summary>
     public class MNRepo
     {
         #region Main

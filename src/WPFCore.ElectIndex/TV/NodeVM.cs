@@ -4,16 +4,23 @@ using WPFCore.Shared.UI.TV;
 
 namespace WPFCore.ElectIndex.TV
 {
+    /// <summary>
+    /// View model for each tree node.
+    /// </summary>
     public class NodeVM : TreeNodeVM
     {
         public NodeVM() { }
 
         public TIndexNodeEnum NodeType { get; set; }
 
-        // allow each tree node to maintain filter info
+        /// <summary>
+        /// TODO: allow each tree node to maintain filter info
+        /// </summary>
         public NodeFilter? Filter { get; set; }
 
-        // allow each tree node to maintain business data
+        /// <summary>
+        /// TODO: allow each tree node to maintain business data
+        /// </summary>
         public TNodeData? DataItem { get; set; }
 
         protected TreeVM ParentVM => (TreeVM)this.Parent;
