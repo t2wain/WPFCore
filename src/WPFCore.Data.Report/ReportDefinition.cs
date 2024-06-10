@@ -3,7 +3,7 @@
 namespace WPFCore.Data.Report
 {
     [Serializable]
-    public class ReportDefinition
+    public record ReportDefinition
     {
         public const string DB_TYPE_VIEW = "VIEW";
         public const string DB_TYPE_PROC = "PROC";
@@ -11,31 +11,26 @@ namespace WPFCore.Data.Report
         public const string DB_TYPE_TABLE_EDIT = "TABLE_EDIT";
         public const string DB_TYPE_PROC_EDIT = "PROC_EDIT";
 
-        public ReportDefinition()
-        {
-            this.DatabaseObjectType = ReportDefinition.DB_TYPE_VIEW;
-        }
+        [XmlIgnore]
+        public int ReportID { get; set; }
+        [XmlIgnore]
+        public int CategoryID { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public string? DatabaseView { get; set; }
+
+        public List<ColumnDefinition>? Columns { get; set; }
+        public List<ColumnDefinition>? Parameters { get; set; }
 
         [XmlIgnore]
-        public int ReportID;
-        [XmlIgnore]
-        public int CategoryID;
-        public string? Name;
-        public string? Description;
-        public string? DatabaseView;
+        public string? ReportDefinitionXml { get; set; }
+        public string DatabaseObjectType { get; set; } = ReportDefinition.DB_TYPE_VIEW;
+        public bool AllowAddAndDelete { get; set; }
 
-        public List<ColumnDefinition>? Columns;
-        public List<ColumnDefinition>? Parameters;
-
-        [XmlIgnore]
-        public string? ReportDefinitionXml;
-        public string? DatabaseObjectType;
-        public bool AllowAddAndDelete;
-
-        public string? UpdateDbProcedure;
-        public string? AddDbProcedure;
-        public string? DeleteDbProcedure;
-        public string? LookUpDbProcedure;
+        public string? UpdateDbProcedure { get; set; }
+        public string? AddDbProcedure { get; set; }
+        public string? DeleteDbProcedure { get; set; }
+        public string? LookUpDbProcedure { get; set; }
 
         public Dictionary<string, object> GetSelectParameters()
         {

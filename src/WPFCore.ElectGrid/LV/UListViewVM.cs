@@ -39,14 +39,8 @@ namespace WPFCore.ElectGrid.LV
             var itemName = "";
             switch (this.ListVM.ViewType)
             {
-                case LViewEnum.Motors:
+                case LViewEnum.ReportDef:
                     itemName = "IPMS BOMs";
-                    break;
-                case LViewEnum.OtherElectricalEquipment:
-                    itemName = "Cobra Drawings";
-                    break;
-                case LViewEnum.Transformers:
-                    itemName = "IPMS Tickets";
                     break;
             }
 

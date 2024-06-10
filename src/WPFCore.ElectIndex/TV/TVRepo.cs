@@ -29,6 +29,7 @@ namespace WPFCore.ElectIndex.TV
                 CreateNode("Wiring Equipment", NT.WiringEquipment, parent),
                 CreateNode("Process Equipment", NT.ProcessEquipment, parent),
                 CreateNode("Documents", NT.Documents, parent),
+                CreateNode("Reports", NT.Reports, parent),
             });
 
         public Task<List<INotifyPropertyChanged>> GetChildren(NT nodeType, TNodeData? data, TreeVM parent) =>
@@ -53,6 +54,8 @@ namespace WPFCore.ElectIndex.TV
                 NT.Transformers => GetTransformers(parent),
                 NT.VariableFrequencyDrives => GetVFDs(parent),
                 NT.PowerDistributionBoards => GetPDBs(parent),
+
+                NT.Reports => GetReports(parent),
 
                 _ => Task.FromResult(new List<INotifyPropertyChanged>())
             };
@@ -173,6 +176,18 @@ namespace WPFCore.ElectIndex.TV
 
         #endregion
 
+        #region Report
+
+        protected Task<List<INotifyPropertyChanged>> GetReports(TreeVM parent) =>
+            Task.FromResult(new List<INotifyPropertyChanged>
+            {
+                CreateNode("All Motors", NT.Report, parent, true),
+                CreateNode("All OEE", NT.Report, parent, true),
+                CreateNode("All Transformer", NT.Report, parent, true),
+            });
+
+        #endregion
+
         #region Data access
 
         protected Task<List<INotifyPropertyChanged>> GetMotors(TreeVM parent)
@@ -247,12 +262,12 @@ namespace WPFCore.ElectIndex.TV
                 .Cast<INotifyPropertyChanged>()
                 .ToList();
 
-        static INotifyPropertyChanged CreateNode(string name, NT nodeType, TreeVM parent) =>
+        static INotifyPropertyChanged CreateNode(string name, NT nodeType, TreeVM parent, bool isLeaf = false) =>
             new NodeVM() { 
                 Name = name, 
                 NodeType = nodeType, 
                 Parent = parent, 
-                Children = new ObservableCollection<INotifyPropertyChanged> { CreateDummyNode() } 
+                Children = isLeaf ? [] : new ObservableCollection<INotifyPropertyChanged> { CreateDummyNode() } 
             };
 
         internal INotifyPropertyChanged CreateLoadingNode()

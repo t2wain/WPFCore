@@ -7,6 +7,9 @@ namespace WPFCore.Shared.UI.LV
 {
     public static class GridUtility
     {
+        /// <summary>
+        /// Create GridView with default CellTemplate and Style
+        /// </summary>
         public static GridView CreateGridViewForDataView(DataView dv)
         {
             var gv = new GridView();
@@ -18,6 +21,8 @@ namespace WPFCore.Shared.UI.LV
             }
             return gv;
         }
+
+        #region CreateColumn
 
         public static GridViewColumn CreateColumn(string colName, string bindingPath, Type dataType)
         {
@@ -88,7 +93,9 @@ namespace WPFCore.Shared.UI.LV
             return col;
         }
 
-        public static DataTemplate CreateDataTemplate(Type type, FrameworkElementFactory el)
+        #endregion
+
+        internal static DataTemplate CreateDataTemplate(Type type, FrameworkElementFactory el)
         {
             DataTemplate template = new DataTemplate { DataType = type };
             template.VisualTree = el;

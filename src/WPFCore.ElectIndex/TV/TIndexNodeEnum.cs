@@ -102,7 +102,14 @@
         MiscellaneousDrawings,
         PDBLayoutDrawings,
         WiringDiagrams,
-        CableBlockDiagrams
+        CableBlockDiagrams,
+
+        #endregion
+
+        #region Report
+
+        Reports,
+        Report,
 
         #endregion
     }

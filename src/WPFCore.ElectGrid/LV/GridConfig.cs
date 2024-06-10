@@ -1,11 +1,18 @@
 ﻿using System.Windows.Controls;
 using System.Windows;
 using WPFCore.Shared.UI.LV;
+using WPFCore.Data.Report;
 
 namespace WPFCore.ElectGrid.LV
 {
+    /// <summary>
+    /// Create GridView for a specific object collection
+    /// or for a general report based on DataView
+    /// </summary>
     public static class GridConfig
     {
+        #region Specific report
+
         static GridView? _bom;
         public static GridView BOMItemsReport
         {
@@ -135,6 +142,29 @@ namespace WPFCore.ElectGrid.LV
             gv.Columns.Add(GridUtility.CreateColumn("Earn Hours", "tot_fin_hrs", 100, typeof(double), HorizontalAlignment.Right, "{0:F1}"));
             gv.Columns.Add(GridUtility.CreateColumn("Pct Earn", "tot_fin_pct", 100, typeof(double), HorizontalAlignment.Right, "{0:F2}"));
 
+            return gv;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region General Report
+
+        public static GridView CreateGeneralReport(ReportDefinition rdef)
+        {
+            var gv = new GridView();
+            foreach (var c in rdef.Columns!)
+            {
+                gv.Columns.Add(GridUtility.CreateColumn(
+                    c.HeaderName!, 
+                    c.FieldName!, 
+                    c.ColumnWidth,
+                    Type.GetType(c.DataType!)!,
+                    (HorizontalAlignment)c.Alignment,
+                    c.Format!
+                ));
+            }
             return gv;
         }
 

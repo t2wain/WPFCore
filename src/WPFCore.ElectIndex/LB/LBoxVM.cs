@@ -33,6 +33,7 @@ namespace WPFCore.ElectIndex.LB
                     case NT.Transformers:
                     case NT.VariableFrequencyDrives:
                     case NT.PowerDistributionBoards:
+                    case NT.Reports:
                         var c1 = n.Children.First() as NodeVM;
                         if (c1 == null
                             || c1.NodeType == NT.NoResult

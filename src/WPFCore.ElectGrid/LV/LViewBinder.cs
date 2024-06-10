@@ -7,6 +7,9 @@ namespace WPFCore.ElectGrid.LV
 {
     public class LViewBinder : ListViewBinder
     {
+        /// <summary>
+        /// When report data changed, recreate the GridView
+        /// </summary>
         protected override void ListenPropertyChangedOnVM(object? sender, PropertyChangedEventArgs e)
         {
             base.ListenPropertyChangedOnVM(sender, e);
@@ -29,14 +32,8 @@ namespace WPFCore.ElectGrid.LV
             GridView? vw = null;
             switch(this.ListVM.ViewType) 
             {
-                case LViewEnum.Motors:
-                    vw = GridConfig.BOMItemsReport;
-                    break;
-                case LViewEnum.OtherElectricalEquipment:
-                    vw = GridConfig.BOMItemsReport;
-                    break;
-                case LViewEnum.Transformers:
-                    vw = GridConfig.BOMItemsReport;
+                case LViewEnum.ReportDef:
+                    vw = GridConfig.CreateGeneralReport(this.ListVM.ReportDef!);
                     break;
             }
 

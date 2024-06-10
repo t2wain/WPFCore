@@ -2,6 +2,9 @@
 
 namespace WPFCore.Shared.UI.LV
 {
+    /// <summary>
+    /// Manage the ICollectionView.SortDescriptions
+    /// </summary>
     public class ListViewSort
     {
         // manage column sorting for an ICollectionView

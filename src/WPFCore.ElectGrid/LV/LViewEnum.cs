@@ -2,8 +2,6 @@
 {
     public enum LViewEnum
     {
-        Motors,
-        OtherElectricalEquipment,
-        Transformers
+        ReportDef
     }
 }

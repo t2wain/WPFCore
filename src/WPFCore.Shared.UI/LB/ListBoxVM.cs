@@ -19,7 +19,7 @@ namespace WPFCore.Shared.UI.LB
         private ObservableCollection<INotifyPropertyChanged> _listItems = null!;
 
         [ObservableProperty]
-        private ListCollectionView? _listItemsView;
+        private ICollectionView? _listItemsView;
 
         [ObservableProperty]
         private int _itemCount = 0;
@@ -65,7 +65,7 @@ namespace WPFCore.Shared.UI.LB
             switch (args.PropertyName)
             {
                 case nameof(ListItems):
-                    this.ListItemsView = new ListCollectionView(this.ListItems);
+                    this.ListItemsView = CollectionViewSource.GetDefaultView(this.ListItems);
                     break;
             }
         }

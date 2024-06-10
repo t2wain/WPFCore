@@ -3,16 +3,16 @@
 namespace WPFCore.Data.Report
 {
     [Serializable]
-    public class ColumnDefinition
+    public record ColumnDefinition
     {
         public const int ALIGN_LEFT = 0;
         public const int ALIGN_RIGHT = 1;
         public const int ALIGN_CENTER = 2;
 
         [XmlIgnore]
-        public int ColumnID;
+        public int ColumnID { get; set; }
         [XmlIgnore]
-        public int ReportID;
+        public int ReportID { get; set; }
 
         public string? HeaderName { get; set; }
 

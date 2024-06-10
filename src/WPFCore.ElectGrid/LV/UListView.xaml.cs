@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace WPFCore.ElectGrid.LV
 {
@@ -11,19 +10,14 @@ namespace WPFCore.ElectGrid.LV
         public UListView()
         {
             InitializeComponent();
-            this.Loaded += this.OnLoaded;
         }
 
         private LViewBinder? _lvwBind;
-        protected void OnLoaded(object sender, RoutedEventArgs e)
+        public void Init(LViewVM vm)
         {
             this._lvwBind = new LViewBinder();
             this._lvwBind.ListViewControl = this._lvwData;
-
-            if (this.DataContext is UListViewVM ctx)
-            {
-                ctx.Init();
-            }
+            this._lvwData.DataContext = vm;
         }
     }
 }

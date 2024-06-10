@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
 using System.Data;
+using WPFCore.Data.Report;
 using WPFCore.Shared.UI;
 using WPFCore.Shared.UI.LV;
 
@@ -16,33 +18,20 @@ namespace WPFCore.ElectGrid.LV
             this.Init();
         }
 
-        [ObservableProperty]
-        LViewEnum _viewType;
+        public LViewEnum ViewType { get; set; }
 
-        public override void PopulateData()
-        {
-            this.QueryDataAsync();
-        }
+        public ReportDefinition? ReportDef { get; set; }
 
-        protected async void QueryDataAsync()
+        protected override async Task PopulateData()
         {
             Utility.SetWaitCursor();
-            DataView? dv = null;
             switch (this.ViewType)
             {
-                case LViewEnum.Motors:
-                    dv = await this._ds.GetMotors();
-                    break;
-                case LViewEnum.OtherElectricalEquipment:
-                    dv = await this._ds.GetOtherElectricalEquipment();
-                    break;
-                case LViewEnum.Transformers:
-                    dv = await this._ds.GetTransformers();
+                case LViewEnum.ReportDef:
+                    if (this.ReportDef != null)
+                        this.ListData = await ReportUtil.LoadReport(this._ds.DB, this.ReportDef);
                     break;
             }
-
-            if (dv != null)
-                this.ListData = dv;
             Utility.SetNormalCursor();
         }
     }

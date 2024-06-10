@@ -22,6 +22,11 @@ namespace WPFCore.Shared.UI.LV
         [ObservableProperty]
         private bool _isEnabled = true;
 
+        #region Data
+
+        // Data can be either a DataView (ListData)
+        // or a collection of objects (Root)
+
         [ObservableProperty]
         private DataView? _listData;
 
@@ -31,9 +36,11 @@ namespace WPFCore.Shared.UI.LV
         [ObservableProperty]
         private ICollectionView? _listItemsView;
 
-        virtual public void RefreshData() { }
+        virtual public Task RefreshData() => this.PopulateData();
 
-        virtual public void PopulateData() { }
+        virtual protected Task PopulateData() => Task.CompletedTask;
+
+        #endregion
 
         public void RaisePropertyChangeEvent(string propertyName)
         {
@@ -46,10 +53,10 @@ namespace WPFCore.Shared.UI.LV
             switch (args.PropertyName)
             {
                 case nameof(Root):
-                    this.ListItemsView = new ListCollectionView(this.Root);
+                    this.ListItemsView = CollectionViewSource.GetDefaultView(this.Root);
                     break;
                 case nameof(ListData):
-                    this.ListItemsView = new ListCollectionView(this.ListData);
+                    this.ListItemsView = CollectionViewSource.GetDefaultView(this.ListData);
                     break;
             }
         }

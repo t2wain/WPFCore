@@ -1,5 +1,6 @@
-﻿using WPFCore.Data;
-using WPFCore.Data.TV;
+﻿using ADOLib;
+using WPFCore.Data.OleDb;
+using WPFCore.Data.OleDb.TV;
 
 namespace WPFCore.Test
 {
@@ -7,10 +8,12 @@ namespace WPFCore.Test
     {
         public Context()
         {
-            Repo = new EquipRepo(new DataDB("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=C:\\devgit\\Data\\SPEL.accdb"));
+            Repo = new EquipRepo(NewDB());
         }
 
         public EquipRepo Repo { get; init; }
+
+        public IDatabase NewDB() => new DataDB("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=C:\\devgit\\Data\\SPEL.accdb");
 
         public void Dispose()
         {
