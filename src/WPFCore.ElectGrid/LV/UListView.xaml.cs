@@ -15,9 +15,9 @@ namespace WPFCore.ElectGrid.LV
         private LViewBinder? _lvwBind;
         public void Init(LViewVM vm)
         {
+            this._lvwData.DataContext = vm;
             this._lvwBind = new LViewBinder();
             this._lvwBind.ListViewControl = this._lvwData;
-            this._lvwData.DataContext = vm;
         }
     }
 }

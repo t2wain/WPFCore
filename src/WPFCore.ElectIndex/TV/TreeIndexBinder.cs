@@ -16,7 +16,7 @@ namespace WPFCore.ElectIndex.TV
 
             if (this.VM?.SelectedItem is NodeVM n) 
             {
-                if (!n.IsLeafNode)
+                if (n.IsLeafNode)
                     this.RaiseViewDetailEvent();
 
                 //switch (n.NodeType)
@@ -36,13 +36,13 @@ namespace WPFCore.ElectIndex.TV
                 && vm.IsCommandCanExecute(TACommands.ViewDetailMsg, n)) {
 
                 vm.SendMessage(n.DataItem!);
+                vm.RaiseExecuteViewDetailCmd();
             }
 
         }
 
         #region Config Commands
 
-        // command handler for Refresh
         virtual protected void OnViewDetail(object sender, RoutedEventArgs e)
         {
             this.RaiseViewDetailEvent();

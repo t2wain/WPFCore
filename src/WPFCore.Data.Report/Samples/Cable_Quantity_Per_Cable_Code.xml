@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ReportDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Cable Quantity Per Cable Code</Name>
+  <Description />
+  <DatabaseView>R_CABLE_SUM_BY_CABLE_CODE_2</DatabaseView>
+  <Columns>
+    <ColumnDefinition>
+      <HeaderName>Cable Code</HeaderName>
+      <FieldName>CABLE_CODE</FieldName>
+      <Description />
+      <ColumnWidth>83</ColumnWidth>
+      <Visible>true</Visible>
+      <Position>0</Position>
+      <Format />
+      <Alignment>0</Alignment>
+      <DataType>System.String</DataType>
+      <Filter />
+      <IsEditable>false</IsEditable>
+      <IsFrozen>false</IsFrozen>
+      <IsLookUp>false</IsLookUp>
+      <IsPrimaryKey>false</IsPrimaryKey>
+    </ColumnDefinition>
+    <ColumnDefinition>
+      <HeaderName>Description</HeaderName>
+      <FieldName>CODE_DESC</FieldName>
+      <Description />
+      <ColumnWidth>224</ColumnWidth>
+      <Visible>true</Visible>
+      <Position>1</Position>
+      <Format />
+      <Alignment>0</Alignment>
+      <DataType>System.String</DataType>
+      <Filter />
+      <IsEditable>false</IsEditable>
+      <IsFrozen>false</IsFrozen>
+      <IsLookUp>false</IsLookUp>
+      <IsPrimaryKey>false</IsPrimaryKey>
+    </ColumnDefinition>
+    <ColumnDefinition>
+      <HeaderName>Cable Routed</HeaderName>
+      <FieldName>CBL_ROUTED</FieldName>
+      <Description />
+      <ColumnWidth>92</ColumnWidth>
+      <Visible>true</Visible>
+      <Position>2</Position>
+      <Format />
+      <Alignment>0</Alignment>
+      <DataType>System.Decimal</DataType>
+      <Filter />
+      <IsEditable>false</IsEditable>
+      <IsFrozen>false</IsFrozen>
+      <IsLookUp>false</IsLookUp>
+      <IsPrimaryKey>false</IsPrimaryKey>
+    </ColumnDefinition>
+    <ColumnDefinition>
+      <HeaderName>Routed Length</HeaderName>
+      <FieldName>ROUTED_LENGTH</FieldName>
+      <Description />
+      <ColumnWidth>97</ColumnWidth>
+      <Visible>true</Visible>
+      <Position>3</Position>
+      <Format />
+      <Alignment>0</Alignment>
+      <DataType>System.Decimal</DataType>
+      <Filter />
+      <IsEditable>false</IsEditable>
+      <IsFrozen>false</IsFrozen>
+      <IsLookUp>false</IsLookUp>
+      <IsPrimaryKey>false</IsPrimaryKey>
+    </ColumnDefinition>
+    <ColumnDefinition>
+      <HeaderName>Cable Not Routed</HeaderName>
+      <FieldName>CBL_NOT_ROUTED</FieldName>
+      <Description />
+      <ColumnWidth>113</ColumnWidth>
+      <Visible>true</Visible>
+      <Position>4</Position>
+      <Format />
+      <Alignment>0</Alignment>
+      <DataType>System.Decimal</DataType>
+      <Filter />
+      <IsEditable>false</IsEditable>
+      <IsFrozen>false</IsFrozen>
+      <IsLookUp>false</IsLookUp>
+      <IsPrimaryKey>false</IsPrimaryKey>
+    </ColumnDefinition>
+    <ColumnDefinition>
+      <HeaderName>Estimated Length</HeaderName>
+      <FieldName>ESTIMATE_LENGTH</FieldName>
+      <Description />
+      <ColumnWidth>111</ColumnWidth>
+      <Visible>true</Visible>
+      <Position>5</Position>
+      <Format />
+      <Alignment>0</Alignment>
+      <DataType>System.Decimal</DataType>
+      <Filter />
+      <IsEditable>false</IsEditable>
+      <IsFrozen>false</IsFrozen>
+      <IsLookUp>false</IsLookUp>
+      <IsPrimaryKey>false</IsPrimaryKey>
+    </ColumnDefinition>
+    <ColumnDefinition>
+      <HeaderName>Total Cable Count</HeaderName>
+      <FieldName>TOT_CBL_COUNT</FieldName>
+      <Description />
+      <ColumnWidth>114</ColumnWidth>
+      <Visible>true</Visible>
+      <Position>6</Position>
+      <Format />
+      <Alignment>0</Alignment>
+      <DataType>System.Decimal</DataType>
+      <Filter />
+      <IsEditable>false</IsEditable>
+      <IsFrozen>false</IsFrozen>
+      <IsLookUp>false</IsLookUp>
+      <IsPrimaryKey>false</IsPrimaryKey>
+    </ColumnDefinition>
+    <ColumnDefinition>
+      <HeaderName>Total Cable Length</HeaderName>
+      <FieldName>TOT_LENGTH</FieldName>
+      <Description />
+      <ColumnWidth>119</ColumnWidth>
+      <Visible>true</Visible>
+      <Position>7</Position>
+      <Format />
+      <Alignment>0</Alignment>
+      <DataType>System.Decimal</DataType>
+      <Filter />
+      <IsEditable>false</IsEditable>
+      <IsFrozen>false</IsFrozen>
+      <IsLookUp>false</IsLookUp>
+      <IsPrimaryKey>false</IsPrimaryKey>
+    </ColumnDefinition>
+  </Columns>
+  <Parameters />
+  <DatabaseObjectType>VIEW</DatabaseObjectType>
+  <AllowAddAndDelete>false</AllowAddAndDelete>
+  <UpdateDbProcedure />
+  <AddDbProcedure />
+  <DeleteDbProcedure />
+  <LookUpDbProcedure />
+</ReportDefinition>

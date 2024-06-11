@@ -178,13 +178,16 @@ namespace WPFCore.ElectIndex.TV
 
         #region Report
 
-        protected Task<List<INotifyPropertyChanged>> GetReports(TreeVM parent) =>
-            Task.FromResult(new List<INotifyPropertyChanged>
-            {
-                CreateNode("All Motors", NT.Report, parent, true),
-                CreateNode("All OEE", NT.Report, parent, true),
-                CreateNode("All Transformer", NT.Report, parent, true),
-            });
+        protected Task<List<INotifyPropertyChanged>> GetReports(TreeVM parent) 
+        {
+            var lst = new List<EquipItem>() 
+            { 
+                new() { ID = @"C:\devgit\Data\Reports\Cable_Quantity_Per_Cable_Code.xml", Name = "Cable Quantity Per Cable Code" },
+                new() { ID = @"C:\devgit\Data\Reports\Cable_Schedule_SPEL.xml", Name = "Cable Schedule - SPEL" },
+            };
+
+            return Task.FromResult(CreateEquipNode(lst.OrderBy(r => r.Name), NT.Report, parent));
+        }
 
         #endregion
 
@@ -257,6 +260,7 @@ namespace WPFCore.ElectIndex.TV
                     Name = eq.Name!,
                     NodeType = nodeType,
                     Parent = parent,
+                    DataItem = new() { NodeType = nodeType, Data = eq },
                     IsLeafNode = true,
                 })
                 .Cast<INotifyPropertyChanged>()
@@ -267,6 +271,7 @@ namespace WPFCore.ElectIndex.TV
                 Name = name, 
                 NodeType = nodeType, 
                 Parent = parent, 
+                DataItem = new() { NodeType = nodeType },
                 Children = isLeaf ? [] : new ObservableCollection<INotifyPropertyChanged> { CreateDummyNode() } 
             };
 

@@ -20,8 +20,6 @@ namespace WPFCore.ElectIndex.LB
 
         protected LBoxVM VM2 => (LBoxVM)this.VM!; 
 
-        #region Config Commands
-
         protected void RaiseViewDetailEvent()
         {
             if (!this.IsCommandCanExecute(TACommands.ViewDetailMsg))
@@ -33,15 +31,13 @@ namespace WPFCore.ElectIndex.LB
 
             if (lst.First() is TNodeData n)
             {
-                var d = new TNodeData
-                {
-                    NodeType = n.NodeType,
-                };
-                this.VM2.SendMessage(d);
+                this.VM2.RaiseExecuteViewDetailCmd();
+                this.VM2.SendMessage(n);
             }
         }
 
-        // command handler for Refresh
+        #region Config Commands
+
         virtual protected void OnViewDetail(object sender, RoutedEventArgs e)
         {
             this.RaiseViewDetailEvent();
@@ -76,6 +72,7 @@ namespace WPFCore.ElectIndex.LB
                         switch (d.NodeType)
                         {
                             case NT.Motor:
+                            case NT.Report:
                                 allow = true;
                                 break;
                         }

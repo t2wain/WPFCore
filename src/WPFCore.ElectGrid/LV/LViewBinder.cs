@@ -13,9 +13,11 @@ namespace WPFCore.ElectGrid.LV
         protected override void ListenPropertyChangedOnVM(object? sender, PropertyChangedEventArgs e)
         {
             base.ListenPropertyChangedOnVM(sender, e);
+
+            var vm2 = this.VM as LViewVM;
             switch (e.PropertyName)
             {
-                case "ListItemsView":
+                case nameof(vm2.ReportDef):
                     this.SetupGridView();
                     this.ListVM.IsEnabled = true;
                     break;

@@ -56,7 +56,7 @@ namespace WPFCore.Shared.UI.LV
                 };
             }
 
-            if (!isMultiColumn && this.View.SortDescriptions.Count > 1)
+            if (!isMultiColumn && this.View.SortDescriptions.Count >= 1)
             {
                 // switch to a single property sorting
                 this.View.SortDescriptions.Clear();

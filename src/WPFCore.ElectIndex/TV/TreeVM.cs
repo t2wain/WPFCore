@@ -11,7 +11,11 @@ namespace WPFCore.ElectIndex.TV
     // view model for a TreeView control
     public class TreeVM : TreeViewVM
     {
-        public const string SelectedItemChildrenRefreshed = "SelectedItemChildrenDataRefreshed";
+        // These are faux properties. The intention is to use
+        // the PropertyChanged notification to communicate an event.
+        public const string SelectedItemChildrenRefreshedEvent = "SelectedItemChildrenDataRefreshedEvent";
+        public const string ExecuteViewDetailCmdEvent = "ExecuteViewDetailCmdEvent";
+
         private readonly TVRepo _repo;
 
         public TreeVM(TVRepo repo) : base()
@@ -85,8 +89,8 @@ namespace WPFCore.ElectIndex.TV
                 case CM2.ViewDetailMsg:
                     allow = t switch
                     {
-                        NT.NoResult | NT.Dummy => true,
-                        _ => false
+                        NT.NoResult | NT.Dummy => false,
+                        _ => n.IsLeafNode
                     };
                     break;
             }
@@ -123,7 +127,12 @@ namespace WPFCore.ElectIndex.TV
 
         virtual public void RaiseSelectedItemChildrenDataRefreshed()
         {
-            this.OnPropertyChanged(SelectedItemChildrenRefreshed);
+            this.OnPropertyChanged(SelectedItemChildrenRefreshedEvent);
+        }
+
+        virtual public void RaiseExecuteViewDetailCmd()
+        {
+            this.OnPropertyChanged(ExecuteViewDetailCmdEvent);
         }
 
         public virtual void SendMessage(TNodeData data)

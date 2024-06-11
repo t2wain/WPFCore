@@ -12,6 +12,10 @@ namespace WPFCore.ElectIndex.LB
     /// </summary>
     public partial class LBoxVM : ListBoxVM
     {
+        // These are faux properties. The intention is to use
+        // the PropertyChanged notification to communicate an event.
+        public const string ExecuteViewDetailCmdEvent = "ExecuteViewDetailCmdEvent";
+
         public LBoxVM()
         {
             this.Init();
@@ -58,6 +62,11 @@ namespace WPFCore.ElectIndex.LB
             var lst = base.GetContextCommands();
             lst.Add(TACommands.ViewDetail);
             return lst;
+        }
+
+        virtual public void RaiseExecuteViewDetailCmd()
+        {
+            this.OnPropertyChanged(ExecuteViewDetailCmdEvent);
         }
 
         public void SendMessage(TNodeData data) { }

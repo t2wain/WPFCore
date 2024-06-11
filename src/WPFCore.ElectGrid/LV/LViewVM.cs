@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.ComponentModel;
-using System.Data;
+using WPFCore.Data.OleDb;
 using WPFCore.Data.Report;
 using WPFCore.Shared.UI;
 using WPFCore.Shared.UI.LV;
@@ -20,7 +19,19 @@ namespace WPFCore.ElectGrid.LV
 
         public LViewEnum ViewType { get; set; }
 
-        public ReportDefinition? ReportDef { get; set; }
+        [ObservableProperty]
+        private ReportDefinition? _reportDef;
+
+        public async Task ShowReport(string? reportId)
+        {
+            if (reportId != null)
+            {
+                this.ListData = null;
+                ReportDef = await ReportUtil.DeserializeReportDefinitionFromFile(reportId);
+                await this.RefreshData();
+            }
+
+        }
 
         protected override async Task PopulateData()
         {
@@ -29,7 +40,11 @@ namespace WPFCore.ElectGrid.LV
             {
                 case LViewEnum.ReportDef:
                     if (this.ReportDef != null)
-                        this.ListData = await ReportUtil.LoadReport(this._ds.DB, this.ReportDef);
+                    {
+                        var db = this._ds.NewDB();
+                        this.ListData = await ReportUtil.LoadReport(db, this.ReportDef);
+                        db.Dispose();
+                    }
                     break;
             }
             Utility.SetNormalCursor();

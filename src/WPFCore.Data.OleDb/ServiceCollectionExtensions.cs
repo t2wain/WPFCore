@@ -11,6 +11,7 @@ namespace WPFCore.Data.OleDb
         {
             service.AddTransient<IDatabase, DataDB>(p => new DataDB(connString));
             service.AddTransient<D.IEquipRepo, EquipRepo>();
+            service.AddTransient<IReportDS, ReportDS>();
             return service;
         }
     }

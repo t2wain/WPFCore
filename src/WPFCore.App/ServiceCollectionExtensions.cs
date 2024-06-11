@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WPFCore.Data.OleDb;
 using WPFCore.ElectIndex;
+using WPFCore.ElectGrid;
 
 namespace WPFCore.App
 {
@@ -22,8 +23,9 @@ namespace WPFCore.App
 
         public static IServiceCollection ConfigureServices(this IServiceCollection service, IConfiguration _config)
         {
-            service = service.AddOleDbData(_config.GetConnectionString("Default")!);
-            service = service.AddElectIndex();
+            service.AddOleDbData(_config.GetConnectionString("Default")!);
+            service.AddElectIndex();
+            service.AddElectGrid(); 
             return service;
         }
     }

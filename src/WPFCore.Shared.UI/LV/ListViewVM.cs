@@ -8,7 +8,7 @@ using WPFCore.Shared.UI.TV;
 
 namespace WPFCore.Shared.UI.LV
 {
-    public partial class ListViewVM : ObservableObject
+    public partial class ListViewVM : ObservableRecipient
     {
 
         protected void Init()
