@@ -38,18 +38,14 @@ namespace WPFCore.Test
         public async Task Should_get_report_column_def()
         {
             var r = await ReportUtil.DeserializeReportDefinitionFromFile(@"C:\devgit\Data\Reports\Cable_Quantity_Per_Cable_Code.xml");
-            using var db = _ctx.NewDB();
-            var cols = ReportUtil.GetUpdatedColumnDefinitions(db, r);
-            db.Dispose();
+            var cols = await _ctx.ReportDS.GetUpdatedColumnDefinitions(r);
             Assert.Equal(cols.Count, r.Columns!.Count);
         }
 
         protected async Task<DataView> LoadReport(string defxml)
         {
             var r = await ReportUtil.DeserializeReportDefinitionFromFile(defxml);
-            var db = _ctx.NewDB();
-            var dv = await ReportUtil.LoadReport(db, r);
-            db.Dispose();
+            var dv = await _ctx.ReportDS.GetReportData(r);
             return dv;
         }
     }

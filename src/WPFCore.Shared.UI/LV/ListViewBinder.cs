@@ -6,7 +6,7 @@ using WPFCore.Shared.UI.TV;
 
 namespace WPFCore.Shared.UI.LV
 {
-    public class ListViewBinder
+    public class ListViewBinder : IDisposable
     {
         public ListView ListViewControl { get; protected set; } = null!;
 
@@ -16,25 +16,47 @@ namespace WPFCore.Shared.UI.LV
         {
             this.ListViewControl = lv;
 
-            // Configure handlers for ListView events
-            lv.AddHandler(ListView.MouseDownEvent, new RoutedEventHandler(this.OnMouseDown));
-            lv.AddHandler(ListView.MouseRightButtonDownEvent, new RoutedEventHandler(this.OnItemMouseRightButtonDown));
-            lv.AddHandler(ListView.ContextMenuOpeningEvent, new RoutedEventHandler(this.OnContextMenuOpen));
-            lv.AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(this.OnColumnHeaderClick));
-
-            // Configure handlers for TreeViewItem events
-            lv.AddHandler(ListViewItem.UnselectedEvent, new RoutedEventHandler(this.OnItemUnSelected));
-            lv.AddHandler(ListViewItem.SelectedEvent, new RoutedEventHandler(this.OnItemSelected));
+            this.ConfigureEvent(lv, vm);
 
             this.ConfigCommands();
 
             this.VM = vm;
             lv.DataContext = vm;
-            vm.PropertyChanged += this.ListenPropertyChangedOnVM;
-
         }
 
         #region ListView control event handler
+
+        RoutedEventHandler _h1 = null!;
+        RoutedEventHandler _h2 = null!;
+        RoutedEventHandler _h3 = null!;
+        RoutedEventHandler _h4 = null!;
+        RoutedEventHandler _h5 = null!;
+        RoutedEventHandler _h6 = null!;
+
+        protected void ConfigureEvent(ListView lv, ListViewVM vm)
+        {
+            // Configure handlers for ListView events
+            _h1 = new RoutedEventHandler(this.OnMouseDown);
+            lv.AddHandler(ListView.MouseDownEvent, _h1);
+
+            _h2 = new RoutedEventHandler(this.OnItemMouseRightButtonDown);
+            lv.AddHandler(ListView.MouseRightButtonDownEvent, _h2);
+
+            _h3 = new RoutedEventHandler(this.OnContextMenuOpen);
+            lv.AddHandler(ListView.ContextMenuOpeningEvent, _h3);
+
+            _h4 = new RoutedEventHandler(new RoutedEventHandler(this.OnColumnHeaderClick));
+            lv.AddHandler(GridViewColumnHeader.ClickEvent, _h4);
+
+            // Configure handlers for TreeViewItem events
+            _h5 = new RoutedEventHandler(new RoutedEventHandler(this.OnItemUnSelected));
+            lv.AddHandler(ListViewItem.UnselectedEvent, _h5);
+
+            _h6 = new RoutedEventHandler(new RoutedEventHandler(this.OnItemSelected));
+            lv.AddHandler(ListViewItem.SelectedEvent, _h6);
+
+            vm.PropertyChanged += this.ListenPropertyChangedOnVM;
+        }
 
         virtual protected void OnItemUnSelected(object sender, RoutedEventArgs e) { }
 
@@ -122,5 +144,21 @@ namespace WPFCore.Shared.UI.LV
 
         // changes from the view model
         virtual protected void ListenPropertyChangedOnVM(object? sender, PropertyChangedEventArgs e) { }
+
+        public virtual void Dispose()
+        {
+            var lv = this.ListViewControl;
+            lv.RemoveHandler(ListView.MouseDownEvent, _h1);
+            lv.RemoveHandler(ListView.MouseRightButtonDownEvent, _h2);
+            lv.RemoveHandler(ListView.ContextMenuOpeningEvent, _h3);
+            lv.RemoveHandler(GridViewColumnHeader.ClickEvent, _h4);
+            lv.RemoveHandler(ListViewItem.UnselectedEvent, _h5);
+            lv.RemoveHandler(ListViewItem.SelectedEvent, _h6);
+
+            var vm = this.VM;
+            vm.PropertyChanged -= this.ListenPropertyChangedOnVM;
+
+            this.ListViewControl = null!;
+        }
     }
 }

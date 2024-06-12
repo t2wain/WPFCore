@@ -7,6 +7,30 @@ namespace WPFCore.ElectGrid.LV
 {
     public class LViewBinder : ListViewBinder
     {
+
+
+        public override void InitListView(ListView lv, ListViewVM vm)
+        {
+            base.InitListView(lv, vm);
+
+            lv.GotFocus += this.OnFocus;
+            lv.LostFocus += this.OnLostFocus;
+
+        }
+
+        protected LViewVM ListVM => (this.VM as LViewVM)!;
+
+        private void OnFocus(object sender, RoutedEventArgs e)
+        {
+            this.ListVM.IsFocus = true;
+        }
+
+        private void OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            this.ListVM.IsFocus = false;
+        }
+
+
         /// <summary>
         /// When report data changed, recreate the GridView
         /// </summary>
@@ -23,8 +47,6 @@ namespace WPFCore.ElectGrid.LV
                     break;
             }
         }
-
-        protected LViewVM ListVM => (this.VM as LViewVM)!;
 
         #region Setup GridView
 

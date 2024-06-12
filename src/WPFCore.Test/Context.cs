@@ -1,19 +1,27 @@
-﻿using ADOLib;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using WPFCore.Data;
 using WPFCore.Data.OleDb;
-using WPFCore.Data.OleDb.TV;
+using WPFCore.Data.TV;
 
 namespace WPFCore.Test
 {
     public class Context : IDisposable
     {
+        IHost _host = null!;
+
         public Context()
         {
-            Repo = new EquipRepo(NewDB());
+            var host = new HostApplicationBuilder();
+            host.Services.AddOleDbData("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=C:\\devgit\\Data\\SPEL.accdb");
+            _host = host.Build();
         }
 
-        public EquipRepo Repo { get; init; }
+        public IEquipRepo Repo => 
+            _host.Services.GetRequiredService<IEquipRepo>();
 
-        public IDatabase NewDB() => new DataDB("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=C:\\devgit\\Data\\SPEL.accdb");
+        public IReportDS ReportDS => 
+            _host.Services.GetRequiredService<IReportDS>();
 
         public void Dispose()
         {

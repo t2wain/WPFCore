@@ -52,6 +52,7 @@ namespace WPFCore.ElectIndex.TV
             Utility.SetWaitCursor();
             this.Children.Clear();
             this.Children.Add(ParentVM.CreateLoadingNode());
+            this.RaiseSelectedItemChildrenDataRefreshed();
             var lstNodes = await this.ParentVM.GetChildren(this);
 
             // back to UI thread to populate child nodes
@@ -60,12 +61,17 @@ namespace WPFCore.ElectIndex.TV
             this.AddNoResultFound(); // determine if there are children returned
             this.IsExpanded = true;
 
+            this.RaiseSelectedItemChildrenDataRefreshed();
+            Utility.SetNormalCursor();
+        }
+
+        protected virtual void RaiseSelectedItemChildrenDataRefreshed()
+        {
             if (this.Parent.SelectedItem is NodeVM sn && sn.ID == this.ID)
             {
                 // raise event to indicate data is refreshed
-                this.ParentVM.RaiseSelectedItemChildrenDataRefreshed();
+                this.ParentVM.RaisePropertyChangeEvent(TreeVM.SelectedItemChildrenRefreshedEvent);;
             }
-            Utility.SetNormalCursor();
         }
 
         protected void AddNoResultFound()

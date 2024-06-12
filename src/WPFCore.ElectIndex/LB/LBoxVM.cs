@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Windows.Input;
 using WPFCore.ElectIndex.TV;
 using WPFCore.Shared.UI.LB;
-using NT = WPFCore.ElectIndex.TV.TIndexNodeEnum;
 
 namespace WPFCore.ElectIndex.LB
 {
@@ -14,7 +13,7 @@ namespace WPFCore.ElectIndex.LB
     {
         // These are faux properties. The intention is to use
         // the PropertyChanged notification to communicate an event.
-        public const string ExecuteViewDetailCmdEvent = "ExecuteViewDetailCmdEvent";
+        public const string ExecuteViewDetailCmdEvent = "WPFCore.ElectIndex.LB.LBoxVM.ExecuteViewDetailCmdEvent";
 
         public LBoxVM()
         {
@@ -29,30 +28,19 @@ namespace WPFCore.ElectIndex.LB
             this.ListItems.Clear();
             if (this.CurrentIndexNode is NodeVM n && n.Children.Count > 0)
             {
-                switch (n.NodeType)
-                {
-                    case NT.Motors:
-                    case NT.OtherElectricalEquipment:
-                    case NT.Generators:
-                    case NT.Transformers:
-                    case NT.VariableFrequencyDrives:
-                    case NT.PowerDistributionBoards:
-                    case NT.Reports:
-                        var c1 = n.Children.First() as NodeVM;
-                        if (c1 == null
-                            || c1.NodeType == NT.NoResult
-                            || c1.NodeType == NT.Loading)
-                            return;
-                        var q = from n3 in n.Children.Cast<NodeVM>()
-                                select new LBoxItemVM
-                                {
-                                    Name = n3.Name,
-                                    Data = n3.DataItem,
-                                    Parent = this
-                                };
-                        this.AddItems(q.ToList());
-                        break;
-                }
+                var children = n.Children
+                    .Where(n => n is NodeVM)
+                    .Cast<NodeVM>()
+                    .Where(n => n.DataItem?.Data != null)
+                    .Select(n => new LBoxItemVM
+                    {
+                        Name = n.Name,
+                        Data = n.DataItem,
+                        Parent = this
+                    })
+                    .ToList();
+
+                this.AddItems(children);
             }
             this.ItemCount = this.ListItems.Count;
         }
@@ -62,11 +50,6 @@ namespace WPFCore.ElectIndex.LB
             var lst = base.GetContextCommands();
             lst.Add(TACommands.ViewDetail);
             return lst;
-        }
-
-        virtual public void RaiseExecuteViewDetailCmd()
-        {
-            this.OnPropertyChanged(ExecuteViewDetailCmdEvent);
         }
 
         public void SendMessage(TNodeData data) { }

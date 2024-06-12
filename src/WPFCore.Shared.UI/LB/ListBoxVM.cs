@@ -70,6 +70,11 @@ namespace WPFCore.Shared.UI.LB
             }
         }
 
+        virtual public void RaisePropertyChangeEvent(string eventId)
+        {
+            this.OnPropertyChanged(eventId);
+        }
+
         protected void AddItems(IEnumerable<INotifyPropertyChanged> items)
         {
             items.Aggregate(this.ListItems, (agg, i) => { agg.Add(i); return agg; });

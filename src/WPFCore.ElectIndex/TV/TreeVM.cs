@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Windows.Input;
 using WPFCore.Shared.UI.TV;
-using NT = WPFCore.ElectIndex.TV.TIndexNodeEnum;
 using CM = WPFCore.Shared.UI.TV.TNCommands;
 using CM2 = WPFCore.ElectIndex.TV.TACommands;
+using NT = WPFCore.ElectIndex.TV.TIndexNodeEnum;
 
 namespace WPFCore.ElectIndex.TV
 {
@@ -13,8 +13,8 @@ namespace WPFCore.ElectIndex.TV
     {
         // These are faux properties. The intention is to use
         // the PropertyChanged notification to communicate an event.
-        public const string SelectedItemChildrenRefreshedEvent = "SelectedItemChildrenDataRefreshedEvent";
-        public const string ExecuteViewDetailCmdEvent = "ExecuteViewDetailCmdEvent";
+        public const string SelectedItemChildrenRefreshedEvent = "WPFCore.ElectIndex.TV.TreeVM.SelectedItemChildrenDataRefreshedEvent";
+        public const string ExecuteViewDetailCmdEvent = "WPFCore.ElectIndex.TV.TreeVM.ExecuteViewDetailCmdEvent";
 
         private readonly TVRepo _repo;
 
@@ -124,16 +124,6 @@ namespace WPFCore.ElectIndex.TV
         #endregion
 
         #region Raise events
-
-        virtual public void RaiseSelectedItemChildrenDataRefreshed()
-        {
-            this.OnPropertyChanged(SelectedItemChildrenRefreshedEvent);
-        }
-
-        virtual public void RaiseExecuteViewDetailCmd()
-        {
-            this.OnPropertyChanged(ExecuteViewDetailCmdEvent);
-        }
 
         public virtual void SendMessage(TNodeData data)
         {

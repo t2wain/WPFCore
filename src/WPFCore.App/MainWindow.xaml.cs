@@ -14,6 +14,7 @@ namespace WPFCore.App
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Event
 
         public MainWindow()
         {
@@ -21,7 +22,6 @@ namespace WPFCore.App
             this.Loaded += OnLoad;
         }
 
-        private StatusBarVM _svm = null!;
         private void OnLoad(object sender, RoutedEventArgs e)
         {
             // Status bar
@@ -32,7 +32,19 @@ namespace WPFCore.App
 
             InitElectIndex();
             InitElectGrid();
+
         }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _tvm.PropertyChanged -= OnElectIndexPropertyChanged;
+            _lvm.PropertyChanged -= OnElectGridPropertyChanged;
+            base.OnClosed(e);
+        }
+
+        #endregion
+
+        #region ElectIndex
 
         private UTreeLBoxVM _tvm = null!;
         void InitElectIndex()
@@ -45,22 +57,14 @@ namespace WPFCore.App
             }
         }
 
-        LViewVM _lvm = null!;
-        void InitElectGrid()
-        {
-            if (Application.Current is App app)
-            {
-                _lvm = app.Provider.GetRequiredService<LViewVM>();
-                this._lvw.Init(_lvm);
-            }
-        }
-
         private void OnElectIndexPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case nameof(_tvm.ItemCount):
-                    _svm.LeftMessage = _tvm.ItemCount > 0 ? $"Item count: {_tvm.ItemCount}" : "";
+                case nameof(_tvm.IsFocus):
+                    if (_tvm.IsFocus)
+                        UpdateCountMsg(this._tvm.ItemCount);
                     break;
                 case UTreeLBoxVM.ExecuteViewDetailCmdTVEvent:
                     if (_tvm.TreeVM.SelectedItem is NodeVM t)
@@ -73,6 +77,36 @@ namespace WPFCore.App
             }
         }
 
+        #endregion
+
+        #region ElectGrid
+
+        LViewVM _lvm = null!;
+        void InitElectGrid()
+        {
+            if (Application.Current is App app)
+            {
+                _lvm = app.Provider.GetRequiredService<LViewVM>();
+                _lvm.PropertyChanged += OnElectGridPropertyChanged;
+                this._lvw.Init(_lvm);
+            }
+        }
+
+        private void OnElectGridPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(_lvm.IsFocus):
+                    if (_lvm.IsFocus)
+                        UpdateCountMsg(this._lvm.ListData?.Count ?? 0);
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region Action
+
         private void ShowDetail(TNodeData? item)
         {
             switch (item?.NodeType)
@@ -84,11 +118,13 @@ namespace WPFCore.App
             }
         }
 
-        protected override void OnClosed(EventArgs e)
+
+        private StatusBarVM _svm = null!;
+        private void UpdateCountMsg(int count)
         {
-            _tvm.PropertyChanged -= OnElectIndexPropertyChanged;
-            this._tvw.Dispose();
-            base.OnClosed(e);
+            _svm.LeftMessage = count > 0 ? String.Format("Items: {0:#,###}", count) : "";
         }
+
+        #endregion
     }
 }

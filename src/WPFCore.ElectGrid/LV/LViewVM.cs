@@ -22,6 +22,9 @@ namespace WPFCore.ElectGrid.LV
         [ObservableProperty]
         private ReportDefinition? _reportDef;
 
+        [ObservableProperty]
+        private bool _isFocus;
+
         public async Task ShowReport(string? reportId)
         {
             if (reportId != null)

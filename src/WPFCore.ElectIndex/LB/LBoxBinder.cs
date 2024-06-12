@@ -31,7 +31,7 @@ namespace WPFCore.ElectIndex.LB
 
             if (lst.First() is TNodeData n)
             {
-                this.VM2.RaiseExecuteViewDetailCmd();
+                this.VM2.RaisePropertyChangeEvent(LBoxVM.ExecuteViewDetailCmdEvent);
                 this.VM2.SendMessage(n);
             }
         }

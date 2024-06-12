@@ -1,5 +1,3 @@
-using ADOLib;
-
 namespace WPFCore.Test
 {
     public class DBTest : IClassFixture<Context>

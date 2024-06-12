@@ -37,5 +37,16 @@ namespace WPFCore.Data.OleDb
             });
         }
 
+        public Task<List<ColumnDefinition>> GetUpdatedColumnDefinitions(ReportDefinition def)
+        {
+            var db = _dbfact.NewDB();
+            return Task.Factory.StartNew(() => ReportUtil.GetUpdatedColumnDefinitions(db, def))
+                .ContinueWith(t => 
+                { 
+                    db.Dispose();
+                    return t.Result;
+                });
+        }
+
     }
 }

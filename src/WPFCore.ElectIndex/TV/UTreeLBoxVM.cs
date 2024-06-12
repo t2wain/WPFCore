@@ -11,11 +11,14 @@ namespace WPFCore.ElectIndex.TV
     {
         // These are faux properties. The intention is to use
         // the PropertyChanged notification to communicate an event.
-        public const string ExecuteViewDetailCmdTVEvent = "ExecuteViewDetailCmdTVEvent";
-        public const string ExecuteViewDetailCmdLBEvent = "ExecuteViewDetailCmdLBEvent";
+        public const string ExecuteViewDetailCmdTVEvent = "WPFCore.ElectIndex.TV.UTreeLBoxVM.ExecuteViewDetailCmdTVEvent";
+        public const string ExecuteViewDetailCmdLBEvent = "WPFCore.ElectIndex.TV.UTreeLBoxVM.ExecuteViewDetailCmdLBEvent";
 
         [ObservableProperty]
         private int _itemCount = 0;
+
+        [ObservableProperty]
+        private bool _isFocus;
 
         public TreeVM TreeVM { get; protected set; }
         public LBoxVM LBoxVM { get; protected set; }
@@ -36,7 +39,7 @@ namespace WPFCore.ElectIndex.TV
                     this.ItemCount = this.LBoxVM.ItemCount;
                     break;
                 case LBoxVM.ExecuteViewDetailCmdEvent:
-                    this.OnPropertyChanged(UTreeLBoxVM.ExecuteViewDetailCmdLBEvent);
+                    this.RaisePropertyChangeEvent(UTreeLBoxVM.ExecuteViewDetailCmdLBEvent);
                     break;
             }
         }
@@ -57,9 +60,14 @@ namespace WPFCore.ElectIndex.TV
                     }
                     break;
                 case TreeVM.ExecuteViewDetailCmdEvent:
-                    this.OnPropertyChanged(UTreeLBoxVM.ExecuteViewDetailCmdTVEvent);
+                    this.RaisePropertyChangeEvent(UTreeLBoxVM.ExecuteViewDetailCmdTVEvent);
                     break;
             }
+        }
+
+        virtual public void RaisePropertyChangeEvent(string eventId)
+        {
+            this.OnPropertyChanged(eventId);
         }
 
     }

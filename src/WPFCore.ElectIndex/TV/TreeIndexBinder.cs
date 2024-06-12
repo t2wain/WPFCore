@@ -18,13 +18,6 @@ namespace WPFCore.ElectIndex.TV
             {
                 if (n.IsLeafNode)
                     this.RaiseViewDetailEvent();
-
-                //switch (n.NodeType)
-                //{
-                //    case NT.NoResult:
-                //        this.RaiseViewDetailEvent();
-                //        break;
-                //}
             }
 
         }
@@ -36,7 +29,7 @@ namespace WPFCore.ElectIndex.TV
                 && vm.IsCommandCanExecute(TACommands.ViewDetailMsg, n)) {
 
                 vm.SendMessage(n.DataItem!);
-                vm.RaiseExecuteViewDetailCmd();
+                vm.RaisePropertyChangeEvent(TreeVM.ExecuteViewDetailCmdEvent);
             }
 
         }

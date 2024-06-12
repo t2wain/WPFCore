@@ -47,6 +47,11 @@ namespace WPFCore.Shared.UI.TV
             }
         }
 
+        virtual public void RaisePropertyChangeEvent(string eventId)
+        {
+            this.OnPropertyChanged(eventId);
+        }
+
         #endregion
 
         #region Command Action
