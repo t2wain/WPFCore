@@ -11,23 +11,26 @@ namespace WPFCore.Shared.UI.TV
     /// </summary>
     public class TreeViewBinder : IDisposable
     {
-        private TreeView? _tvw;
-        public TreeView? TreeViewControl
-        {
-            set
-            {
-                this._tvw = value;
-                if (this._tvw != null && !DesignerProperties.GetIsInDesignMode(this._tvw))
-                    this.InitTreeView(this._tvw);
-            }
-            protected get
-            {
-                return this._tvw;
-            }
-        }
+        public TreeView TreeViewControl { get; protected set; } = null!;
 
         // populate from UI DataContext
-        protected TreeViewVM? VM { get; set; }
+        protected TreeViewVM VM { get; set; } = null!;
+
+        virtual public void InitTreeView(TreeView tv, TreeViewVM vm)
+        {
+            this.TreeViewControl = tv;
+            this.ConfigureEventHandler(tv);
+            
+            // setup command bindings
+            // to listen to routed command
+            this.ConfigCommands(tv);
+
+            this.TreeViewControl.DataContext = vm;
+            VM = vm;
+
+        }
+
+        #region TreeView control event handler
 
         RoutedEventHandler _h1 = null!;
         RoutedEventHandler _h2 = null!;
@@ -37,7 +40,7 @@ namespace WPFCore.Shared.UI.TV
         RoutedEventHandler _h6 = null!;
         RoutedEventHandler _h7 = null!;
 
-        virtual protected void InitTreeView(TreeView tv)
+        protected void ConfigureEventHandler(TreeView tv)
         {
             // Configure handlers for TreeView events
             tv.SelectedItemChanged += OnSelectedItemChanged;
@@ -64,18 +67,8 @@ namespace WPFCore.Shared.UI.TV
 
             _h7 = new RoutedEventHandler(this.OnDoubleClick);
             tv.AddHandler(Control.MouseDoubleClickEvent, _h7);
-            
-            // setup command bindings
-            // to listen to routed command
-            this.ConfigCommands(tv);
-            
-            if (tv.DataContext is TreeViewVM vm)
-            {
-                VM = vm;
-            }
-        }
 
-        #region TreeView control event handler
+        }
 
         virtual protected void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e) { }
 
@@ -190,9 +183,9 @@ namespace WPFCore.Shared.UI.TV
 
         public void Dispose()
         {
-            if (this._tvw != null)
+            var tv = this.TreeViewControl;
+            if (tv != null)
             {
-                var tv = this._tvw;
                 tv.SelectedItemChanged -= OnSelectedItemChanged;
                 tv.MouseDown -= this.OnMouseDown;
 
@@ -206,7 +199,7 @@ namespace WPFCore.Shared.UI.TV
                 tv.RemoveHandler(Control.MouseDoubleClickEvent, _h7);
 
                 tv.CommandBindings.Clear();
-                this._tvw = null;
+                this.TreeViewControl = null;
             }
 
         }

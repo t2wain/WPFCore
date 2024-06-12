@@ -1,16 +1,15 @@
-﻿using ADOLib;
-using Microsoft.Extensions.DependencyInjection;
-using System.Data;
+﻿using System.Data;
+using WPFCore.Data.Report;
 
 namespace WPFCore.Data.OleDb
 {
-    public class ReportDS : IReportDS
+    internal class ReportDS : IReportDS
     {
-        private readonly IServiceProvider _provider;
+        private readonly IDBFactory _dbfact;
 
-        public ReportDS(IServiceProvider provider)
+        public ReportDS(IDBFactory dbfact)
         {
-            this._provider = provider;
+            this._dbfact = dbfact;
         }
 
         public Task<DataView> GetMotors()
@@ -28,8 +27,15 @@ namespace WPFCore.Data.OleDb
             throw new NotImplementedException();
         }
 
-        public IDatabase NewDB() => 
-            _provider.GetRequiredService<IDatabase>();
+        public Task<DataView> GetReportData(ReportDefinition def)
+        {
+            var db = _dbfact.NewDB();
+            return ReportUtil.LoadReport(db, def).ContinueWith(t => 
+            {
+                db.Dispose();
+                return t.Result;
+            });
+        }
 
     }
 }

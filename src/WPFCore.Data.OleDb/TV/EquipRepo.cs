@@ -1,42 +1,24 @@
-﻿using ADOLib;
-using System.Data;
-using WPFCore.Data.TV;
+﻿using System.Data;
 
 namespace WPFCore.Data.OleDb.TV
 {
-    public class EquipRepo : IEquipRepo
+    internal class EquipRepo : WPFCore.Data.TV.EquipRepo
     {
-        private readonly IDatabase _db;
+        private readonly IDBFactory _dbfact;
 
-        public EquipRepo(IDatabase db)
+        public EquipRepo(IDBFactory dbfact)
         {
-            this._db = db;
+            this._dbfact = dbfact;
         }
 
-        public Task<IEnumerable<EquipItem>> GetMotor() =>
-            GetEquipment(35);
-
-        public Task<IEnumerable<EquipItem>> GetOEE() =>
-            GetEquipment(45);
-
-        public Task<IEnumerable<EquipItem>> GetGenerators() =>
-            GetEquipment(28);
-
-        public Task<IEnumerable<EquipItem>> GetTransformers() =>
-            GetEquipment(11);
-
-        public Task<IEnumerable<EquipItem>> GetVFDs() =>
-            GetEquipment(12);
-
-        public Task<IEnumerable<EquipItem>> GetPDBs() =>
-            GetEquipment(34);
-
-        public Task<IEnumerable<EquipItem>> GetEquipment(int equipSubClass)
+        public override Task<IEnumerable<EquipItem>> GetEquipment(int equipSubClass)
         {
             string sql = $"select id, tag, equipclass, equipsubclass from vw_plantitem where equipsubclass = {equipSubClass} order by tag";
-            return _db.ExecuteTableAsync(sql, "t1")
+            var db = _dbfact.NewDB();
+            return db.ExecuteTableAsync(sql, "t1")
                 .ContinueWith(t =>
                 {
+                    db.Dispose();
                     var dt = t.Result;
                     var lst = dt.Rows.Cast<DataRow>().Select(r => new EquipItem()
                     {
@@ -47,14 +29,6 @@ namespace WPFCore.Data.OleDb.TV
                     }).ToList().AsEnumerable();
                     return lst;
                 });
-        }
-
-        public void Dispose()
-        {
-            if (_db != null)
-            {
-                _db.Dispose();
-            }
         }
     }
 }

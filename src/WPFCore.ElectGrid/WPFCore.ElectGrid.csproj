@@ -17,10 +17,4 @@
     <ProjectReference Include="..\WPFCore.Shared.UI\WPFCore.Shared.UI.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="ADOLib">
-      <HintPath>..\Libs\ADOLib\ADOLib.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

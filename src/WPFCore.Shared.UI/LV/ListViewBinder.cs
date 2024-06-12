@@ -8,25 +8,14 @@ namespace WPFCore.Shared.UI.LV
 {
     public class ListViewBinder
     {
-        private ListView? _lvw;
-        public ListView? ListViewControl
-        {
-            set
-            {
-                this._lvw = value;
-                if (this._lvw != null && !DesignerProperties.GetIsInDesignMode(this._lvw))
-                    this.InitListView(_lvw);
-            }
-            protected get
-            {
-                return this._lvw;
-            }
-        }
+        public ListView ListViewControl { get; protected set; } = null!;
 
-        protected ListViewVM? VM { get; set; }
+        public ListViewVM VM { get; protected set; } = null!;
 
-        virtual protected void InitListView(ListView lv)
+        virtual public void InitListView(ListView lv, ListViewVM vm)
         {
+            this.ListViewControl = lv;
+
             // Configure handlers for ListView events
             lv.AddHandler(ListView.MouseDownEvent, new RoutedEventHandler(this.OnMouseDown));
             lv.AddHandler(ListView.MouseRightButtonDownEvent, new RoutedEventHandler(this.OnItemMouseRightButtonDown));
@@ -39,11 +28,10 @@ namespace WPFCore.Shared.UI.LV
 
             this.ConfigCommands();
 
-            if (lv.DataContext is ListViewVM vm)
-            {
-                this.VM = vm;
-                this.VM.PropertyChanged += this.ListenPropertyChangedOnVM;
-            }
+            this.VM = vm;
+            lv.DataContext = vm;
+            vm.PropertyChanged += this.ListenPropertyChangedOnVM;
+
         }
 
         #region ListView control event handler
@@ -87,22 +75,22 @@ namespace WPFCore.Shared.UI.LV
 
         #region Config Commands
 
+        // Configure the handler for the commands
+        virtual protected void ConfigCommands()
+        {
+            foreach (var cb in this.GetCommandBindings())
+                this.ListViewControl.CommandBindings.Add(cb);
+        }
+
         // command handler for Refresh
         virtual protected void OnRefresh(object sender, RoutedEventArgs e)
         {
-            this.VM?.RefreshData();
+            this.VM.RefreshData();
         }
 
         virtual protected void OnRefreshCanExecuted(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.IsCommandCanExecute(TNCommands.RefreshMsg);
-        }
-
-        // Configure the handler for the commands
-        virtual protected void ConfigCommands()
-        {
-            foreach (var cb in this.GetCommandBindings())
-                this.ListViewControl?.CommandBindings.Add(cb);
         }
 
         // Configure the handler for the commands
@@ -119,8 +107,8 @@ namespace WPFCore.Shared.UI.LV
         virtual protected bool IsCommandCanExecute(string cmdName)
         {
             var allowed = false;
-            var ti = this.ListViewControl?.SelectedItem as INotifyPropertyChanged;
-            if (ti != null && this.VM != null)
+            var ti = this.ListViewControl.SelectedItem as INotifyPropertyChanged;
+            if (ti != null)
                 allowed = this.VM.IsCommandCanExecute(cmdName, ti);
             return allowed;
         }
@@ -129,7 +117,7 @@ namespace WPFCore.Shared.UI.LV
 
         virtual protected void SortColumn(string propertyName, bool isMultiColumn = false) 
         {
-            this.VM?.SortColumn(propertyName, isMultiColumn);
+            this.VM.SortColumn(propertyName, isMultiColumn);
         }
 
         // changes from the view model

@@ -23,17 +23,13 @@ namespace WPFCore.ElectIndex.TV
         /// </summary>
         public void Init(UTreeLBoxVM vm)
         {
-            this.DataContext = vm;
-            this._tvwIndex.DataContext = vm.TreeVM;
-            this._lbxData.DataContext = vm.LBoxVM;
-
             // configure event handlers and command bindings
             this._tvwBind = new TreeIndexBinder();
-            this._tvwBind.TreeViewControl = this._tvwIndex;
+            this._tvwBind.InitTreeView(this._tvwIndex, vm.TreeVM);
 
             // configure event handlers and command bindings
             this._lbxBind = new LBoxBinder();
-            this._lbxBind.ListBoxControl = this._lbxData;
+            this._lbxBind.InitListView(this._lbxData, vm.LBoxVM);
         }
 
         public void Dispose()

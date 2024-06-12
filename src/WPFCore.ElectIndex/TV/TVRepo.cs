@@ -13,11 +13,11 @@ namespace WPFCore.ElectIndex.TV
     /// </summary>
     public class TVRepo
     {
-        private readonly IServiceProvider _provider;
+        private readonly IEquipRepo _repo;
 
-        public TVRepo(IServiceProvider provider)
+        public TVRepo(IEquipRepo repo)
         {
-            this._provider = provider;
+            this._repo = repo;
         }
 
         #region Nodes
@@ -193,61 +193,29 @@ namespace WPFCore.ElectIndex.TV
 
         #region Data access
 
-        protected Task<List<INotifyPropertyChanged>> GetMotors(TreeVM parent)
-        {
-            var repo = GetRepo();
-            return repo.GetMotor().ContinueWith(t => {
-                repo.Dispose();
-                return CreateEquipNode(t.Result, NT.Motor, parent);
-            });
-        }
+        protected Task<List<INotifyPropertyChanged>> GetMotors(TreeVM parent) =>
+            _repo.GetMotor()
+                .ContinueWith(t => CreateEquipNode(t.Result, NT.Motor, parent));
 
-        protected Task<List<INotifyPropertyChanged>> GetOEE(TreeVM parent)
-        {
-            var repo = GetRepo();
-            return repo.GetOEE().ContinueWith(t => {
-                repo.Dispose();
-                return CreateEquipNode(t.Result, NT.OEE, parent);
-            });
-        }
+        protected Task<List<INotifyPropertyChanged>> GetOEE(TreeVM parent) =>
+            _repo.GetOEE()
+                .ContinueWith(t => CreateEquipNode(t.Result, NT.OEE, parent));
 
-        protected Task<List<INotifyPropertyChanged>> GetGenerators(TreeVM parent)
-        {
-            var repo = GetRepo();
-            return repo.GetGenerators().ContinueWith(t => {
-                repo.Dispose();
-                return CreateEquipNode(t.Result, NT.Generator, parent);
-            });
-        }
+        protected Task<List<INotifyPropertyChanged>> GetGenerators(TreeVM parent) =>
+            _repo.GetGenerators()
+                .ContinueWith(t => CreateEquipNode(t.Result, NT.Generator, parent));
 
-        protected Task<List<INotifyPropertyChanged>> GetTransformers(TreeVM parent)
-        {
-            var repo = GetRepo();
-            return repo.GetTransformers().ContinueWith(t => {
-                repo.Dispose();
-                return CreateEquipNode(t.Result, NT.Transformer, parent);
-            });
-        }
+        protected Task<List<INotifyPropertyChanged>> GetTransformers(TreeVM parent) =>
+            _repo.GetTransformers()
+                .ContinueWith(t => CreateEquipNode(t.Result, NT.Transformer, parent));
 
-        protected Task<List<INotifyPropertyChanged>> GetVFDs(TreeVM parent)
-        {
-            var repo = GetRepo();
-            return repo.GetVFDs().ContinueWith(t => {
-                repo.Dispose();
-                return CreateEquipNode(t.Result, NT.VFD, parent);
-            });
-        }
+        protected Task<List<INotifyPropertyChanged>> GetVFDs(TreeVM parent) =>
+            _repo.GetVFDs()
+                .ContinueWith(t => CreateEquipNode(t.Result, NT.VFD, parent));
 
-        protected Task<List<INotifyPropertyChanged>> GetPDBs(TreeVM parent)
-        {
-            var repo = GetRepo();
-            return repo.GetPDBs().ContinueWith(t => {
-                repo.Dispose();
-                return CreateEquipNode(t.Result, NT.PDB, parent);
-            });
-        }
-
-        protected IEquipRepo GetRepo() => _provider.GetRequiredService<IEquipRepo>();
+        protected Task<List<INotifyPropertyChanged>> GetPDBs(TreeVM parent) =>
+            _repo.GetPDBs()
+                .ContinueWith(t => CreateEquipNode(t.Result, NT.PDB, parent));
 
         #endregion
 

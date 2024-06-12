@@ -1,11 +1,12 @@
-﻿using ADOLib;
-using System.Data;
+﻿using System.Data;
+using System.Threading.Tasks;
+using WPFCore.Data.Report;
 
-namespace WPFCore.Data.OleDb
+namespace WPFCore.Data
 {
     public interface IReportDS
     {
-        IDatabase NewDB();
+        Task<DataView> GetReportData(ReportDefinition def);
         Task<DataView> GetMotors();
         Task<DataView> GetOtherElectricalEquipment();
         Task<DataView> GetTransformers();

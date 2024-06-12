@@ -1,5 +1,4 @@
-﻿using ADOLib;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using WPFCore.Data.OleDb.TV;
 using D = WPFCore.Data.TV;
 
@@ -9,9 +8,9 @@ namespace WPFCore.Data.OleDb
     {
         public static IServiceCollection AddOleDbData(this IServiceCollection service, string connString)
         {
-            service.AddTransient<IDatabase, DataDB>(p => new DataDB(connString));
-            service.AddTransient<D.IEquipRepo, EquipRepo>();
-            service.AddTransient<IReportDS, ReportDS>();
+            service.AddScoped<IDBFactory, DBFactory>(p => new DBFactory(connString));
+            service.AddScoped<D.IEquipRepo, EquipRepo>();
+            service.AddScoped<IReportDS, ReportDS>();
             return service;
         }
     }

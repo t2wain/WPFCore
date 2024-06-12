@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using WPFCore.Data.OleDb;
+using WPFCore.Data;
 using WPFCore.Data.Report;
 using WPFCore.Shared.UI;
 using WPFCore.Shared.UI.LV;
@@ -28,7 +28,7 @@ namespace WPFCore.ElectGrid.LV
             {
                 this.ListData = null;
                 ReportDef = await ReportUtil.DeserializeReportDefinitionFromFile(reportId);
-                await this.RefreshData();
+                await this.PopulateData();
             }
 
         }
@@ -41,9 +41,7 @@ namespace WPFCore.ElectGrid.LV
                 case LViewEnum.ReportDef:
                     if (this.ReportDef != null)
                     {
-                        var db = this._ds.NewDB();
-                        this.ListData = await ReportUtil.LoadReport(db, this.ReportDef);
-                        db.Dispose();
+                        this.ListData = await this._ds.GetReportData(this.ReportDef);
                     }
                     break;
             }

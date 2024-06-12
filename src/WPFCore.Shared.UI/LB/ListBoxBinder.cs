@@ -12,37 +12,28 @@ namespace WPFCore.Shared.UI.LB
     /// </summary>
     public class ListBoxBinder : IDisposable
     {
-        private ListBox? _lvw;
-        public ListBox? ListBoxControl
-        {
-            get { return this._lvw; }
-            set
-            {
-                this._lvw = value;
-                if (this._lvw != null && !DesignerProperties.GetIsInDesignMode(this._lvw))
-                    this.InitListView(_lvw);
-            }
-        }
+        public ListBox ListBoxControl { get; protected set; } = null!;
 
-        protected ListBoxVM? VM { get; set; }
+        protected ListBoxVM VM { get; set; } = null!;
 
         RoutedEventHandler _h1 = null!;
 
-        virtual protected void InitListView(ListBox lv)
+        virtual public void InitListView(ListBox lv, ListBoxVM vm)
         {
+            this.ListBoxControl = lv;
+
             _h1 = new RoutedEventHandler(this.OnDoubleClick);
             lv.AddHandler(Control.MouseDoubleClickEvent, _h1);
             this.ConfigCommands(lv);
 
-            if (lv.DataContext is ListBoxVM vm)
-            {
-                this.VM = vm;
-                this.VM.PropertyChanged += this.ListenPropertyChangedOnVM;
-            }
+            this.VM = vm;
+            this.ListBoxControl.DataContext = vm;
+            vm.PropertyChanged += this.ListenPropertyChangedOnVM;
+
         }
 
         public ListBoxItemVM? SelectedItem =>
-            this._lvw?.SelectedItem as ListBoxItemVM;
+            this.ListBoxControl.SelectedItem as ListBoxItemVM;
 
         virtual protected void OnDoubleClick(object sender, RoutedEventArgs e) { }
 
@@ -110,13 +101,14 @@ namespace WPFCore.Shared.UI.LB
 
         public void Dispose()
         {
-            if (this._lvw != null)
+            var lvw = this.ListBoxControl;
+            if (lvw != null)
             {
-                this._lvw.RemoveHandler(Control.MouseDoubleClickEvent, _h1);
-                this._lvw.CommandBindings.Clear();
+                lvw.RemoveHandler(Control.MouseDoubleClickEvent, _h1);
+                lvw.CommandBindings.Clear();
                 if (this.VM != null)
                     this.VM.PropertyChanged -= this.ListenPropertyChangedOnVM;
-                this._lvw = null;
+                this.ListBoxControl = null!;
             }
         }
     }

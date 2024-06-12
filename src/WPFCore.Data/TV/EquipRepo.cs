@@ -26,7 +26,7 @@ namespace WPFCore.Data.TV
         public Task<IEnumerable<EquipItem>> GetPDBs() =>
             GetEquipment(34);
 
-        public Task<IEnumerable<EquipItem>> GetEquipment(int equipSubClass)
+        public virtual Task<IEnumerable<EquipItem>> GetEquipment(int equipSubClass)
         {
             string tag = equipSubClass switch
             {
@@ -48,7 +48,7 @@ namespace WPFCore.Data.TV
             return Task.FromResult(lst);
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
         }
     }

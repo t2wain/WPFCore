@@ -17,6 +17,9 @@ namespace WPFCore.ElectIndex.TV
         [ObservableProperty]
         private int _itemCount = 0;
 
+        public TreeVM TreeVM { get; protected set; }
+        public LBoxVM LBoxVM { get; protected set; }
+
         public UTreeLBoxVM(TreeVM tvm, LBoxVM lvm)
         {
             this.TreeVM = tvm;
@@ -58,12 +61,6 @@ namespace WPFCore.ElectIndex.TV
                     break;
             }
         }
-
-        [ObservableProperty]
-        private TreeVM _treeVM = null!;
-
-        [ObservableProperty]
-        private LBoxVM _lBoxVM = null!;
 
     }
 }
