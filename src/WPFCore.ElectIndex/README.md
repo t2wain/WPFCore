@@ -15,7 +15,12 @@ The ListBox has a Context menu with the following RoutedUICommand commands:
 
 All data binding are based on the MVVM pattern. The ViewModel class is based on the CommunityToolkit.Mvvm library.
 
-The followig files implement data specific features:
+The following objects implement application specific features:
 
 - TIndexNodeEnum
 - TVRepo
+
+## View Item Detail
+
+The custom command TACommands.ViewDetail will raise a custom event RoutedEvent ViewItemDetail which will be handled by the top level application windows then in turn it will execute the same command targeting the WPFCore.ElectIndex.UListView control. The current implementation only works for Report item.
+

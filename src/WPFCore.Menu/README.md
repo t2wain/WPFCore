@@ -17,4 +17,4 @@ The Menu object can contain a list of child items of type MenuItem or Separator.
 
 ## Todo
 
-Setup a command object for each menu item.
+Setup a command object for each menu item. Currently, only the View > Refresh menu is working which will execute the TNCommands.Refresh RoutedCommand.

@@ -1,1 +1,3 @@
-﻿## Display data in a GridView
+﻿## To Display a DataView in a GridView
+
+The display configuration of a DataView is defined in a ReportDefinition class (WPFCore.Data.Report). The ReportDefinition class can be serialized / deserialized as XML and stored in a file or database. In the current implementation, the report is displayed by executing the RouteUICommand ViewDetail and provide a path to the XML configuration file for the parameter.

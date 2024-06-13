@@ -2,22 +2,32 @@
 
 This is a reference implementation of a data-centric WPF application. Some class libraries are intended for use in a new project. While others are for reference only since they display specific set of sample data. The sample features and data are based on the Hexagon Smart Electrical application. However, there is no business logic implemented in the application.
 
-## UTreeView WPF Custom Control (WPFCore.ElectIndex)
+## Custom Controls
 
-This control consist of a TreeView and a ListBox WPF controls. The TreeView display a deeply nested hierarchy set of data and the ListBox display the child set of data of the selected tree node.
+Currently, the application is composed of 4 custom user controls:
 
-The TreeView has a Context menu with several RoutedUICommand commands:
+- WPFCore.Menu.UMenu
+- WPFCore.Shared.UI.SB.UStatusBar
+- WPFCore.ElectIndex
+- WPFCore.ElectGrid
 
-- Refresh (Ctrl+R)
-- Collapse All (Ctrl+Left)
-- Expand All (Ctrl+Right)
+Please see the README document of each perspective project.
 
-The ListBox has a Context menu with the following RoutedUICommand commands:
+## Shared UI Library
 
-- Select All (Ctrl+U)
-- Unselect All (Ctrl+A)
+- WPFCore.Shared.UI
 
-All data binding are based on the MVVM pattern. The ViewModel class is based on the CommunityToolkit.Mvvm library.
+## Data Access Libraries
+
+- WPFCore.Data
+- WPFCore.Data.OleDb
+- WPFCore.Data.Report
+- ADOLib.dll
+
+## Other Common Library for the App
+
+- WPFCore.Common
+- WPFCore.Common.UI
 
 ## WPFCore.App
 
@@ -25,4 +35,11 @@ This application display data from an MS Access database. Database access is bas
 
 ## WPFCore.App2
 
-This application display dynamically generated data.
+This application display mocked data.
+
+## Exploring WPF Features
+
+- MVVM Data Bindings
+- Custom RoutedUICommand
+- Custom RoutedEvent
+- Custom User Control
