@@ -17,9 +17,6 @@ namespace WPFCore.ElectIndex.TV
         [ObservableProperty]
         private int _itemCount = 0;
 
-        [ObservableProperty]
-        private bool _isFocus;
-
         public TreeVM TreeVM { get; protected set; }
         public LBoxVM LBoxVM { get; protected set; }
 
