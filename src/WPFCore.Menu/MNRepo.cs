@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
+using WPFCore.Shared.UI.TV;
 using CT = WPFCore.Menu.MenuCommandEnum;
 using MT = WPFCore.Shared.UI.MNU.MenuTypeEnum;
 
@@ -121,7 +123,7 @@ namespace WPFCore.Menu
         protected List<INotifyPropertyChanged> GetViewSubMenu() =>
             new List<INotifyPropertyChanged>()
             {
-                CreateMenuItem("Refresh", CT.Refresh),
+                CreateMenuItem("Refresh", CT.Refresh, TNCommands.Refresh),
                 CreateSeparator(),
                 CreateMenuItem("Show Selected Electrical Branch Only", CT.ShowSelectedElectricalBranchOnly),
                 CreateMenuItem("Show In New Window", CT.ShowInNewWindow),
@@ -334,11 +336,12 @@ namespace WPFCore.Menu
             };
 
 
-        static INotifyPropertyChanged CreateMenuItem(string name, CT cmdType) =>
+        static INotifyPropertyChanged CreateMenuItem(string name, CT cmdType, ICommand? command = null) =>
             new SELMenuItemVM()
             {
                 Name = name,
                 MenuCommandType = cmdType,
+                Command = command,
                 MenuType = MT.Menu,
             };
 

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace WPFCore.Shared.UI.MNU
 {
@@ -10,6 +11,7 @@ namespace WPFCore.Shared.UI.MNU
         public string Name { get; set; } = null!;
         public MenuTypeEnum MenuType { get; set; }
         public MenuItemRole Role { get; set; }
+        public ICommand? Command { get; set; }
 
         public bool HasChildren { get { return this.Children.Count > 0; } }
 

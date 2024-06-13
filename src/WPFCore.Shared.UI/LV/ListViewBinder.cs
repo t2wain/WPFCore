@@ -33,7 +33,7 @@ namespace WPFCore.Shared.UI.LV
         RoutedEventHandler _h5 = null!;
         RoutedEventHandler _h6 = null!;
 
-        protected void ConfigureEvent(ListView lv, ListViewVM vm)
+        void ConfigureEvent(ListView lv, ListViewVM vm)
         {
             // Configure handlers for ListView events
             _h1 = new RoutedEventHandler(this.OnMouseDown);
@@ -98,7 +98,7 @@ namespace WPFCore.Shared.UI.LV
         #region Config Commands
 
         // Configure the handler for the commands
-        virtual protected void ConfigCommands()
+        void ConfigCommands()
         {
             foreach (var cb in this.GetCommandBindings())
                 this.ListViewControl.CommandBindings.Add(cb);

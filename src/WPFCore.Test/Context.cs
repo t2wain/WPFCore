@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WPFCore.Data;
+using WPFCore.Common.Data;
 using WPFCore.Data.OleDb;
-using WPFCore.Data.TV;
 
 namespace WPFCore.Test
 {

@@ -154,7 +154,11 @@ namespace WPFCore.ElectGrid.LV
         public static GridView CreateGeneralReport(ReportDefinition rdef)
         {
             var gv = new GridView();
-            foreach (var c in rdef.Columns!)
+            var q = rdef.Columns!
+                .Where(i => i.Visible)
+                .OrderBy(i => i.Position);
+
+            foreach (var c in q)
             {
                 gv.Columns.Add(GridUtility.CreateColumn(
                     c.HeaderName!, 

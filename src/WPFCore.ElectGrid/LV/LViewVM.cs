@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
+using System.Windows.Data;
 using WPFCore.Common.Data;
 using WPFCore.Data.Report;
 using WPFCore.Shared.UI;
@@ -23,7 +25,7 @@ namespace WPFCore.ElectGrid.LV
         private ReportDefinition? _reportDef;
 
         [ObservableProperty]
-        private bool _isFocus;
+        private int _itemCount;
 
         public async Task ShowReport(string? reportId)
         {
@@ -34,6 +36,20 @@ namespace WPFCore.ElectGrid.LV
                 await this.PopulateData();
             }
 
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+            switch (args.PropertyName)
+            {
+                case nameof(Root):
+                    this.ItemCount = this.Root?.Count() ?? 0;
+                    break;
+                case nameof(ListData):
+                    this.ItemCount = this.ListData?.Count ?? 0;
+                    break;
+            }
         }
 
         protected override async Task PopulateData()

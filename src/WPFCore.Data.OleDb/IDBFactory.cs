@@ -1,5 +1,4 @@
 ﻿using ADOLib;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace WPFCore.Data.OleDb
 {

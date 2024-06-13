@@ -1,9 +1,7 @@
-﻿using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using WPFCore.Common.ElectIndex;
 using WPFCore.Common.UI;
 using WPFCore.ElectGrid.LV;
-using WPFCore.ElectIndex;
 using WPFCore.ElectIndex.TV;
 using WPFCore.Menu;
 using WPFCore.Shared.UI.SB;
@@ -37,7 +35,6 @@ namespace WPFCore.App
 
         public void Dispose()
         {
-            _lvm.PropertyChanged -= OnElectGridPropertyChanged;
             _mainWindow.RemoveHandler(WPFCoreApp.ItemCountChangedEvent, _h1);
             _mainWindow.RemoveHandler(WPFCoreApp.CustomControlFocusEvent, _h2);
             _mainWindow.RemoveHandler(WPFCoreApp.ViewItemDetailEvent, _h3);
@@ -70,9 +67,13 @@ namespace WPFCore.App
 
         private void OnCustomFocus(object sender, RoutedEventArgs e)
         {
-            if (e.Source is UTreeView ctl)
+            if (e.Source is UTreeView t)
             {
-                UpdateCountMsg(ctl.VM.ItemCount);
+                UpdateCountMsg(t.VM.ItemCount);
+            }
+            else if (e.Source is UListView l)
+            {
+                UpdateCountMsg(l.VM.ItemCount);
             }
         }
 
@@ -94,23 +95,11 @@ namespace WPFCore.App
 
         #region ElectGrid
 
-        LViewVM _lvm = null!;
+        UListView _lvw = null!;
         public void InitElectGrid(UListView lvw, LViewVM lvm)
         {
-                _lvm = lvm;
-                lvm.PropertyChanged += OnElectGridPropertyChanged;
-                lvw.Init(lvm);
-        }
-
-        private void OnElectGridPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(_lvm.IsFocus):
-                    if (_lvm.IsFocus)
-                        UpdateCountMsg(this._lvm.ListData?.Count ?? 0);
-                    break;
-            }
+            _lvw = lvw;
+            lvw.Init(lvm);
         }
 
         #endregion
@@ -122,8 +111,8 @@ namespace WPFCore.App
             switch (item?.NodeType)
             {
                 case NT.Report:
-                    _lvm.ShowReport(item?.Data?.ID)
-                        .ContinueWith(t => Task.CompletedTask);
+                    if (TACommands.ViewDetail.CanExecute(item, _lvw))
+                        TACommands.ViewDetail.Execute(item, _lvw);
                     break;
             }
         }
