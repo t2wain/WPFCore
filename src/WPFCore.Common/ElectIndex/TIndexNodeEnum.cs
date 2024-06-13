@@ -1,4 +1,4 @@
-﻿namespace WPFCore.ElectIndex.TV
+﻿namespace WPFCore.Common.ElectIndex
 {
     // Identify electrical equipment category
     public enum TIndexNodeEnum

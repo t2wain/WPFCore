@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace WPFCore.ElectIndex.TV
+namespace WPFCore.Common.UI
 {
     public static class TACommands
     {
@@ -10,12 +10,12 @@ namespace WPFCore.ElectIndex.TV
 
         static TACommands()
         {
-            InputGestureCollection inputs = new InputGestureCollection();
+            var inputs = new InputGestureCollection();
             inputs.Add(new KeyGesture(Key.Space, ModifierKeys.None, "<Spacebar>"));
             ViewDetailCommand = new RoutedUICommand("View Detail", ViewDetailMsg, typeof(TACommands), inputs);
 
             inputs = new InputGestureCollection();
-            inputs.Add(new KeyGesture(Key.F, ModifierKeys.Control, "Ctrl+F")); 
+            inputs.Add(new KeyGesture(Key.F, ModifierKeys.Control, "Ctrl+F"));
             SetFilterCommand = new RoutedUICommand("Set Filter...", SetFilterMsg, typeof(TACommands), inputs);
 
             ClearFilterCommand = new RoutedUICommand("Clear Filter", ClearFilterMsg, typeof(TACommands));

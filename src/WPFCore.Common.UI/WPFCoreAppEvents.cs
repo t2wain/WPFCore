@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using WPFCore.ElectIndex.TV;
+using WPFCore.Common.ElectIndex;
 
-namespace WPFCore.ElectIndex
+namespace WPFCore.Common.UI
 {
     public delegate void ViewItemDetailEventHandler(object sender, ViewItemDetailEventArgs args);
 

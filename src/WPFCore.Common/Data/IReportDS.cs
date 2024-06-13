@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Threading.Tasks;
+﻿using System.Data;
 using WPFCore.Data.Report;
 
-namespace WPFCore.Data
+namespace WPFCore.Common.Data
 {
     public interface IReportDS
     {

@@ -21,7 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFCore.Data.Report", "WPFC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFCore.ElectGrid", "WPFCore.ElectGrid\WPFCore.ElectGrid.csproj", "{8474BD72-879D-4C16-B33D-728A70858770}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFCore.Menu", "WPFCore.Menu\WPFCore.Menu.csproj", "{402B6B27-8B7C-4F53-BDF5-EF184BE732FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFCore.Menu", "WPFCore.Menu\WPFCore.Menu.csproj", "{402B6B27-8B7C-4F53-BDF5-EF184BE732FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFCore.Common.UI", "WPFCore.Common.UI\WPFCore.Common.UI.csproj", "{EB423FA3-0D57-4F38-963E-6F50454DA6AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFCore.Common", "WPFCore.Common\WPFCore.Common.csproj", "{BB676AD5-6699-450C-9245-409B48F26254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,14 @@ Global
 		{402B6B27-8B7C-4F53-BDF5-EF184BE732FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{402B6B27-8B7C-4F53-BDF5-EF184BE732FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{402B6B27-8B7C-4F53-BDF5-EF184BE732FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB423FA3-0D57-4F38-963E-6F50454DA6AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB423FA3-0D57-4F38-963E-6F50454DA6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB423FA3-0D57-4F38-963E-6F50454DA6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB423FA3-0D57-4F38-963E-6F50454DA6AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB676AD5-6699-450C-9245-409B48F26254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB676AD5-6699-450C-9245-409B48F26254}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB676AD5-6699-450C-9245-409B48F26254}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB676AD5-6699-450C-9245-409B48F26254}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

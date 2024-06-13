@@ -1,8 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using WPFCore.ElectIndex.TV;
+using WPFCore.Common.ElectIndex;
+using WPFCore.Common.UI;
 using WPFCore.Shared.UI.LB;
-using NT = WPFCore.ElectIndex.TV.TIndexNodeEnum;
+using NT = WPFCore.Common.ElectIndex.TIndexNodeEnum;
 
 namespace WPFCore.ElectIndex.LB
 {

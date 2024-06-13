@@ -1,4 +1,4 @@
-﻿using WPFCore.ElectIndex.TV;
+﻿using WPFCore.Common.ElectIndex;
 using WPFCore.Shared.UI.LB;
 
 namespace WPFCore.ElectIndex.LB

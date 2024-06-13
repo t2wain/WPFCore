@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using WPFCore.Common.ElectIndex;
 using WPFCore.Shared.UI;
 using WPFCore.Shared.UI.TV;
 

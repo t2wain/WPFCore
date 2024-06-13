@@ -1,6 +1,6 @@
-﻿using WPFCore.Data;
+﻿using WPFCore.Common.Data;
 
-namespace WPFCore.ElectIndex.TV
+namespace WPFCore.Common.ElectIndex
 {
     // TODO: allow each tree node to maintain business data
     public class TNodeData

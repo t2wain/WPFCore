@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using WPFCore.Common.ElectIndex;
+using WPFCore.Common.UI;
 using WPFCore.ElectIndex.TV;
 using WPFCore.Shared.UI.LB;
 

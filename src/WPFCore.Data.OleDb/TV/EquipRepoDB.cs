@@ -1,12 +1,14 @@
 ﻿using System.Data;
+using WPFCore.Common.Data;
+using WPFCore.Data.TV;
 
 namespace WPFCore.Data.OleDb.TV
 {
-    internal class EquipRepo : WPFCore.Data.TV.EquipRepo
+    internal class EquipRepoDB : MockEquipRepo
     {
         private readonly IDBFactory _dbfact;
 
-        public EquipRepo(IDBFactory dbfact)
+        public EquipRepoDB(IDBFactory dbfact)
         {
             this._dbfact = dbfact;
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using WPFCore.Common.Data;
 using WPFCore.Data.OleDb.TV;
-using D = WPFCore.Data.TV;
+using WPFCore.Data.TV;
 
 namespace WPFCore.Data.OleDb
 {
@@ -9,7 +10,7 @@ namespace WPFCore.Data.OleDb
         public static IServiceCollection AddOleDbData(this IServiceCollection service, string connString)
         {
             service.AddScoped<IDBFactory, DBFactory>(p => new DBFactory(connString));
-            service.AddScoped<D.IEquipRepo, EquipRepo>();
+            service.AddScoped<IEquipRepo, EquipRepoDB>();
             service.AddScoped<IReportDS, ReportDS>();
             return service;
         }

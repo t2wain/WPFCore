@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WPFCore.Common.Data;
 
 namespace WPFCore.Data.TV
 {
-    public class EquipRepo : IEquipRepo
+    public class MockEquipRepo : IEquipRepo
     {
 
         public Task<IEnumerable<EquipItem>> GetMotor() =>

@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using WPFCore.Common.Data;
 using WPFCore.Data.Report;
 
 namespace WPFCore.Data.OleDb

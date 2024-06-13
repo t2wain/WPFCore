@@ -1,4 +1,4 @@
-﻿namespace WPFCore.Data
+﻿namespace WPFCore.Common.Data
 {
     public record EquipItem
     {

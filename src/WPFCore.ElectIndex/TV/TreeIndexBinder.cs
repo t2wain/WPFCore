@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using WPFCore.Common.UI;
 using WPFCore.Shared.UI.TV;
 
 namespace WPFCore.ElectIndex.TV

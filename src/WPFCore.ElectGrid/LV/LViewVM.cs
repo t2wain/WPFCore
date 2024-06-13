@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using WPFCore.Data;
+using WPFCore.Common.Data;
 using WPFCore.Data.Report;
 using WPFCore.Shared.UI;
 using WPFCore.Shared.UI.LV;

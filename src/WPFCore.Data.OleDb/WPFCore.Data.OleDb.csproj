@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WPFCore.Data.Report\WPFCore.Data.Report.csproj" />
     <ProjectReference Include="..\WPFCore.Data\WPFCore.Data.csproj" />
   </ItemGroup>
 

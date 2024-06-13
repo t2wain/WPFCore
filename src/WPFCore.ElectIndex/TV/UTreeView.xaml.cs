@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using WPFCore.Common.UI;
 using WPFCore.ElectIndex.LB;
 
 namespace WPFCore.ElectIndex.TV

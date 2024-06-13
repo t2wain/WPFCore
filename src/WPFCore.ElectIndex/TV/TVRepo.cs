@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using WPFCore.Data;
-using WPFCore.Data.TV;
+using WPFCore.Common.Data;
+using WPFCore.Common.ElectIndex;
 using WPFCore.Shared.UI.TV;
-using NT = WPFCore.ElectIndex.TV.TIndexNodeEnum;
+using NT = WPFCore.Common.ElectIndex.TIndexNodeEnum;
 
 namespace WPFCore.ElectIndex.TV
 {

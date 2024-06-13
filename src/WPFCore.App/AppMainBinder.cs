@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using WPFCore.Common.ElectIndex;
+using WPFCore.Common.UI;
 using WPFCore.ElectGrid.LV;
 using WPFCore.ElectIndex;
 using WPFCore.ElectIndex.TV;
 using WPFCore.Menu;
 using WPFCore.Shared.UI.SB;
-using NT = WPFCore.ElectIndex.TV.TIndexNodeEnum;
+using NT = WPFCore.Common.ElectIndex.TIndexNodeEnum;
 
 namespace WPFCore.App
 {

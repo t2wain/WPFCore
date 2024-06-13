@@ -2,7 +2,7 @@
 
 namespace WPFCore.Data.OleDb
 {
-    internal class DataDB : AccessDatabase 
+    internal class DataDB : OleDbDatabase 
     {
         public DataDB(string connString)
         {

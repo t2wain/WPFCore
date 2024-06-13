@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WPFCore.Common.UI\WPFCore.Common.UI.csproj" />
     <ProjectReference Include="..\WPFCore.Data\WPFCore.Data.csproj" />
     <ProjectReference Include="..\WPFCore.Shared.UI\WPFCore.Shared.UI.csproj" />
   </ItemGroup>

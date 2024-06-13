@@ -1,10 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using WPFCore.Common.ElectIndex;
 using WPFCore.Shared.UI.TV;
 using CM = WPFCore.Shared.UI.TV.TNCommands;
-using CM2 = WPFCore.ElectIndex.TV.TACommands;
-using NT = WPFCore.ElectIndex.TV.TIndexNodeEnum;
+using CM2 = WPFCore.Common.UI.TACommands;
+using NT = WPFCore.Common.ElectIndex.TIndexNodeEnum;
 
 namespace WPFCore.ElectIndex.TV
 {

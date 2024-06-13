@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WPFCore.Data.OleDb\WPFCore.Data.OleDb.csproj" />
-    <ProjectReference Include="..\WPFCore.Data.Report\WPFCore.Data.Report.csproj" />
     <ProjectReference Include="..\WPFCore.Shared.UI\WPFCore.Shared.UI.csproj" />
   </ItemGroup>
 
