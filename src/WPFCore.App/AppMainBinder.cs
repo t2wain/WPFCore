@@ -2,6 +2,7 @@
 using WPFCore.Common.ElectIndex;
 using WPFCore.Common.UI;
 using WPFCore.ElectGrid.LV;
+using WPFCore.ElectGrid.TC;
 using WPFCore.ElectIndex.TV;
 using WPFCore.Menu;
 using WPFCore.Shared.UI.SB;
@@ -71,9 +72,9 @@ namespace WPFCore.App
             {
                 UpdateCountMsg(t.VM.ItemCount);
             }
-            else if (e.Source is UListView l)
+            else if (e.Source is UTabControl tc && tc.VM.SelectedItem is LViewVM vm)
             {
-                UpdateCountMsg(l.VM.ItemCount);
+                UpdateCountMsg(vm.ItemCount);
             }
         }
 
@@ -95,11 +96,11 @@ namespace WPFCore.App
 
         #region ElectGrid
 
-        UListView _lvw = null!;
-        public void InitElectGrid(UListView lvw, LViewVM lvm)
+        UTabControl _tcv = null!;
+        public void InitElectGrid(UTabControl tcv, UTabConrolVM tvm)
         {
-            _lvw = lvw;
-            lvw.Init(lvm);
+            _tcv = tcv;
+            tcv.Init(tvm);
         }
 
         #endregion
@@ -111,8 +112,8 @@ namespace WPFCore.App
             switch (item?.NodeType)
             {
                 case NT.Report:
-                    if (TACommands.ViewDetail.CanExecute(item, _lvw))
-                        TACommands.ViewDetail.Execute(item, _lvw);
+                    if (TACommands.ViewDetail.CanExecute(item, _tcv))
+                        TACommands.ViewDetail.Execute(item, _tcv);
                     break;
             }
         }

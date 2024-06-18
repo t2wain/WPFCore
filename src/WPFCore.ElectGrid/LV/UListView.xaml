@@ -6,12 +6,19 @@
     xmlns:wl="clr-namespace:WPFCore.ElectGrid.LV"
     mc:Ignorable="d" 
     d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="10 5" Text="{Binding Name}" Grid.Row="0"></TextBlock>
+        <ListView 
+            Grid.Row="1"
+            Name="_lvwData" 
+            Grid.Column="0"
+            IsEnabled="{Binding Path=IsEnabled}"
+            View="{Binding GridView}"
+            ItemsSource="{Binding Path=ListItemsView}" />
 
-    <ListView 
-        Name="_lvwData" 
-        Grid.Column="0"
-        DataContext="{Binding Path=ListVM}"
-        IsEnabled="{Binding Path=IsEnabled}"
-        ItemsSource="{Binding Path=ListItemsView}">
-    </ListView>
+    </Grid>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WPFCore.ElectGrid.LV;
+using WPFCore.ElectGrid.TC;
 
 namespace WPFCore.ElectGrid
 {
@@ -8,6 +9,7 @@ namespace WPFCore.ElectGrid
         public static IServiceCollection AddElectGrid(this IServiceCollection service)
         {
             service.AddTransient<LViewVM>();
+            service.AddTransient<UTabConrolVM>();
             return service;
         }
     }

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
-using System.Windows.Data;
+using System.Windows.Controls;
 using WPFCore.Common.Data;
 using WPFCore.Data.Report;
 using WPFCore.Shared.UI;
@@ -22,20 +22,52 @@ namespace WPFCore.ElectGrid.LV
         public LViewEnum ViewType { get; set; }
 
         [ObservableProperty]
+        string? _name;
+
+        [ObservableProperty]
         private ReportDefinition? _reportDef;
 
         [ObservableProperty]
         private int _itemCount;
 
-        public async Task ShowReport(string? reportId)
-        {
-            if (reportId != null)
-            {
-                this.ListData = null;
-                ReportDef = await ReportUtil.DeserializeReportDefinitionFromFile(reportId);
-                await this.PopulateData();
-            }
+        [ObservableProperty]
+        private ViewBase? _gridView;
 
+        public ReportResult GetReport() => new()
+        {
+            ListData = this.ListData!,
+            ReportDef = this.ReportDef!,
+            GridView = this.GridView!
+        };
+
+        public void ShowReport(ReportResult report)
+        {
+            this.ReportDef = report.ReportDef;
+            this.GridView = report.GridView;
+            this.ListData = report.ListData;
+        }
+
+        public async Task<ReportResult> ShowReport(string reportId)
+        {
+            var reportDef = await ReportUtil.DeserializeReportDefinitionFromFile(reportId);
+            var ctx = await this.ShowReport(reportDef);
+            return ctx;
+        }
+
+        public async Task<ReportResult> ShowReport(ReportDefinition reportDef)
+        {
+
+            this.ListData = null;
+            ReportDef = reportDef;
+            this.GridView = GridConfig.CreateGeneralReport(reportDef);
+            this.Name = reportDef.Name;
+            await this.PopulateData();
+            return new() 
+            { 
+                ListData = this.ListData!, 
+                ReportDef = reportDef, 
+                GridView = this.GridView
+            };
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)

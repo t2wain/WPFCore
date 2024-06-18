@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFCore.ElectIndex.TV;assembly=WPFCore.ElectIndex"
         xmlns:mnu="clr-namespace:WPFCore.Menu;assembly=WPFCore.Menu"
         xmlns:sb="clr-namespace:WPFCore.Shared.UI.SB;assembly=WPFCore.Shared.UI"
-        xmlns:lv="clr-namespace:WPFCore.ElectGrid.LV;assembly=WPFCore.ElectGrid"
+        xmlns:lv="clr-namespace:WPFCore.ElectGrid.TC;assembly=WPFCore.ElectGrid"
         mc:Ignorable="d"
         Title="Sample WPF Core Application" Height="450" Width="800">
     <DockPanel>
@@ -26,9 +26,10 @@
                 VerticalAlignment="Stretch"
                 Width="5">
             </GridSplitter>
-            <lv:UListView 
+            <lv:UTabControl x:Name="_tcv" Grid.Column="1" />
+            <!--<lv:UListView 
                 x:Name="_lvw"
-                Grid.Column="1"></lv:UListView>
+                Grid.Column="1"></lv:UListView>-->
         </Grid>
     </DockPanel>
 </Window>
