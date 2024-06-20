@@ -9,10 +9,13 @@ namespace WPFCore.ElectGrid.TC
     {
         public LViewVM VM { get; set; } = null!;
 
+        public string ID { get; set; } = null!;
+
         public async Task ShowReport(string reportId, TabControl utc, IServiceProvider provider)
         {
             var lvm = provider.GetRequiredService<LViewVM>();
             this.VM = lvm;
+            this.ID = reportId;
             var ru = new UListView();
             ru.Init(lvm);
 

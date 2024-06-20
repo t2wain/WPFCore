@@ -36,7 +36,11 @@ namespace WPFCore.Shared.UI.LV
         [ObservableProperty]
         private ICollectionView? _listItemsView;
 
-        virtual public Task RefreshData() => this.PopulateData();
+        virtual public Task RefreshData()
+        {
+            this.ListData?.Table?.Clear();
+            return this.PopulateData();
+        }
 
         virtual protected Task PopulateData() => Task.CompletedTask;
 
