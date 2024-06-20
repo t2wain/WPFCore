@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using WPFCore.Common.ElectIndex;
 using WPFCore.Common.UI;
-using WPFCore.ElectGrid.LV;
 using WPFCore.ElectGrid.TC;
 using WPFCore.ElectIndex.TV;
 using WPFCore.Menu;
@@ -72,9 +71,9 @@ namespace WPFCore.App
             {
                 UpdateCountMsg(t.VM.ItemCount);
             }
-            else if (e.Source is UTabControl tc && tc.VM.SelectedItem is LViewVM vm)
+            else if (e.Source is UTabControl utc && utc.SelectedItem is ReportTabItem ti)
             {
-                UpdateCountMsg(vm.ItemCount);
+                UpdateCountMsg(ti.VM.ItemCount);
             }
         }
 
@@ -97,10 +96,10 @@ namespace WPFCore.App
         #region ElectGrid
 
         UTabControl _tcv = null!;
-        public void InitElectGrid(UTabControl tcv, UTabConrolVM tvm)
+        public void InitElectGrid(UTabControl tcv, IServiceProvider provider)
         {
             _tcv = tcv;
-            tcv.Init(tvm);
+            tcv.Init(provider);
         }
 
         #endregion

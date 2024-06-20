@@ -1,8 +1,4 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Input;
-using WPFCore.Common.Data;
-using WPFCore.Common.ElectIndex;
-using WPFCore.Common.UI;
 
 namespace WPFCore.ElectGrid.TC
 {
@@ -16,44 +12,15 @@ namespace WPFCore.ElectGrid.TC
             InitializeComponent();
         }
 
-        public void Init(UTabConrolVM vm)
+        public TabControl TControl => this._utc;
+
+        UTabControlBinder _tcb = null!;
+        public void Init(IServiceProvider provider)
         {
-            this.VM = vm;
-            this.DataContext = vm;
-            this.ConfigureCommands();
+            _tcb = new UTabControlBinder();
+            _tcb.Init(this, provider);
         }
 
-        public UTabConrolVM VM { get; set; } = null!;
-
-        #region Configure commands
-
-        private void ConfigureCommands()
-        {
-            this.CommandBindings.Add(new(TACommands.ViewDetail, this.OnViewDetail, this.OnViewDetailCanExecuted));
-        }
-
-        virtual protected void OnViewDetail(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (e.Parameter is TNodeData n
-                && n.Data is EquipItem eq
-                && !String.IsNullOrWhiteSpace(eq.ID))
-            {
-                this.VM.AddReport(eq.ID);
-            }
-        }
-
-        virtual protected void OnViewDetailCanExecuted(object sender, CanExecuteRoutedEventArgs e)
-        {
-            if (e.Parameter is TNodeData n
-                && n.Data is EquipItem eq
-                && !String.IsNullOrWhiteSpace(eq.ID))
-            {
-                e.CanExecute = true;
-            }
-            else { e.CanExecute = false; }
-        }
-
-        #endregion
-
+        public TabItem SelectedItem => this.TControl.SelectedItem as TabItem;
     }
 }

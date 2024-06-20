@@ -33,41 +33,20 @@ namespace WPFCore.ElectGrid.LV
         [ObservableProperty]
         private ViewBase? _gridView;
 
-        public ReportResult GetReport() => new()
-        {
-            ListData = this.ListData!,
-            ReportDef = this.ReportDef!,
-            GridView = this.GridView!
-        };
-
-        public void ShowReport(ReportResult report)
-        {
-            this.ReportDef = report.ReportDef;
-            this.GridView = report.GridView;
-            this.ListData = report.ListData;
-        }
-
-        public async Task<ReportResult> ShowReport(string reportId)
+        public async Task ShowReport(string reportId)
         {
             var reportDef = await ReportUtil.DeserializeReportDefinitionFromFile(reportId);
-            var ctx = await this.ShowReport(reportDef);
-            return ctx;
+            await this.ShowReport(reportDef);
         }
 
-        public async Task<ReportResult> ShowReport(ReportDefinition reportDef)
+        public Task ShowReport(ReportDefinition reportDef)
         {
 
             this.ListData = null;
             ReportDef = reportDef;
             this.GridView = GridConfig.CreateGeneralReport(reportDef);
             this.Name = reportDef.Name;
-            await this.PopulateData();
-            return new() 
-            { 
-                ListData = this.ListData!, 
-                ReportDef = reportDef, 
-                GridView = this.GridView
-            };
+            return this.PopulateData();
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)

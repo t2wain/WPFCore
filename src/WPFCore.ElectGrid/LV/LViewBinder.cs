@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using WPFCore.Common.UI;
 using WPFCore.Shared.UI.LV;
@@ -10,7 +9,7 @@ namespace WPFCore.ElectGrid.LV
     {
         #region Init
 
-        LViewVM ListVM => (this.VM as LViewVM)!;
+        //LViewVM ListVM => (this.VM as LViewVM)!;
 
         public override void InitListView(ListView lv, ListViewVM vm)
         {

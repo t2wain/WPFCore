@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
-using WPFCore.ElectGrid.LV;
-using WPFCore.ElectGrid.TC;
 using WPFCore.ElectIndex.TV;
 
 namespace WPFCore.App
@@ -26,8 +24,7 @@ namespace WPFCore.App
 
             if (Application.Current is App app)
             {
-                var tcvm = app.Provider.GetRequiredService<UTabConrolVM>();
-                _main.InitElectGrid(_tcv, tcvm);
+                _main.InitElectGrid(_tcv, app.Provider);
 
                 var tvm = app.Provider.GetRequiredService<UTreeLBoxVM>();
                 _main.InitElectIndex(_tvw, tvm);

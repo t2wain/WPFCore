@@ -3,25 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:tc="clr-namespace:WPFCore.ElectGrid.TC"
-             xmlns:lv="clr-namespace:WPFCore.ElectGrid.LV"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <DataTemplate x:Key="ReportTemplate" DataType="{x:Type tc:TabItemVM}">
-            <lv:UListView DataContext="{Binding TabDataContext}" />
-        </DataTemplate>
-        <DataTemplate x:Key="TabHeader" DataType="{x:Type tc:TabItemVM}">
-            <TextBlock Text="{Binding Name}" />
-        </DataTemplate>
-        <tc:TabItemContentTemplateSelector x:Key="tsel" 
-            ReportGridDataTemplate="{StaticResource ReportTemplate}" />
-    </UserControl.Resources>
     <Grid>
-        <TabControl
-            ItemsSource="{Binding Items}"
-            SelectedItem="{Binding SelectedItem}"
-            ItemTemplate="{StaticResource TabHeader}"
-            ContentTemplateSelector="{StaticResource tsel}" />
+        <TabControl x:Name="_utc" />
     </Grid>
 </UserControl>

@@ -9,7 +9,6 @@ namespace WPFCore.ElectGrid
         public static IServiceCollection AddElectGrid(this IServiceCollection service)
         {
             service.AddTransient<LViewVM>();
-            service.AddTransient<UTabConrolVM>();
             return service;
         }
     }
