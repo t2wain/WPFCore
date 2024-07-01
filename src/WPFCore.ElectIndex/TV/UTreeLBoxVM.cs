@@ -11,8 +11,8 @@ namespace WPFCore.ElectIndex.TV
     {
         // These are faux properties. The intention is to use
         // the PropertyChanged notification to communicate an event.
-        public const string ExecuteViewDetailCmdTVEvent = "WPFCore.ElectIndex.TV.UTreeLBoxVM.ExecuteViewDetailCmdTVEvent";
-        public const string ExecuteViewDetailCmdLBEvent = "WPFCore.ElectIndex.TV.UTreeLBoxVM.ExecuteViewDetailCmdLBEvent";
+        internal const string ExecuteViewDetailCmdTVEvent = "WPFCore.ElectIndex.TV.UTreeLBoxVM.ExecuteViewDetailCmdTVEvent";
+        internal const string ExecuteViewDetailCmdLBEvent = "WPFCore.ElectIndex.TV.UTreeLBoxVM.ExecuteViewDetailCmdLBEvent";
 
         [ObservableProperty]
         private int _itemCount = 0;

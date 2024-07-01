@@ -73,7 +73,10 @@ namespace WPFCore.App
             }
             else if (e.Source is UTabControl utc && utc.SelectedItem is ReportTabItem ti)
             {
-                UpdateCountMsg(ti.VM.ItemCount);
+                if (ti.VM != null)
+                    UpdateCountMsg(ti.VM.ItemCount);
+                else if (ti.DGVM != null)
+                    UpdateCountMsg(ti.DGVM.ItemCount);
             }
         }
 
@@ -84,7 +87,7 @@ namespace WPFCore.App
 
         #endregion
 
-        #region ElectIndex
+        #region Init ElectIndex
 
         public void InitElectIndex(UTreeView tvw, UTreeLBoxVM tvm)
         {
@@ -93,7 +96,7 @@ namespace WPFCore.App
 
         #endregion
 
-        #region ElectGrid
+        #region Init ElectGrid
 
         UTabControl _tcv = null!;
         public void InitElectGrid(UTabControl tcv, IServiceProvider provider)

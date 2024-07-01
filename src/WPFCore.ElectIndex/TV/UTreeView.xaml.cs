@@ -72,12 +72,16 @@ namespace WPFCore.ElectIndex.TV
                 case nameof(VM.ItemCount):
                     base.RaiseEvent(new(WPFCoreApp.ItemCountChangedEvent, this));
                     break;
+                // faux property change, triggered by ViewDetail command
                 case UTreeLBoxVM.ExecuteViewDetailCmdTVEvent:
                     if (VM.TreeVM.SelectedItem is NodeVM t && t.DataItem != null)
+                        // custom RoutedUIEvent
                         base.RaiseEvent(new ViewItemDetailEventArgs(WPFCoreApp.ViewItemDetailEvent, this, t.DataItem));
                     break;
+                // faux property change, triggered by ViewDetail command
                 case UTreeLBoxVM.ExecuteViewDetailCmdLBEvent:
                     if (VM.LBoxVM.SelectedItems.FirstOrDefault() is LBoxItemVM l && l.Data != null)
+                        // custom RoutedUIEvent
                         base.RaiseEvent(new ViewItemDetailEventArgs(WPFCoreApp.ViewItemDetailEvent, this, l.Data));
                     break;
             }

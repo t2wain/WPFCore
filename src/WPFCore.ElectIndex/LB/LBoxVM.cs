@@ -15,7 +15,7 @@ namespace WPFCore.ElectIndex.LB
     {
         // These are faux properties. The intention is to use
         // the PropertyChanged notification to communicate an event.
-        public const string ExecuteViewDetailCmdEvent = "WPFCore.ElectIndex.LB.LBoxVM.ExecuteViewDetailCmdEvent";
+        internal const string ExecuteViewDetailCmdEvent = "WPFCore.ElectIndex.LB.LBoxVM.ExecuteViewDetailCmdEvent";
 
         public LBoxVM()
         {

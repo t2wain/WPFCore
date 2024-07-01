@@ -29,7 +29,10 @@ namespace WPFCore.ElectIndex.TV
                 && vm.SelectedItem is NodeVM n 
                 && vm.IsCommandCanExecute(TACommands.ViewDetailMsg, n)) {
 
+                // use the messaging system to broadcast the command
                 vm.SendMessage(n.DataItem!);
+
+                // use the property change event system to broadcast the command
                 vm.RaisePropertyChangeEvent(TreeVM.ExecuteViewDetailCmdEvent);
             }
 
