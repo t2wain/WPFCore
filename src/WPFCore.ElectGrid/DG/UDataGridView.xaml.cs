@@ -1,11 +1,12 @@
 ﻿using System.Windows.Controls;
+using WPFCore.Data.Report;
 
 namespace WPFCore.ElectGrid.DG
 {
     /// <summary>
     /// Interaction logic for UDataGridView.xaml
     /// </summary>
-    public partial class UDataGridView : UserControl
+    public partial class UDataGridView : UserControl, IDisposable
     {
         public UDataGridView()
         {
@@ -25,5 +26,10 @@ namespace WPFCore.ElectGrid.DG
             }
         }
 
+        public void Dispose()
+        {
+            this._dgvBind?.Dispose();
+            this._dgvBind = null!;
+        }
     }
 }

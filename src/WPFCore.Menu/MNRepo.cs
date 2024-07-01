@@ -62,7 +62,7 @@ namespace WPFCore.Menu
             {
                 CreateSubMenu("New", CT.New),
                 CreateSubMenu("Open", CT.Open),
-                CreateMenuItem("Close", CT.Close),
+                CreateMenuItem("Close", CT.Close, ApplicationCommands.Close),
                 CreateSeparator(),
                 CreateMenuItem("Save As...", CT.SaveAs),
                 CreateSeparator(),

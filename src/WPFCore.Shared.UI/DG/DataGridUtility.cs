@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -39,8 +40,8 @@ namespace WPFCore.Shared.UI.DG
             c.IsReadOnly = isReadOnly;
             c.Width = width;
 
-            //c.ElementStyle = CreateCellStyle(alignment);
-            //c.HeaderStyle = CreateHeaderStyle(alignment, isReadOnly);
+            c.ElementStyle = CreateCellStyle(alignment);
+            c.HeaderStyle = CreateHeaderStyle(alignment, isReadOnly);
             return c;
         }
 
@@ -58,7 +59,7 @@ namespace WPFCore.Shared.UI.DG
             column.Width = width;
 
             column.ElementStyle = CreateCellStyle(alignment);
-            //column.HeaderStyle = CreateHeaderStyle(alignment, isReadOnly);
+            column.HeaderStyle = CreateHeaderStyle(alignment, isReadOnly);
         }
 
         internal static Binding CreateBinding(string bindingPath, string? format = null)
@@ -78,15 +79,15 @@ namespace WPFCore.Shared.UI.DG
             style.Setters.Add(new Setter(FrameworkElement.HorizontalAlignmentProperty, alignment));
             style.Setters.Add(new Setter(TextBlock.TextWrappingProperty, TextWrapping.Wrap));
             style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
-            style.Setters.Add(new Setter(TextBlock.PaddingProperty, new Thickness(5)));
+            style.Setters.Add(new Setter(TextBlock.PaddingProperty, new Thickness(5, 2, 5, 2)));
             return style;
         }
 
         internal static Style CreateHeaderStyle(HorizontalAlignment alignment, bool isReadOnly)
         {
             Style style = new Style();
-            style.TargetType = typeof(TextBlock);
-            style.Setters.Add(new Setter(FrameworkElement.HorizontalAlignmentProperty, alignment));
+            style.TargetType = typeof(DataGridColumnHeader);
+            style.Setters.Add(new Setter(Control.HorizontalContentAlignmentProperty, alignment));
             if (!isReadOnly)
                 style.Setters.Add(new Setter(TextBlock.BackgroundProperty, Brushes.Aqua));
             return style;

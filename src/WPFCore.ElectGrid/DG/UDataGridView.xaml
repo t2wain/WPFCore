@@ -16,7 +16,6 @@
             Grid.Row="1"
             Name="_dgData" 
             Grid.Column="0"
-            AutoGenerateColumns="False"
             ItemsSource="{Binding Path=GridItemsView}" />
     </Grid>
 </UserControl>

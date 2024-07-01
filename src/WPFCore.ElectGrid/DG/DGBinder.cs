@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using WPFCore.Common.UI;
+using WPFCore.Data.Report;
 using WPFCore.Shared.UI.DG;
 
 namespace WPFCore.ElectGrid.DG
@@ -52,6 +53,9 @@ namespace WPFCore.ElectGrid.DG
         {
             switch (e.PropertyName)
             {
+                case nameof(VM2.ReportDef):
+                    DataGridConfig.SetDataGridOption(this.GridControl, VM2.ReportDef);
+                    break;
                 case nameof(VM2.Columns):
                     this.AddColumns(VM2.Columns);
                     break;

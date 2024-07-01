@@ -9,8 +9,6 @@ namespace WPFCore.ElectGrid.LV
     {
         #region Init
 
-        //LViewVM ListVM => (this.VM as LViewVM)!;
-
         public override void InitListView(ListView lv, ListViewVM vm)
         {
             base.InitListView(lv, vm);

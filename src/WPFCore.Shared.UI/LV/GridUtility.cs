@@ -82,6 +82,7 @@ namespace WPFCore.Shared.UI.LV
             tb.SetValue(FrameworkElement.HorizontalAlignmentProperty, alignment);
             tb.SetValue(TextBlock.TextWrappingProperty, TextWrapping.Wrap);
             tb.SetValue(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top);
+            tb.SetValue(TextBlock.PaddingProperty, new Thickness(5, 2, 5, 2));
 
             var col = new GridViewColumn();
             var header = new GridViewColumnHeader();
@@ -110,6 +111,8 @@ namespace WPFCore.Shared.UI.LV
             style.TargetType = typeof(ListViewItem);
             style.Setters.Add(new Setter(Control.HorizontalContentAlignmentProperty, HorizontalAlignment.Stretch));
             style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Stretch));
+            style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0, 0, 1, 1)));
+            style.Setters.Add(new Setter(Control.BorderBrushProperty, SystemColors.ControlLightBrush));
             return style;
         }
     }

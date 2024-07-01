@@ -9,6 +9,15 @@ namespace WPFCore.ElectGrid.DG
     {
         #region General Report
 
+        public static void SetDataGridOption(DataGrid dg, ReportDefinition rdef)
+        {
+            dg.AutoGenerateColumns = false;
+            dg.HorizontalGridLinesBrush = SystemColors.ControlLightBrush;
+            dg.VerticalGridLinesBrush = SystemColors.ControlLightBrush;
+            dg.CanUserAddRows = rdef.AllowAddAndDelete;
+            dg.CanUserDeleteRows = rdef.AllowAddAndDelete;
+        }
+
         public static IEnumerable<DataGridColumn> CreateGeneralReport(ReportDefinition rdef)
         {
             var cols = new List<DataGridColumn>();

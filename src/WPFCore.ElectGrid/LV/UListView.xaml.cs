@@ -6,7 +6,7 @@ namespace WPFCore.ElectGrid.LV
     /// <summary>
     /// Interaction logic for UListView.xaml
     /// </summary>
-    public partial class UListView : UserControl
+    public partial class UListView : UserControl, IDisposable
     {
         public UListView()
         {
@@ -26,5 +26,10 @@ namespace WPFCore.ElectGrid.LV
             }
         }
 
+        public void Dispose()
+        {
+            this._lvwBind?.Dispose();
+            this._lvwBind = null!;
+        }
     }
 }
