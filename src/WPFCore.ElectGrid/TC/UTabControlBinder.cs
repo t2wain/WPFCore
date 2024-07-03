@@ -67,7 +67,7 @@ namespace WPFCore.ElectGrid.TC
             if (nidx < 0)
                 nidx = 0;
             tabs.Remove(tab);
-            if (tab.Content is IDisposable obj)
+            if (tab is IDisposable obj)
                 obj.Dispose();
             if (tabs.Count > 0 && tabs.GetItemAt(nidx) is TabItem t)
             {
@@ -96,8 +96,14 @@ namespace WPFCore.ElectGrid.TC
                  i is ReportTabItem r && r.ID == reportId
             ).FirstOrDefault();
 
-            if (ti != null)
-                ti.IsSelected = true;
+            if (ti != null && ti is ReportTabItem rti)
+            {
+                rti.IsSelected = true;
+                if (rti.VM != null && rti.VM.ItemCount == 0)
+                    rti.VM.RefreshData();
+                else if (rti.DGVM != null && rti.DGVM.ItemCount == 0)
+                    rti.DGVM.RefreshData();
+            }
             else
             {
                 ti = new ReportTabItem();

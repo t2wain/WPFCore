@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WPFCore.Common.UI;
-using WPFCore.Data.Report;
+using WPFCore.ElectGrid.RPT;
+using WPFCore.ElectGrid.TC;
 using WPFCore.Shared.UI.DG;
+using WPFCore.Shared.UI.DLG;
 
 namespace WPFCore.ElectGrid.DG
 {
@@ -42,6 +45,7 @@ namespace WPFCore.ElectGrid.DG
         {
             dg.GotFocus += this.OnFocus;
             this.VM.PropertyChanged += OnPropertyChanged;
+            this.ConfigureCommands(dg);
         }
 
         void OnFocus(object sender, RoutedEventArgs e)
@@ -65,5 +69,27 @@ namespace WPFCore.ElectGrid.DG
 
         #endregion
 
+        #region Configure Commands 
+
+        protected void ConfigureCommands(DataGrid dg)
+        {
+            dg.CommandBindings.Add(new(TACommands.Edit, this.OnEdit, this.OnEditCanExecuted));
+        }
+
+        protected void OnEditCanExecuted(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        protected void OnEdit(object sender, ExecutedRoutedEventArgs e)
+        {
+            var c = new UReportDef();
+            var vm = new UReportDefVM();
+            vm.ReportDef = VM2.ReportDef;
+            c.Init(vm);
+            var res = DialogUtility.GetDialogWindow(c, $"Report Edit - {VM2.ReportDef!.Name}").ShowDialog();
+        }
+
+        #endregion
     }
 }

@@ -66,16 +66,23 @@ namespace WPFCore.ElectGrid.LV
         protected override async Task PopulateData()
         {
             Utility.SetWaitCursor();
-            switch (this.ViewType)
+            try
             {
-                case LViewEnum.ReportDef:
-                    if (this.ReportDef != null)
-                    {
-                        this.ListData = await this._ds.GetReportData(this.ReportDef);
-                    }
-                    break;
+                switch (this.ViewType)
+                {
+                    case LViewEnum.ReportDef:
+                        if (this.ReportDef != null)
+                        {
+                            this.ListData = await this._ds.GetReportData(this.ReportDef);
+                        }
+                        break;
+                }
             }
-            Utility.SetNormalCursor();
+            catch (AggregateException ex)
+            {
+                throw ex;
+            }
+            finally { Utility.SetNormalCursor(); }
         }
     }
 }

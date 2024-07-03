@@ -7,6 +7,7 @@ namespace WPFCore.Common.UI
         public const string SetFilterMsg = "TACommands.SetFilter";
         public const string ClearFilterMsg = "TACommands.ClearFilter";
         public const string ViewDetailMsg = "TACommands.ViewDetail";
+        public const string EditMsg = "TACommands.Edit";
 
         static TACommands()
         {
@@ -19,6 +20,8 @@ namespace WPFCore.Common.UI
             SetFilterCommand = new RoutedUICommand("Set Filter...", SetFilterMsg, typeof(TACommands), inputs);
 
             ClearFilterCommand = new RoutedUICommand("Clear Filter", ClearFilterMsg, typeof(TACommands));
+
+            EditCommand = new RoutedUICommand("Edit ...", EditMsg, typeof(TACommands));
         }
 
         private static RoutedUICommand SetFilterCommand;
@@ -44,6 +47,16 @@ namespace WPFCore.Common.UI
                 return ViewDetailCommand;
             }
         }
+
+        private static RoutedUICommand EditCommand;
+        public static RoutedUICommand Edit
+        {
+            get
+            {
+                return EditCommand;
+            }
+        }
+
 
     }
 }

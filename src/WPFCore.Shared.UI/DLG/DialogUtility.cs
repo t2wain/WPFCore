@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace WPFCore.Shared.UI.DLG
 {
-    public class DialogUtility
+    public static class DialogUtility
     {
-        virtual protected Window GetDialogWindow(UserControl ctl, string title)
+        public static Window GetDialogWindow(UserControl ctl, string title)
         {
             ChildWindow w = new ChildWindow();
             w.Title = title;
             w.Owner = Application.Current.MainWindow;
-            w.AddControl(ctl);
-            ((DialogVM)ctl.DataContext).Init(ctl);
             w.SizeToContent = SizeToContent.WidthAndHeight;
+            w.Width = ctl.Width;
+            w.Height = ctl.Height;
+            w.AddControl(ctl); 
+            ((DialogVM)ctl.DataContext).Init(ctl);
             w.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             w.ShowInTaskbar = false;
             w.WindowStyle = WindowStyle.ToolWindow;

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Data.Common;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
@@ -17,6 +18,7 @@ namespace WPFCore.Shared.UI.DG
         {
             var c = new DataGridTextColumn();
             SetCommon(c, fieldName, headerName, isReadOnly, width, alignment, format);
+            c.ElementStyle = CreateCellStyle(alignment);
             return c;
         }
 
@@ -40,7 +42,7 @@ namespace WPFCore.Shared.UI.DG
             c.IsReadOnly = isReadOnly;
             c.Width = width;
 
-            c.ElementStyle = CreateCellStyle(alignment);
+            //c.ElementStyle = CreateCellStyle(alignment);
             c.HeaderStyle = CreateHeaderStyle(alignment, isReadOnly);
             return c;
         }
@@ -58,7 +60,6 @@ namespace WPFCore.Shared.UI.DG
             column.IsReadOnly = isReadOnly;
             column.Width = width;
 
-            column.ElementStyle = CreateCellStyle(alignment);
             column.HeaderStyle = CreateHeaderStyle(alignment, isReadOnly);
         }
 

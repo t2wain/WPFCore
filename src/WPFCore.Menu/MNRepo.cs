@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using WPFCore.Common.UI;
 using WPFCore.Shared.UI.TV;
 using CT = WPFCore.Menu.MenuCommandEnum;
 using MT = WPFCore.Shared.UI.MNU.MenuTypeEnum;
@@ -275,7 +276,7 @@ namespace WPFCore.Menu
             new List<INotifyPropertyChanged>()
             {
                 CreateMenuItem("New...", CT.Report_New),
-                CreateMenuItem("Edit...", CT.Report_Edit),
+                CreateMenuItem("Edit...", CT.Report_Edit, TACommands.Edit),
                 CreateMenuItem("Delete...", CT.Report_Delete),
                 CreateSeparator(),
                 CreateMenuItem("Plant Reports...", CT.PlantReports),

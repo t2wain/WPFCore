@@ -35,7 +35,7 @@ namespace WPFCore.Shared.UI.DLG
         RelayCommand? _cancelCmd = null;
 
         UserControl? _ctl = null;
-        public void Init(UserControl ctl)
+        internal void Init(UserControl ctl)
         {
             this._ctl = ctl;
             ctl.AddHandler(TextBox.KeyDownEvent, new KeyEventHandler(this.OnKeyDownHandler));
@@ -44,9 +44,9 @@ namespace WPFCore.Shared.UI.DLG
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
-                this.ApplyCmd!.Execute(null);
+                this.ApplyCmd?.Execute(null);
             else if (e.Key == Key.Escape)
-                this.CancelCmd!.Execute(null);
+                this.CancelCmd?.Execute(null);
         }
     }
 }

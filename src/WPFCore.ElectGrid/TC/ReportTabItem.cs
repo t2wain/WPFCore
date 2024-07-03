@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
-using System.Data;
 using System.Windows.Controls;
 using WPFCore.Data.Report;
 using WPFCore.ElectGrid.DG;
 using WPFCore.ElectGrid.LV;
-using WPFCore.Shared.UI.LV;
 
 namespace WPFCore.ElectGrid.TC
 {
@@ -19,20 +16,28 @@ namespace WPFCore.ElectGrid.TC
         public async Task ShowReport(string reportId, TabControl utc, IServiceProvider provider)
         {
             var reportDef = await ReportUtil.DeserializeReportDefinitionFromFile(reportId);
-            
-            //switch (reportDef.DatabaseObjectType)
-            //{
-            //    case ReportDefinition.DB_TYPE_VIEW:
-            //    case ReportDefinition.DB_TYPE_TABLE:
-            //    case ReportDefinition.DB_TYPE_PROC:
-            //        ShowListViewReport(reportId, utc, provider, reportDef);
-            //        break;
-            //    case ReportDefinition.DB_TYPE_TABLE_EDIT:
-            //    case ReportDefinition.DB_TYPE_PROC_EDIT:
-            //        ShowDataGridReport(reportId, utc, provider, reportDef);
-            //        break;
-            //}
-            ShowDataGridReport(reportId, utc, provider, reportDef);
+
+            // for testing
+            if (false)
+            {
+                switch (reportDef.DatabaseObjectType)
+                {
+                    case ReportDefinition.DB_TYPE_VIEW:
+                    case ReportDefinition.DB_TYPE_TABLE:
+                    case ReportDefinition.DB_TYPE_PROC:
+                        ShowListViewReport(reportId, utc, provider, reportDef);
+                        break;
+                    case ReportDefinition.DB_TYPE_TABLE_EDIT:
+                    case ReportDefinition.DB_TYPE_PROC_EDIT:
+                        ShowDataGridReport(reportId, utc, provider, reportDef);
+                        break;
+                }
+            }
+            else
+            {
+                //ShowListViewReport(reportId, utc, provider, reportDef);
+                ShowDataGridReport(reportId, utc, provider, reportDef);
+            }
 
         }
 
@@ -80,6 +85,8 @@ namespace WPFCore.ElectGrid.TC
 
         public void Dispose()
         {
+            if (this.Content is IDisposable obj)
+                obj.Dispose();
         }
     }
 }

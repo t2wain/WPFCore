@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using WPFCore.Data.Report;
 
 namespace WPFCore.ElectGrid.DG
 {
