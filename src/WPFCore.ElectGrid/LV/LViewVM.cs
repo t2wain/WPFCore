@@ -78,9 +78,9 @@ namespace WPFCore.ElectGrid.LV
                         break;
                 }
             }
-            catch (AggregateException ex)
+            catch (Exception ex)
             {
-                throw ex;
+                this.Name = ex.ToString();
             }
             finally { Utility.SetNormalCursor(); }
         }

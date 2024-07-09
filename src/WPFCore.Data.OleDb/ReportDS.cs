@@ -31,23 +31,18 @@ namespace WPFCore.Data.OleDb
         public Task<DataView> GetReportData(ReportDefinition def)
         {
             var db = _dbfact.NewDB();
-            return ReportUtil.LoadReport(db, def).ContinueWith(t => 
-            {
-                db.Dispose();
-                return t.Result;
-            });
+            var t = ReportUtil.LoadReportAsync(db, def);
+            t.ContinueWith(_ => db.Dispose());
+            return t;
         }
 
         public Task<List<ColumnDefinition>> GetUpdatedColumnDefinitions(ReportDefinition def)
         {
             var db = _dbfact.NewDB();
-            return Task.Factory.StartNew(() => ReportUtil.GetUpdatedColumnDefinitions(db, def))
-                .ContinueWith(t => 
-                { 
-                    db.Dispose();
-                    return t.Result;
-                });
+            var t = ReportUtil.GetUpdatedColumnDefinitionsAsync(db, def);
+            t.ContinueWith(_ => db.Dispose());
+            return t;
         }
-
     }
+    
 }

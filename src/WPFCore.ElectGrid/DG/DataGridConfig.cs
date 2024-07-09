@@ -12,6 +12,8 @@ namespace WPFCore.ElectGrid.DG
         public static void SetDataGridOption(DataGrid dg, ReportDefinition rdef)
         {
             dg.AutoGenerateColumns = false;
+            //dg.EnableColumnVirtualization = false;
+            //dg.EnableRowVirtualization = true;
             dg.HorizontalGridLinesBrush = SystemColors.ControlLightBrush;
             dg.VerticalGridLinesBrush = SystemColors.ControlLightBrush;
             dg.CanUserAddRows = rdef.AllowAddAndDelete;

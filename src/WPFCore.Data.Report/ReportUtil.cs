@@ -1,6 +1,7 @@
 ﻿using ADOLib;
 using System.Data;
 using System.Data.Common;
+using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 
 namespace WPFCore.Data.Report
@@ -14,9 +15,9 @@ namespace WPFCore.Data.Report
         /// Query the database to return the DataView
         /// based on the ReportDefinition configuration
         /// </summary>
-        public static Task<DataView> LoadReport(IDatabase db, ReportDefinition report, string whereClause = "")
+        public static DataView LoadReport(IDatabase db, ReportDefinition report, string whereClause = "")
         {
-            var cmd = db.CreateCommand();
+            using var cmd = db.CreateCommand();
             switch (report.DatabaseObjectType)
             {
                 case ReportDefinition.DB_TYPE_VIEW:
@@ -35,12 +36,11 @@ namespace WPFCore.Data.Report
                     break;
             }
 
-            return db.ExecuteTableAsync(cmd, report.DatabaseView!)
-                .ContinueWith(t => {
-                    cmd.Dispose();
-                    return t.Result.DefaultView;
-                });
+            return db.ExecuteTable(cmd, report.DatabaseView!).DefaultView;
         }
+
+        public static Task<DataView> LoadReportAsync(IDatabase db, ReportDefinition report, string whereClause = "") =>
+            Task.Factory.StartNew(() => LoadReport(db, report, whereClause));
 
         /// <summary>
         /// Set the DbCommand parameters based
@@ -59,9 +59,9 @@ namespace WPFCore.Data.Report
 
         }
 
-        public static Task<List<string>> LoadLookUp(IDatabase db, string dbLookupProc, string colName)
+        public static List<string> LoadLookUp(IDatabase db, string dbLookupProc, string colName)
         {
-            var cmd = db.CreateCommand(dbLookupProc);
+            using var cmd = db.CreateCommand(dbLookupProc);
             cmd.CommandType = CommandType.StoredProcedure;
             db.DeriveParameters(cmd);
             foreach (DbParameter p in cmd.Parameters)
@@ -73,15 +73,15 @@ namespace WPFCore.Data.Report
                 }
             }
 
-            return db.ExecuteTableAsync(cmd, "table1").ContinueWith(t =>
-            {
-                cmd.Dispose();
-                var lst = new List<string>();
-                foreach (DataRow r in t.Result.Rows)
-                    lst.Add(r[0].ToString()!);
-                return lst;
-            });
+            var tbl = db.ExecuteTable(cmd, "table1");
+            var lst = new List<string>();
+            foreach (DataRow r in tbl.Rows)
+                lst.Add(r[0].ToString()!);
+            return lst;
         }
+
+        public static Task<List<string>> LoadLookUpAsync(IDatabase db, string dbLookupProc, string colName) =>
+            Task.Factory.StartNew<List<string>>(() => LoadLookUp(db, dbLookupProc, colName));
 
         #endregion
 
@@ -135,37 +135,39 @@ namespace WPFCore.Data.Report
         public static List<ColumnDefinition> GetUpdatedColumnDefinitions(IDatabase db, ReportDefinition def)
         {
             List<ColumnDefinition> columns = new List<ColumnDefinition>();
-            using (DbCommand cmd = db.CreateCommand())
+            using var cmd = db.CreateCommand();
+            switch (def.DatabaseObjectType)
             {
-                switch (def.DatabaseObjectType)
-                {
-                    case ReportDefinition.DB_TYPE_PROC:
-                    case ReportDefinition.DB_TYPE_PROC_EDIT:
-                        cmd.CommandText = def.DatabaseView;
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        break;
-                    default:
-                        cmd.CommandText = String.Format("select * from {0}", def.DatabaseView);
-                        cmd.CommandType = CommandType.Text;
-                        break;
-                }
-
-                if (cmd.CommandText != String.Empty)
-                {
-                    DbDataAdapter da = db.CreateDataAdapter();
-                    da.SelectCommand = cmd;
-                    if (cmd.CommandType == CommandType.StoredProcedure)
-                        db.DeriveParameters(cmd);
-                    cmd.Connection = db.Connection;
-                    DataTable tbl = new DataTable("schema");
-                    da.FillSchema(tbl, SchemaType.Source);
-                    columns = GetColumnDefinitionsFromSchemaTable(tbl);
-                    if (def.Columns != null)
-                        columns = GetUpdatedColumnDefinitions(columns, def.Columns);
-                }
+                case ReportDefinition.DB_TYPE_PROC:
+                case ReportDefinition.DB_TYPE_PROC_EDIT:
+                    cmd.CommandText = def.DatabaseView;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    break;
+                default:
+                    cmd.CommandText = String.Format("select * from {0}", def.DatabaseView);
+                    cmd.CommandType = CommandType.Text;
+                    break;
             }
+
+            if (cmd.CommandText != String.Empty)
+            {
+                using DbDataAdapter da = db.CreateDataAdapter();
+                da.SelectCommand = cmd;
+                if (cmd.CommandType == CommandType.StoredProcedure)
+                    db.DeriveParameters(cmd);
+                cmd.Connection = db.Connection;
+                DataTable tbl = new DataTable("schema");
+                da.FillSchema(tbl, SchemaType.Source);
+                columns = GetColumnDefinitionsFromSchemaTable(tbl);
+                if (def.Columns != null)
+                    columns = GetUpdatedColumnDefinitions(columns, def.Columns);
+            }
+            
             return columns;
         }
+
+        public static Task<List<ColumnDefinition>> GetUpdatedColumnDefinitionsAsync(IDatabase db, ReportDefinition def) =>
+            Task.Factory.StartNew(() => GetUpdatedColumnDefinitions(db, def));
 
         static List<ColumnDefinition> GetColumnDefinitionsFromSchemaTable(DataTable table)
         {

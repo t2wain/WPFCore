@@ -18,25 +18,26 @@ namespace WPFCore.ElectGrid.TC
             var reportDef = await ReportUtil.DeserializeReportDefinitionFromFile(reportId);
 
             // for testing
-            if (false)
+            var production = false;
+            if (production)
             {
                 switch (reportDef.DatabaseObjectType)
                 {
                     case ReportDefinition.DB_TYPE_VIEW:
                     case ReportDefinition.DB_TYPE_TABLE:
                     case ReportDefinition.DB_TYPE_PROC:
-                        ShowListViewReport(reportId, utc, provider, reportDef);
+                        await ShowListViewReport(reportId, utc, provider, reportDef);
                         break;
                     case ReportDefinition.DB_TYPE_TABLE_EDIT:
                     case ReportDefinition.DB_TYPE_PROC_EDIT:
-                        ShowDataGridReport(reportId, utc, provider, reportDef);
+                        await ShowDataGridReport(reportId, utc, provider, reportDef);
                         break;
                 }
             }
             else
             {
                 //ShowListViewReport(reportId, utc, provider, reportDef);
-                ShowDataGridReport(reportId, utc, provider, reportDef);
+                await ShowDataGridReport(reportId, utc, provider, reportDef);
             }
 
         }

@@ -90,7 +90,7 @@ namespace WPFCore.ElectGrid.TC
 
         #region Report
 
-        public void AddReport(string reportId)
+        public Task AddReport(string reportId)
         {
             var ti = this.UTControl.TControl.Items.Cast<ReportTabItem>().Where(i =>
                  i is ReportTabItem r && r.ID == reportId
@@ -100,14 +100,15 @@ namespace WPFCore.ElectGrid.TC
             {
                 rti.IsSelected = true;
                 if (rti.VM != null && rti.VM.ItemCount == 0)
-                    rti.VM.RefreshData();
+                    return rti.VM.RefreshData();
                 else if (rti.DGVM != null && rti.DGVM.ItemCount == 0)
-                    rti.DGVM.RefreshData();
+                    return rti.DGVM.RefreshData();
+                else return Task.CompletedTask;
             }
             else
             {
                 ti = new ReportTabItem();
-                ti.ShowReport(reportId, this.UTControl.TControl, this._provider);
+                return ti.ShowReport(reportId, this.UTControl.TControl, this._provider);
             }
         }
 
