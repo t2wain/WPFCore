@@ -3,8 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPFCore.Common.UI;
+using WPFCore.Data.Report;
 using WPFCore.ElectGrid.RPT;
-using WPFCore.ElectGrid.TC;
 using WPFCore.Shared.UI.DG;
 using WPFCore.Shared.UI.DLG;
 
@@ -58,10 +58,11 @@ namespace WPFCore.ElectGrid.DG
             switch (e.PropertyName)
             {
                 case nameof(VM2.ReportDef):
-                    DataGridConfig.SetDataGridOption(this.GridControl, VM2.ReportDef);
+                    DataGridConfig.SetDataGridOption(this.GridControl, VM2.ReportDef!);
                     break;
                 case nameof(VM2.Columns):
                     this.AddColumns(VM2.Columns);
+                    DataGridConfig.SetFrozenColumn(this.GridControl, VM2.ReportDef!);
                     break;
             }
 
@@ -83,11 +84,25 @@ namespace WPFCore.ElectGrid.DG
 
         protected void OnEdit(object sender, ExecutedRoutedEventArgs e)
         {
+            // Create a copy of report def
+            var dlrdef = new ReportDefinition();
+            dlrdef.SetData(VM2.ReportDef!);
+
+            // Update column def width based on datagrid column
+            DataGridUtility.UpdateColumnDefWidth(dlrdef.Columns!, VM2.Columns);
+
+            // Configure dialog window
             var c = new UReportDef();
-            var vm = new UReportDefVM();
-            vm.ReportDef = VM2.ReportDef;
-            c.Init(vm);
-            var res = DialogUtility.GetDialogWindow(c, $"Report Edit - {VM2.ReportDef!.Name}").ShowDialog();
+            var dlvm = new UReportDefVM();
+            dlvm.ReportDef = dlrdef;
+            c.Init(dlvm);
+
+            // Show dialog
+            var dlres = DialogUtility.GetDialogWindow(c, $"Report Edit - {VM2.ReportDef!.Name}", null, 470).ShowDialog();
+
+            // Update column defs
+            if (dlres.HasValue && dlres.Value)
+                VM2.UpdateReportDef(dlvm.ReportDef);
         }
 
         #endregion

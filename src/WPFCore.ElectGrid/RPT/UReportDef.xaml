@@ -29,6 +29,24 @@
     <DockPanel>
         <TabControl>
             <TabItem Header="General">
+                <DockPanel LastChildFill="True">
+                <!-- Row 6 -->
+                    <DockPanel DockPanel.Dock="Bottom"
+                        DataContext="{Binding DataContext, 
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                        Grid.Row="6" 
+                        Grid.Column="0" 
+                        Grid.ColumnSpan="5"
+                        Margin="20 10 20 10"
+                        Height="40"
+                        LastChildFill="False">
+                        <Button DockPanel.Dock="Left" Command="{Binding ExportCmd}">Export Config</Button>
+                        <Button DockPanel.Dock="Left" Command="{Binding ImportCmd}">Import Config</Button>
+                        <Button DockPanel.Dock="Left" Command="{Binding RefeshCmd}">Refresh</Button>
+                        <Button DockPanel.Dock="Left" Command="{Binding SaveCmd}">Save</Button>
+                        <Button DockPanel.Dock="Right" Command="{Binding CancelCmd}">Cancel</Button>
+                        <Button DockPanel.Dock="Right" Command="{Binding ApplyCmd}">OK</Button>
+                    </DockPanel>
                 <Grid Margin="20 30 20 20" DataContext="{Binding DataContext.ReportDef, 
                     RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
                     <Grid.ColumnDefinitions>
@@ -44,8 +62,7 @@
                         <RowDefinition Height="35"></RowDefinition>
                         <RowDefinition Height="35"></RowDefinition>
                         <RowDefinition Height="35"></RowDefinition>
-                        <RowDefinition Height="100"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <!-- Row 0 -->
@@ -142,26 +159,12 @@
                         Grid.Row="5" 
                         Grid.Column="1" 
                         Grid.ColumnSpan="5"
+                        VerticalContentAlignment="Top"
                         Text="{Binding Description}" />
 
-                    <!-- Row 6 -->
-                    <DockPanel
-                        DataContext="{Binding DataContext, 
-                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
-                        Grid.Row="6" 
-                        Grid.Column="0" 
-                        Grid.ColumnSpan="5"
-                        Margin="5 30 5 5"
-                        Height="40"
-                        LastChildFill="False">
-                        <Button DockPanel.Dock="Left" Command="{Binding ExportCmd}">Export Config</Button>
-                        <Button DockPanel.Dock="Left" Command="{Binding ImportCmd}">Import Config</Button>
-                        <Button DockPanel.Dock="Left" Command="{Binding RefeshCmd}">Refresh</Button>
-                        <Button DockPanel.Dock="Left" Command="{Binding SaveCmd}">Save</Button>
-                        <Button DockPanel.Dock="Right" Command="{Binding ApplyCmd}">Cancel</Button>
-                        <Button DockPanel.Dock="Right" Command="{Binding CancelCmd}">OK</Button>
-                    </DockPanel>
                 </Grid>
+
+                </DockPanel>
             </TabItem>
             <TabItem x:Name="_tabColumns" Header="Columns">
                 <DataGrid x:Name="_dgCol" />

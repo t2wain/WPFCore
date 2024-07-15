@@ -12,24 +12,27 @@ namespace WPFCore.ElectGrid.DG
         public static void SetDataGridOption(DataGrid dg, ReportDefinition rdef)
         {
             dg.AutoGenerateColumns = false;
-            //dg.EnableColumnVirtualization = false;
-            //dg.EnableRowVirtualization = true;
             dg.HorizontalGridLinesBrush = SystemColors.ControlLightBrush;
             dg.VerticalGridLinesBrush = SystemColors.ControlLightBrush;
             dg.CanUserAddRows = rdef.AllowAddAndDelete;
             dg.CanUserDeleteRows = rdef.AllowAddAndDelete;
+            SetFrozenColumn(dg, rdef);
         }
+
+        public static void SetFrozenColumn(DataGrid dg, ReportDefinition rdef) =>
+            dg.FrozenColumnCount = rdef.Columns!.Where(c => c.IsFrozen).Count();
 
         public static IEnumerable<DataGridColumn> CreateGeneralReport(ReportDefinition rdef)
         {
             var cols = new List<DataGridColumn>();
             var q = rdef.Columns!
                 .Where(i => i.Visible)
-                .OrderBy(i => i.Position);
+                .OrderByDescending(i => i.IsFrozen)
+                .ThenBy(i => i.Position);
 
             foreach (var c in q)
             {
-                if (c.IsLookUp)
+                if (c.IsLookUp && c.IsEditable)
                 {
                     cols.Add(DataGridUtility.CreateComboBoxColumn(
                         c.FieldName!,

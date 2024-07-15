@@ -86,5 +86,11 @@ namespace WPFCore.ElectGrid.DG
             finally { Utility.SetNormalCursor(); }
         }
 
+        public void UpdateReportDef(ReportDefinition reportDef)
+        {
+            this.ReportDef!.SetData(reportDef);
+            this.Columns = DataGridConfig.CreateGeneralReport(reportDef);
+        }
+
     }
 }

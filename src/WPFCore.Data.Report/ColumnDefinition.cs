@@ -46,9 +46,11 @@ namespace WPFCore.Data.Report
         {
             this.HeaderName = col.HeaderName;
             this.FieldName = col.FieldName;
+            this.Description = col.Description;
             this.ColumnWidth = col.ColumnWidth;
             this.Visible = col.Visible;
             this.Position = col.Position;
+            this.Format = col.Format;
             this.Alignment = col.Alignment;
             this.DataType = col.DataType;
             this.Filter = col.Filter;

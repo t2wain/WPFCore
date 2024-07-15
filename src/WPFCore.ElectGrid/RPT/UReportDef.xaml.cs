@@ -2,6 +2,7 @@
 using System.Windows;
 using WPFCore.Shared.UI.DG;
 using R = WPFCore.Data.Report;
+using System.Windows.Threading;
 
 namespace WPFCore.ElectGrid.RPT
 {
@@ -33,18 +34,18 @@ namespace WPFCore.ElectGrid.RPT
             var cols = new List<DataGridColumn>() 
             {
                 DataGridUtility.CreateTextColumn("FieldName", "Field Name", 150),
-                DataGridUtility.CreateTextColumn("HeaderName", "Header Name", 150, false),
-                DataGridUtility.CreateTextColumn("Description", "Description", 200, false),
-                DataGridUtility.CreateTextColumn("ColumnWidth", "Width", 50, false, HorizontalAlignment.Center),
-                DataGridUtility.CreateCheckBoxColumn("IsPrimaryKey", "Key", 50, false),
-                DataGridUtility.CreateCheckBoxColumn("Visible", "Visible", 50, false),
-                DataGridUtility.CreateTextColumn("Position", "Position", 60, false, HorizontalAlignment.Center),
-                DataGridUtility.CreateTextColumn("Format", "Format", 60, false, HorizontalAlignment.Center),
-                DataGridUtility.CreateTextColumn("Alignment", "Alignment", 70, false, HorizontalAlignment.Center),
-                DataGridUtility.CreateCheckBoxColumn("IsEditable", "Editable", 60, false),
-                DataGridUtility.CreateCheckBoxColumn("IsLookUp", "Lookup", 60, false),
-                DataGridUtility.CreateCheckBoxColumn("IsFrozen", "Frozen", 60, false),
-                DataGridUtility.CreateTextColumn("Filter", "Filter", 150, false),
+                DataGridUtility.CreateTextColumn("HeaderName", "Header Name", 150, false, markEditable: false),
+                DataGridUtility.CreateTextColumn("Description", "Description", 200, false, markEditable: false),
+                DataGridUtility.CreateTextColumn("ColumnWidth", "Width", 50, false, HorizontalAlignment.Center, null, false),
+                DataGridUtility.CreateCheckBoxColumn("IsPrimaryKey", "Key", 50, false, false),
+                DataGridUtility.CreateCheckBoxColumn("Visible", "Visible", 50, false, false),
+                DataGridUtility.CreateTextColumn("Position", "Position", 60, false, HorizontalAlignment.Center, null, false),
+                DataGridUtility.CreateTextColumn("Format", "Format", 60, false, HorizontalAlignment.Center, null, false),
+                DataGridUtility.CreateTextColumn("Alignment", "Alignment", 70, false, HorizontalAlignment.Center, null, false),
+                DataGridUtility.CreateCheckBoxColumn("IsEditable", "Editable", 60, false, false),
+                DataGridUtility.CreateCheckBoxColumn("IsLookUp", "Lookup", 60, false, false),
+                DataGridUtility.CreateCheckBoxColumn("IsFrozen", "Frozen", 60, false, false),
+                DataGridUtility.CreateTextColumn("Filter", "Filter", 150, false, markEditable: false),
             };
 
             foreach (var col in cols)
