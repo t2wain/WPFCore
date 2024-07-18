@@ -37,7 +37,7 @@ namespace WPFCore.Shared.UI.DG
         {
             var c = new DataGridTextColumn();
             SetCommon(c, fieldName, headerName, isReadOnly, width, alignment, format, markEditable);
-            c.ElementStyle = CreateCellStyle(alignment);
+            c.ElementStyle = CreateTextCellStyle(alignment);
             return c;
         }
 
@@ -46,6 +46,7 @@ namespace WPFCore.Shared.UI.DG
         {
             var c = new DataGridCheckBoxColumn();
             SetCommon(c, fieldName, headerName, isReadOnly, width, HorizontalAlignment.Center, null, markEditable);
+            c.ElementStyle = CreateCheckboxCellStyle();
             return c;
         }
 
@@ -93,7 +94,7 @@ namespace WPFCore.Shared.UI.DG
             return b;
         }
 
-        internal static Style CreateCellStyle(HorizontalAlignment alignment)
+        internal static Style CreateTextCellStyle(HorizontalAlignment alignment)
         {
             Style style = new Style();
             style.TargetType = typeof(TextBlock);
@@ -101,6 +102,15 @@ namespace WPFCore.Shared.UI.DG
             style.Setters.Add(new Setter(TextBlock.TextWrappingProperty, TextWrapping.Wrap));
             style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
             style.Setters.Add(new Setter(TextBlock.PaddingProperty, new Thickness(5, 2, 5, 2)));
+            return style;
+        }
+
+        internal static Style CreateCheckboxCellStyle()
+        {
+            Style style = new Style();
+            style.TargetType = typeof(CheckBox);
+            style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Center));
+            style.Setters.Add(new Setter(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Center));
             return style;
         }
 

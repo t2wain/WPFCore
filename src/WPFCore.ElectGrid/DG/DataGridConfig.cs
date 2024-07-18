@@ -16,6 +16,7 @@ namespace WPFCore.ElectGrid.DG
             dg.VerticalGridLinesBrush = SystemColors.ControlLightBrush;
             dg.CanUserAddRows = rdef.AllowAddAndDelete;
             dg.CanUserDeleteRows = rdef.AllowAddAndDelete;
+            dg.CanUserResizeRows = false;
             SetFrozenColumn(dg, rdef);
         }
 

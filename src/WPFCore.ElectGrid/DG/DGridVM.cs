@@ -33,10 +33,12 @@ namespace WPFCore.ElectGrid.DG
         [ObservableProperty]
         private IEnumerable<DataGridColumn> _columns = [];
 
+        public IReportDS ReportDS => this._ds;
 
         public async Task ShowReport(string reportId)
         {
-            var reportDef = await ReportUtil.DeserializeReportDefinitionFromFile(reportId);
+            var reportDef = await this.ReportDS.GetReportDefinition(reportId);
+            reportDef.FileName = reportId;
             await this.ShowReport(reportDef);
         }
 

@@ -15,6 +15,9 @@ namespace WPFCore.Data.Report
         public int ReportID { get; set; }
         [XmlIgnore]
         public int CategoryID { get; set; }
+        [XmlIgnore]
+        public string? FileName { get; set; }
+
         public string? Name { get; set; }
         public string? Description { get; set; }
         public string? DatabaseView { get; set; }
@@ -43,6 +46,8 @@ namespace WPFCore.Data.Report
 
         public void SetData(ReportDefinition def)
         {
+            this.FileName = def.FileName;
+
             this.Name = def.Name;
             this.Description = def.Description;
             this.DatabaseView = def.DatabaseView;

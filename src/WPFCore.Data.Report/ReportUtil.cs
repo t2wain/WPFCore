@@ -1,7 +1,6 @@
 ﻿using ADOLib;
 using System.Data;
 using System.Data.Common;
-using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 
 namespace WPFCore.Data.Report
@@ -248,6 +247,12 @@ namespace WPFCore.Data.Report
 
         #region Serialization
 
+        public static Task SaveReportDefinition(ReportDefinition reportDef)
+        {
+            var xml = SerializeReportDefinition(reportDef);
+            return File.WriteAllTextAsync(reportDef.FileName!, xml);
+        }
+
         public static string SerializeReportDefinition(ReportDefinition def)
         {
             var s = new XmlSerializer(typeof(ReportDefinition));
@@ -258,7 +263,12 @@ namespace WPFCore.Data.Report
 
         public static Task<ReportDefinition> DeserializeReportDefinitionFromFile(string filePath) =>
             File.ReadAllTextAsync(filePath)
-                .ContinueWith(t => DeserializeReportDefinition(t.Result));
+                .ContinueWith(t =>
+                {
+                    var reportDef = DeserializeReportDefinition(t.Result);
+                    reportDef.FileName = filePath;
+                    return reportDef;
+                });
 
         public static ReportDefinition DeserializeReportDefinition(string xml)
         {

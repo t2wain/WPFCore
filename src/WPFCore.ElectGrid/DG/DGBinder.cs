@@ -87,13 +87,14 @@ namespace WPFCore.ElectGrid.DG
             // Create a copy of report def
             var dlrdef = new ReportDefinition();
             dlrdef.SetData(VM2.ReportDef!);
+            dlrdef.FileName = VM2.ReportDef!.FileName;
 
             // Update column def width based on datagrid column
             DataGridUtility.UpdateColumnDefWidth(dlrdef.Columns!, VM2.Columns);
 
             // Configure dialog window
             var c = new UReportDef();
-            var dlvm = new UReportDefVM();
+            var dlvm = new UReportDefVM(VM2.ReportDS);
             dlvm.ReportDef = dlrdef;
             c.Init(dlvm);
 

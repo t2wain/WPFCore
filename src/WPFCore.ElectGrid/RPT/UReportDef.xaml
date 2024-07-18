@@ -82,7 +82,11 @@
                         Grid.Row="0" 
                         Grid.Column="4" 
                         Text="{Binding DatabaseObjectType}"
-                        Margin="5"></ComboBox>
+                        Margin="5">
+                            <ComboBoxItem>VIEW</ComboBoxItem>
+                            <ComboBoxItem>PROC</ComboBoxItem>
+                            <ComboBoxItem>TABLE</ComboBoxItem>
+                        </ComboBox>
 
                     <!-- Row 1 -->
                     <TextBlock 

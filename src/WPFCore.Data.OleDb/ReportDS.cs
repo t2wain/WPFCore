@@ -13,6 +13,8 @@ namespace WPFCore.Data.OleDb
             this._dbfact = dbfact;
         }
 
+        #region Others
+
         public Task<DataView> GetMotors()
         {
             throw new NotImplementedException();
@@ -28,6 +30,11 @@ namespace WPFCore.Data.OleDb
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        public Task<ReportDefinition> GetReportDefinition(string reportId) =>
+            ReportUtil.DeserializeReportDefinitionFromFile(reportId);
+
         public Task<DataView> GetReportData(ReportDefinition def)
         {
             var db = _dbfact.NewDB();
@@ -38,11 +45,14 @@ namespace WPFCore.Data.OleDb
 
         public Task<List<ColumnDefinition>> GetUpdatedColumnDefinitions(ReportDefinition def)
         {
-            var db = _dbfact.NewDB();
+            using var db = _dbfact.NewDB();
             var t = ReportUtil.GetUpdatedColumnDefinitionsAsync(db, def);
-            t.ContinueWith(_ => db.Dispose());
+            t.ContinueWith(_ => db.Dispose(), TaskContinuationOptions.ExecuteSynchronously);
             return t;
         }
+
+        public Task SaveReportDefinition(ReportDefinition def) =>
+            ReportUtil.SaveReportDefinition(def);
     }
     
 }

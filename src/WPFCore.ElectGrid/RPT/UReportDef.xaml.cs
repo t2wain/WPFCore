@@ -30,11 +30,13 @@ namespace WPFCore.ElectGrid.RPT
             dg.VerticalGridLinesBrush = SystemColors.ControlLightBrush;
             dg.CanUserAddRows = false;
             dg.CanUserDeleteRows = false;
+            dg.FrozenColumnCount = 1;
+            dg.CanUserResizeRows = false;
 
             var cols = new List<DataGridColumn>() 
             {
-                DataGridUtility.CreateTextColumn("FieldName", "Field Name", 150),
                 DataGridUtility.CreateTextColumn("HeaderName", "Header Name", 150, false, markEditable: false),
+                DataGridUtility.CreateTextColumn("FieldName", "Field Name", 150),
                 DataGridUtility.CreateTextColumn("Description", "Description", 200, false, markEditable: false),
                 DataGridUtility.CreateTextColumn("ColumnWidth", "Width", 50, false, HorizontalAlignment.Center, null, false),
                 DataGridUtility.CreateCheckBoxColumn("IsPrimaryKey", "Key", 50, false, false),

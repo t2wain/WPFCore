@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Controls;
+using WPFCore.Common.Data;
 using WPFCore.Data.Report;
 using WPFCore.ElectGrid.DG;
 using WPFCore.ElectGrid.LV;
@@ -66,9 +67,11 @@ namespace WPFCore.ElectGrid.TC
             IServiceProvider provider, ReportDefinition? rdef = null)
         {
 
+            var ds = provider.GetRequiredService<IReportDS>();
+
             var reportDef = rdef;
             if (reportDef == null)
-                reportDef = await ReportUtil.DeserializeReportDefinitionFromFile(reportId);
+                reportDef = await ds.GetReportDefinition(reportId);
 
             var dgvm = provider.GetRequiredService<DGridVM>();
             this.DGVM = dgvm;
