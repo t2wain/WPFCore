@@ -99,11 +99,7 @@ namespace WPFCore.ElectGrid.TC
             if (ti != null && ti is ReportTabItem rti)
             {
                 rti.IsSelected = true;
-                if (rti.VM != null && rti.VM.ItemCount == 0)
-                    return rti.VM.RefreshData();
-                else if (rti.DGVM != null && rti.DGVM.ItemCount == 0)
-                    return rti.DGVM.RefreshData();
-                else return Task.CompletedTask;
+                return Task.CompletedTask;
             }
             else
             {

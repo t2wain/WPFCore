@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WPFCore.Common.Data;
 using WPFCore.Common.UI;
 using WPFCore.Data.Report;
 using WPFCore.ElectGrid.DG;
@@ -20,9 +18,6 @@ namespace WPFCore.ElectGrid.TC
 
         #region Data
 
-        public LViewVM VM { get; set; } = null!;
-        public DGridVM DGVM { get; set; } = null!;
-
         public string ID { get; set; } = null!;
 
         #endregion
@@ -35,6 +30,8 @@ namespace WPFCore.ElectGrid.TC
 
             // for testing
             var production = false;
+            IReportTabItemContent? urpt = null;
+
             if (production)
             {
                 switch (reportDef.DatabaseObjectType)
@@ -42,66 +39,43 @@ namespace WPFCore.ElectGrid.TC
                     case ReportDefinition.DB_TYPE_VIEW:
                     case ReportDefinition.DB_TYPE_TABLE:
                     case ReportDefinition.DB_TYPE_PROC:
-                        await ShowListViewReport(reportId, utc, provider, reportDef);
+                        urpt = new UListView();
                         break;
                     case ReportDefinition.DB_TYPE_TABLE_EDIT:
                     case ReportDefinition.DB_TYPE_PROC_EDIT:
-                        await ShowDataGridReport(reportId, utc, provider, reportDef);
+                        urpt = new UDataGridView();
                         break;
                 }
             }
             else
             {
-                //ShowListViewReport(reportId, utc, provider, reportDef);
-                await ShowDataGridReport(reportId, utc, provider, reportDef);
+                urpt = new UDataGridView();
             }
 
+            if (urpt != null)
+                await ShowReport(reportId, utc, provider, urpt, reportDef);
         }
 
-        UListView _lvru = null!;
-        internal async Task ShowListViewReport(string reportId, TabControl utc, 
-            IServiceProvider provider, ReportDefinition? rdef = null)
+        IReportTabItemContent _urpt = null!;
+        internal async Task ShowReport(string reportId, TabControl utc,
+            IServiceProvider provider, IReportTabItemContent urpt, ReportDefinition? rdef = null)
         {
-            var lvm = provider.GetRequiredService<LViewVM>();
-            this.VM = lvm;
             this.ID = reportId;
-            _lvru = new UListView();
-            _lvru.Init(lvm);
+            _urpt = urpt;
 
             var reportDef = rdef;
             if (reportDef == null)
                 reportDef = await ReportUtil.DeserializeReportDefinitionFromFile(reportId);
+
             this.Header = reportDef.Name;
-            this.Content = _lvru;
+            this.Content = urpt;
             utc.Items.Add(this);
             this.IsSelected = true;
 
-            await lvm.ShowReport(reportDef);
+            await urpt.ShowReport(reportDef, provider);
         }
 
-        UDataGridView _dgru = null!;
-        internal async Task ShowDataGridReport(string reportId, TabControl utc, 
-            IServiceProvider provider, ReportDefinition? rdef = null)
-        {
-            var ds = provider.GetRequiredService<IReportDS>();
-
-            var reportDef = rdef;
-            if (reportDef == null)
-                reportDef = await ds.GetReportDefinition(reportId);
-
-            var dgvm = provider.GetRequiredService<DGridVM>();
-            this.DGVM = dgvm;
-            this.ID = reportId;
-            _dgru = new UDataGridView();
-            _dgru.Init(dgvm);
-
-            this.Header = reportDef.Name;
-            this.Content = _dgru;
-            utc.Items.Add(this);
-            this.IsSelected = true;
-
-            await dgvm.ShowReport(reportDef);
-        }
+        public int ItemCount => _urpt.ItemCount;
 
         #endregion
 
@@ -122,42 +96,56 @@ namespace WPFCore.ElectGrid.TC
 
         protected void OnEdit(object sender, ExecutedRoutedEventArgs e)
         {
-            if (_dgru != null)
+            if (_urpt != null)
             {
                 e.Handled = true;
-                _dgru.ShowEditWindow();
+                _urpt.ShowEditWindow();
             }
         }
 
         protected void OnRefresh(object sender, RoutedEventArgs e)
         {
-            if (this.DGVM != null)
+            if (_urpt != null)
             {
                 e.Handled = true;
-                this.DGVM.RefreshData();
+                _urpt.RefreshData();
             }
-            else if (this.VM != null)
+            //if (this.DGVM != null)
+            //{
+            //    e.Handled = true;
+            //    this.DGVM.RefreshData();
+            //}
+            //else if (this.VM != null)
+            //{
+            //    e.Handled = true;
+            //    this.VM.RefreshData();
+            //}
+        }
+
+        internal Task RefreshData()
+        {
+            if (_urpt != null)
             {
-                e.Handled = true;
-                this.VM.RefreshData();
+                return _urpt.RefreshData();
             }
+            else return Task.CompletedTask;
         }
 
         protected void OnSetFilter(object sender, ExecutedRoutedEventArgs e)
         {
-            if (_dgru != null)
+            if (_urpt != null)
             {
                 e.Handled = true;
-                _dgru.ShowFilterWindow();
+                _urpt.SetFilter();
             }
         }
 
         protected void OnClearFilter(object sender, ExecutedRoutedEventArgs e)
         {
-            if (_dgru != null)
+            if (_urpt != null)
             {
                 e.Handled = true;
-                _dgru.ClearFilter();
+                _urpt.ClearFilter();
             }
         }
 

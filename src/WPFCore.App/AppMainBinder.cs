@@ -73,10 +73,7 @@ namespace WPFCore.App
             }
             else if (e.Source is UTabControl utc && utc.SelectedItem is ReportTabItem ti)
             {
-                if (ti.VM != null)
-                    UpdateCountMsg(ti.VM.ItemCount);
-                else if (ti.DGVM != null)
-                    UpdateCountMsg(ti.DGVM.ItemCount);
+                UpdateCountMsg(ti.ItemCount);
             }
         }
 
