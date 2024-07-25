@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using WPFCore.Common.UI;
 using WPFCore.Data.Report;
 using WPFCore.ElectGrid.RPT;
@@ -45,7 +44,6 @@ namespace WPFCore.ElectGrid.DG
         {
             dg.GotFocus += this.OnFocus;
             this.VM.PropertyChanged += OnPropertyChanged;
-            this.ConfigureCommands(dg);
         }
 
         void OnFocus(object sender, RoutedEventArgs e)
@@ -70,19 +68,7 @@ namespace WPFCore.ElectGrid.DG
 
         #endregion
 
-        #region Configure Commands 
-
-        protected void ConfigureCommands(DataGrid dg)
-        {
-            dg.CommandBindings.Add(new(TACommands.Edit, this.OnEdit, this.OnEditCanExecuted));
-        }
-
-        protected void OnEditCanExecuted(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        protected void OnEdit(object sender, ExecutedRoutedEventArgs e)
+        internal void ShowEditWindow()
         {
             // Create a copy of report def
             var dlrdef = new ReportDefinition();
@@ -92,20 +78,27 @@ namespace WPFCore.ElectGrid.DG
             // Update column def width based on datagrid column
             DataGridUtility.UpdateColumnDefWidth(dlrdef.Columns!, VM2.Columns);
 
-            // Configure dialog window
-            var c = new UReportDef();
-            var dlvm = new UReportDefVM(VM2.ReportDS);
-            dlvm.ReportDef = dlrdef;
-            c.Init(dlvm);
-
-            // Show dialog
-            var dlres = DialogUtility.GetDialogWindow(c, $"Report Edit - {VM2.ReportDef!.Name}", null, 470).ShowDialog();
-
-            // Update column defs
-            if (dlres.HasValue && dlres.Value)
-                VM2.UpdateReportDef(dlvm.ReportDef);
+            var success = ReportDialogUtility.ShowEditWindow(ref dlrdef, VM2.ReportDS);
+            if (success)
+                VM2.UpdateReportDef(dlrdef);
         }
 
-        #endregion
+
+        internal void ShowFilterWindow()
+        {
+            // Create a copy of report def
+            var dlrdef = new ReportDefinition();
+            dlrdef.SetData(VM2.ReportDef!);
+
+            var success = ReportDialogUtility.ShowFilterWindow(ref dlrdef);
+            if (success)
+                VM2.SetFilter(dlrdef);
+        }
+
+        internal void ClearFilter()
+        {
+            VM2.ClearFiler();
+        }
+
     }
 }

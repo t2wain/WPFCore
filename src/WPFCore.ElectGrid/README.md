@@ -1,3 +1,24 @@
-﻿## To Display a DataView in a GridView
+﻿## Display a DataView in a ListView or DataGrid control
 
-The display configuration of a DataView is defined in a ReportDefinition class (WPFCore.Data.Report). The ReportDefinition class can be serialized / deserialized as XML and stored in a file or database. In the current implementation, the report is displayed by executing the RouteUICommand ViewDetail and provide a path to the XML configuration file for the parameter.
+This library display a DataView within a ListView or DataGrid based on a ReportDefinition.
+
+- UListView (WPFCore.ElectGrid.LV) is a ListView control that can display a DataView
+- UDataGridView (WPFCore.ElectGrid.DG) is a DataGrid control that can display a DataView
+- UTabControl (WPFCore.ElectGrid.TC) is a tab control that can host UListView or UDataGridView control in each tab (ReportTabItem)
+- UReportDef (WPFCore.ElectGrid.RPT) is a form control that displays the configuration of the ReportDefinition (WPFCore.Data.Report)
+
+## Command Configuration
+
+The UTabControl control listens for commands:
+
+- TACommands.ViewDetail to display the report.
+- ApplicationCommands.Close to close the report tab.
+
+The ReportTabItem control listens for commands:
+
+- TACommands.Edit to display the UReportDef control in a modal child window 
+- TNCommands.Refresh to refresh the DataView
+
+The DataGrid and Listview listen for commands:
+
+- TNCommands.Refresh to refresh the DataView

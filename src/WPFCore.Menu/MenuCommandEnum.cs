@@ -58,6 +58,8 @@
         #region View
 
         Refresh,
+        SetFilter,
+        ClearFilter,
         ShowSelectedElectricalBranchOnly,
         ShowInNewWindow,
         ShowItemsOfAllPlantGroups,

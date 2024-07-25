@@ -1,6 +1,7 @@
 ﻿using ADOLib;
 using System.Data;
 using System.Data.Common;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
 namespace WPFCore.Data.Report
@@ -25,6 +26,7 @@ namespace WPFCore.Data.Report
                     cmd.CommandText = String.Format("select * from {0} {1}",
                         report.DatabaseView, whereClause);
                     cmd.CommandType = CommandType.Text;
+                    SQLChecker.ValidateSafeReader(cmd.CommandText);
                     break;
                 case ReportDefinition.DB_TYPE_PROC:
                 case ReportDefinition.DB_TYPE_PROC_EDIT:
@@ -278,6 +280,63 @@ namespace WPFCore.Data.Report
             return def;
         }
 
+        public static Task<ReportDefinition[]>? DeserializeReportDefinitionFromFolder(string folderPath) =>
+            Task.WhenAll(Directory.EnumerateFiles(folderPath, "*.xml", SearchOption.TopDirectoryOnly)
+                .Select(DeserializeReportDefinitionFromFile));
+
+
+        #endregion
+
+        #region Filter
+
+        public static IEnumerable<string> GetWhereClause(IEnumerable<ColumnDefinition> lstColumn)
+        {
+            var lstWhere = new List<string>();
+            var q = lstColumn.Where(c => !string.IsNullOrWhiteSpace(c.Filter));
+            foreach (ColumnDefinition col in q)
+            {
+                if (Regex.IsMatch(col.Filter!, @"[\*]+"))
+                    lstWhere.Add(GetExpressionSQL(col));
+                else lstWhere.Add(GetStringSQL(col));
+            }
+            return lstWhere;
+        }
+
+        internal static string GetStringSQL(ColumnDefinition col)
+        {
+            var fieldName = col.FieldName!;
+            var delimiter = "";
+            if (col.DataType!.Equals("System.String",
+                    StringComparison.InvariantCultureIgnoreCase))
+                delimiter = "'";
+            string[] vals = col.Filter!.Trim().Split(';');
+            var lst = new List<string>();
+            foreach (string val in vals)
+            {
+                //if (!SQLChecker.ValidateSafeReader(val))
+                //    continue;
+
+                var v = "";
+                if (val.Contains("%"))
+                    v = String.Format("{0} like {2}{1}{2}", fieldName, val.Trim(), delimiter);
+                else if (val.Equals("<empty>", StringComparison.InvariantCultureIgnoreCase))
+                    v = String.Format("{0} is null", fieldName);
+                else if (val.Equals("<not_empty>", StringComparison.InvariantCultureIgnoreCase))
+                    v = String.Format("{0} is not null", fieldName);
+                else v = String.Format("{0} = {2}{1}{2}", fieldName, val.Trim(), delimiter);
+
+                if (!string.IsNullOrWhiteSpace(val))
+                    lst.Add(v);
+            }
+            return String.Format("({0})", String.Join(" or ", lst.ToArray()));
+        }
+
+        internal static string GetExpressionSQL(ColumnDefinition col)
+        {
+            var val = col.Filter!.Trim();
+            val = val.Replace("*", col.FieldName);
+            return String.Format("({0})", val);
+        }
         #endregion
     }
 }

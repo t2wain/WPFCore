@@ -8,12 +8,12 @@ namespace WPFCore.ElectGrid.RPT
 {
     public partial class UReportDefVM : DialogVM
     {
-        private readonly IReportDS _ds = null!;
+        private readonly IReportDS? _ds = null!;
 
-        public UReportDefVM(IReportDS ds) : base() 
+        public UReportDefVM(IReportDS? ds = null) : base() 
         {
-            this.RefeshCmd = new RelayCommand(this.OnRefresh, this.OnAllow);
-            this.SaveCmd = new RelayCommand(this.OnSave, this.OnAllow);
+            this.RefeshCmd = new RelayCommand(this.OnRefresh, this.OnAllow2);
+            this.SaveCmd = new RelayCommand(this.OnSave, this.OnAllow2);
             this.ExportCmd = new RelayCommand(this.OnExport, this.OnAllow);
             this.ImportCmd = new RelayCommand(this.OnImport, this.OnAllow);
             this._ds = ds;
@@ -38,13 +38,15 @@ namespace WPFCore.ElectGrid.RPT
 
         protected bool OnAllow() => !this._busy;
 
+        protected bool OnAllow2() => !this._busy && this._ds != null;
+
         protected async void OnRefresh()
         {
             try
             {
                 this._busy = true;
                 this.RefeshCmd.NotifyCanExecuteChanged();
-                var cols = await this._ds.GetUpdatedColumnDefinitions(this.ReportDef);
+                var cols = await this._ds!.GetUpdatedColumnDefinitions(this.ReportDef);
                 this.ReportDef.Columns = cols;
             }
             catch
@@ -65,7 +67,7 @@ namespace WPFCore.ElectGrid.RPT
             {
                 this._busy = true;
                 this.RefeshCmd.NotifyCanExecuteChanged();
-                await this._ds.SaveReportDefinition(this.ReportDef);
+                await this._ds!.SaveReportDefinition(this.ReportDef);
             }
             finally
             {

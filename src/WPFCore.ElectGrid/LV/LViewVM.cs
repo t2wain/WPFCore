@@ -74,6 +74,7 @@ namespace WPFCore.ElectGrid.LV
                         if (this.ReportDef != null)
                         {
                             this.ListData = await this._ds.GetReportData(this.ReportDef);
+                            this.Name = this.ReportDef.Name;
                         }
                         break;
                 }

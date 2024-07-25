@@ -93,6 +93,7 @@ namespace WPFCore.Shared.UI.DG
         // command handler for Refresh
         virtual protected void OnRefresh(object sender, RoutedEventArgs e)
         {
+            e.Handled = true;
             this.VM.RefreshData();
         }
 

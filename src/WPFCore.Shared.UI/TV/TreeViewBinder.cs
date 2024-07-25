@@ -118,7 +118,10 @@ namespace WPFCore.Shared.UI.TV
         virtual protected void OnCollapseAll(object sender, RoutedEventArgs e)
         {
             if (this.VM != null)
+            {
+                e.Handled = true;
                 this.VM.CollapseAll();
+            }
         }
 
         virtual protected void OnCollapseAllCanExecuted(object sender, CanExecuteRoutedEventArgs e)
@@ -130,7 +133,10 @@ namespace WPFCore.Shared.UI.TV
         virtual protected void OnExpandAll(object sender, RoutedEventArgs e)
         {
             if (this.VM != null)
+            {
+                e.Handled = true;
                 this.VM.ExpandAll();
+            }
         }
 
         virtual protected void OnExpandAllCanExecuted(object sender, CanExecuteRoutedEventArgs e)
@@ -142,7 +148,10 @@ namespace WPFCore.Shared.UI.TV
         virtual protected void OnRefresh(object sender, RoutedEventArgs e)
         {
             if (this.VM != null)
+            {
+                e.Handled = true;
                 this.VM.Refresh();
+            }
         }
 
         virtual protected void OnRefreshCanExecuted(object sender, CanExecuteRoutedEventArgs e)

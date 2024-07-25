@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection.Metadata.Ecma335;
 using WPFCore.Common.Data;
 using WPFCore.Common.ElectIndex;
 using WPFCore.Shared.UI.TV;
@@ -13,10 +14,12 @@ namespace WPFCore.ElectIndex.TV
     public class TVRepo
     {
         private readonly IEquipRepo _repo;
+        private readonly IReportDS _reportds;
 
-        public TVRepo(IEquipRepo repo)
+        public TVRepo(IEquipRepo repo, IReportDS reportds)
         {
             this._repo = repo;
+            this._reportds = reportds;
         }
 
         #region Nodes
@@ -179,13 +182,15 @@ namespace WPFCore.ElectIndex.TV
 
         protected Task<List<INotifyPropertyChanged>> GetReports(TreeVM parent) 
         {
-            var lst = new List<EquipItem>() 
-            { 
-                new() { ID = @"C:\devgit\Data\Reports\Cable_Quantity_Per_Cable_Code.xml", Name = "Cable Quantity Per Cable Code" },
-                new() { ID = @"C:\devgit\Data\Reports\Cable_Schedule_SPEL.xml", Name = "Cable Schedule - SPEL" },
-            };
-
-            return Task.FromResult(CreateEquipNode(lst.OrderBy(r => r.Name), NT.Report, parent));
+            var t = _reportds.GetReportDefinitions();
+            if (t != null) {
+                return t
+                    .ContinueWith(t => t.Result.Select(rdef => new EquipItem() { ID = rdef.FileName, Name = rdef.Name }),
+                        TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.RunContinuationsAsynchronously)
+                    .ContinueWith(t => CreateEquipNode(t.Result.OrderBy(r => r.Name), NT.Report, parent).ToList(),
+                        TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.RunContinuationsAsynchronously);
+            }
+            else return Task.FromResult(new List<INotifyPropertyChanged>());
         }
 
         #endregion

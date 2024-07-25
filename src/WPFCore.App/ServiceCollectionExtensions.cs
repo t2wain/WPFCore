@@ -23,7 +23,7 @@ namespace WPFCore.App
 
         public static IServiceCollection ConfigureServices(this IServiceCollection service, IConfiguration _config)
         {
-            service.AddOleDbData(_config.GetConnectionString("Default")!);
+            service.AddOleDbData(_config.GetConnectionString("Default")!, _config["ReportFolder"]!);
             service.AddElectIndex();
             service.AddElectGrid(); 
             return service;

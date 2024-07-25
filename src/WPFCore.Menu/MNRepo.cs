@@ -125,6 +125,8 @@ namespace WPFCore.Menu
             new List<INotifyPropertyChanged>()
             {
                 CreateMenuItem("Refresh", CT.Refresh, TNCommands.Refresh),
+                CreateMenuItem("Set Filter...", CT.SetFilter, TACommands.SetFilter),
+                CreateMenuItem("Clear Filter", CT.ClearFilter, TACommands.ClearFilter),
                 CreateSeparator(),
                 CreateMenuItem("Show Selected Electrical Branch Only", CT.ShowSelectedElectricalBranchOnly),
                 CreateMenuItem("Show In New Window", CT.ShowInNewWindow),

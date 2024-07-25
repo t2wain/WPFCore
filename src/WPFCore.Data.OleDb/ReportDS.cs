@@ -7,10 +7,12 @@ namespace WPFCore.Data.OleDb
     internal class ReportDS : IReportDS
     {
         private readonly IDBFactory _dbfact;
+        private readonly string _reportFolder;
 
-        public ReportDS(IDBFactory dbfact)
+        public ReportDS(IDBFactory dbfact, string reportFolder)
         {
             this._dbfact = dbfact;
+            this._reportFolder = reportFolder;
         }
 
         #region Others
@@ -31,6 +33,9 @@ namespace WPFCore.Data.OleDb
         }
 
         #endregion
+
+        public Task<ReportDefinition[]>? GetReportDefinitions() =>
+            ReportUtil.DeserializeReportDefinitionFromFolder(_reportFolder);
 
         public Task<ReportDefinition> GetReportDefinition(string reportId) =>
             ReportUtil.DeserializeReportDefinitionFromFile(reportId);

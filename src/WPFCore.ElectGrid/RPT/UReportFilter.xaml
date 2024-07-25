@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="WPFCore.ElectGrid.RPT.UReportFilter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFCore.ElectGrid.RPT"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="600">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Padding" Value="10 5 10 5" />
+            </Style.Setters>
+        </Style>
+    </UserControl.Resources>
+    <DockPanel>
+        <DockPanel Margin="20 15 20 20" LastChildFill="False" DockPanel.Dock="Bottom">
+            <Button DockPanel.Dock="Right" Command="{Binding CancelCmd}">Cancel</Button>
+            <Button DockPanel.Dock="Right" Command="{Binding ApplyCmd}">OK</Button>
+        </DockPanel>
+        <DataGrid x:Name="_dgCol" />
+    </DockPanel>
+</UserControl>

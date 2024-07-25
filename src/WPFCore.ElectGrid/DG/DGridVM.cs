@@ -77,6 +77,7 @@ namespace WPFCore.ElectGrid.DG
                         if (this.ReportDef != null)
                         {
                             this.GridData = await this._ds.GetReportData(this.ReportDef);
+                            this.Name = this.ReportDef.Name;
                         }
                         break;
                 }
@@ -93,6 +94,28 @@ namespace WPFCore.ElectGrid.DG
             this.ReportDef!.SetData(reportDef);
             this.Columns = DataGridConfig.CreateGeneralReport(reportDef);
         }
+
+        #region Filtering
+
+        public void SetFilter(ReportDefinition rptdef)
+        {
+            var lstwhere = ReportUtil.GetWhereClause(rptdef.Columns!);
+            if (lstwhere.Count() > 0) 
+            {
+                var f = string.Join(" and ", lstwhere.ToArray());
+                this.SetFilter(f);
+            }
+        }
+
+        public void ClearFiler() => this.SetFilter("");
+
+        public void SetFilter(string filter)
+        {
+            this.GridData!.RowFilter = filter;
+            this.RaisePropertyChangeEvent(nameof(GridData));
+        }
+
+        #endregion
 
     }
 }

@@ -25,6 +25,21 @@ namespace WPFCore.ElectGrid.DG
             }
         }
 
+        internal void ShowEditWindow()
+        {
+            _dgvBind.ShowEditWindow();
+        }
+
+        internal void ShowFilterWindow()
+        {
+            _dgvBind.ShowFilterWindow();
+        }
+
+        internal void ClearFilter()
+        {
+            _dgvBind.ClearFilter();
+        }
+
         public void Dispose()
         {
             this._dgvBind?.Dispose();
