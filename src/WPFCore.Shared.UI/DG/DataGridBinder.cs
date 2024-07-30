@@ -56,10 +56,12 @@ namespace WPFCore.Shared.UI.DG
             dg.AddHandler(DataGrid.ContextMenuOpeningEvent, _h1);
 
             dg.CopyingRowClipboardContent += this.OnCopying;
-
             vm.PropertyChanged += this.ListenPropertyChangedOnVM;
         }
 
+        /// <summary>
+        /// lean-up DataGridCell data before copied into the Windows clipboard 
+        /// </summary>
         virtual protected void OnCopying(object? sender, DataGridRowClipboardEventArgs e)
         {
             var q = DataGridUtility.ParseCellContent(e.ClipboardRowContent);
@@ -105,6 +107,10 @@ namespace WPFCore.Shared.UI.DG
             this.GridControl.UnselectAll();
         }
 
+        /// <summary>
+        /// Special paste into DataGridCell
+        /// from Windows clipboard
+        /// </summary>
         private void OnPaste(object sender, ExecutedRoutedEventArgs e)
         {
             var val = Clipboard.GetText();

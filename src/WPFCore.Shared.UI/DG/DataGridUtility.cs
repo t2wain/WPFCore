@@ -22,6 +22,10 @@ namespace WPFCore.Shared.UI.DG
                 _ => throw new NotImplementedException()
             });
 
+        /// <summary>
+        /// Update the column width of ReportDefinition with the 
+        /// actual width of the DataGrid columns
+        /// </summary>
         public static void UpdateColumnDefWidth(IEnumerable<RPT.ColumnDefinition> coldefs, IEnumerable<DataGridColumn> dgCols)
         {
             var dc = GetDictColumns(dgCols);
@@ -32,6 +36,9 @@ namespace WPFCore.Shared.UI.DG
             }
         }
 
+        /// <summary>
+        /// Create data-bound text column
+        /// </summary>
         public static DataGridTextColumn CreateTextColumn(string fieldName,
             string headerName, int width, bool isReadOnly = true,
             HorizontalAlignment alignment = HorizontalAlignment.Left, 
@@ -43,6 +50,9 @@ namespace WPFCore.Shared.UI.DG
             return c;
         }
 
+        /// <summary>
+        /// Create data-bound checkbox column
+        /// </summary>
         public static DataGridCheckBoxColumn CreateCheckBoxColumn(string fieldName,
             string headerName, int width, bool isReadOnly = true, bool markEditable = true)
         {
@@ -52,6 +62,9 @@ namespace WPFCore.Shared.UI.DG
             return c;
         }
 
+        /// <summary>
+        /// Create data-bound combobox column
+        /// </summary>
         public static DataGridComboBoxColumn CreateComboBoxColumn(string fieldName,
             string headerName, int width, bool isReadOnly = true,
             HorizontalAlignment alignment = HorizontalAlignment.Left, 
@@ -132,8 +145,10 @@ namespace WPFCore.Shared.UI.DG
 
         #endregion
 
-        #region DataGrid cell copy
+        #region DataGridCell copy and paste
 
+        // Clean-up DataGridCell data before
+        // copied into the Windows clipboard
         internal static (bool InValid, string? NewVal) ParseCellData(string? data, bool isCsv = false)
         {
             var val = data;
@@ -153,6 +168,8 @@ namespace WPFCore.Shared.UI.DG
             return (invalid, val);
         }
 
+        // Clean-up DataGridCell data before
+        // copied into the Windows clipboard
         internal static (bool Invalid, IEnumerable<DataGridClipboardCellContent> Contents) ParseCellContent(
             IEnumerable<DataGridClipboardCellContent> contents)
         {
@@ -166,12 +183,21 @@ namespace WPFCore.Shared.UI.DG
             else return (false, contents);
         }
 
-        public static void PasteIntoRowsAndColumns(string v, DataGrid dgrid)
+        /// <summary>
+        /// Update the selected cells in the DataGrid
+        /// with tab-delimited data
+        /// </summary>
+        /// <param name="v">row-column data as tab-delimited 
+        /// and new lines typically from Windows clipborad</param>
+        /// <param name="dgrid">DataGrid with selected cells</param>
+        /// <returns>Success</returns>
+        public static bool PasteIntoRowsAndColumns(string v, DataGrid dgrid)
         {
             #region Split data
 
             // split data into rows
-            var d = Regex.Replace(v, "\r\n$", "");
+            // default DataGrid copy command contain extra new line ending
+            var d = Regex.Replace(v, "\r\n$", ""); 
             string[] drows = d.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
             // spit data into columns
@@ -189,17 +215,24 @@ namespace WPFCore.Shared.UI.DG
 
             #endregion
 
+            // get row and column indexes of selected cells
             var cells = dgrid.SelectedCells;
             var lstCell = new List<(DataGridCellInfo Cell, DataGridRow Row, int RowIndex, int ColIndex)>();
             foreach (var cell in cells)
             {
+                // Get the DataGridRow container
                 var dp = dgrid.ItemContainerGenerator.ContainerFromItem(cell.Item);
-
-                // ERROR - Possibly because row virtualization
-                // is enabled for DataGrid
-                if (dp == null) return; 
+                if (dp == null)
+                {
+                    // The rows in DataGrid is virtualized and so
+                    // must be in view to obtain the DataGridRow container
+                    dgrid.ScrollIntoView(cell.Item);
+                    dp = dgrid.ItemContainerGenerator.ContainerFromItem(cell.Item);
+                    if (dp == null) return false; // Still can't obtain the DataGridRow containter
+                }
 
                 var dgrow = (DataGridRow)dp;
+                // get row and column indexes of selected cells
                 lstCell.Add((cell, dgrow, dgrow.GetIndex(), cell.Column.DisplayIndex));
             }
 
@@ -209,11 +242,16 @@ namespace WPFCore.Shared.UI.DG
 
             foreach (var c in lstCell)
             {
+                // calculate row and column index of data that
+                // matches to the DataGridCell
                 int drowIdx = (c.RowIndex - initCellRowIdx) % drowCount;
                 int dcolIdx = c.ColIndex - initCellColIdx;
                 if (!c.Cell.Column.IsReadOnly && drowIdx < drowCount && dcolIdx < dcolCount)
+                    // Update the bounding DataRowView
                     UpdateDataGridCell(c.Cell.Item, c.Cell.Column, data[drowIdx][dcolIdx]);
             }
+
+            return true;
         }
 
         static void UpdateDataGridCell(object boundItem, DataGridColumn column, object data)

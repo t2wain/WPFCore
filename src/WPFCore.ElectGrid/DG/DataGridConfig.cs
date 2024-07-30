@@ -1,8 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using RDF = WPFCore.Data.Report;
 using WPFCore.Shared.UI.DG;
-using WPFCore.Data.Report;
+using RDF = WPFCore.Data.Report;
 
 namespace WPFCore.ElectGrid.DG
 {
@@ -19,18 +18,7 @@ namespace WPFCore.ElectGrid.DG
             dg.CanUserDeleteRows = rdef.AllowAddAndDelete && !string.IsNullOrWhiteSpace(rdef.DeleteDbProcedure);
             dg.CanUserResizeRows = false;
             dg.SelectionUnit = DataGridSelectionUnit.CellOrRowHeader;
-            dg.EnableRowVirtualization = EnableRowVirtualization(rdef);
             SetFrozenColumn(dg, rdef);
-        }
-
-        static bool EnableRowVirtualization(RDF.ReportDefinition rdef)
-        {
-            return rdef.DatabaseView switch
-            {
-                ReportDefinition.DB_TYPE_TABLE_EDIT
-                    or ReportDefinition.DB_TYPE_PROC_EDIT => false,
-                _ => true
-            };
         }
 
         public static void SetFrozenColumn(DataGrid dg, RDF.ReportDefinition rdef) =>
