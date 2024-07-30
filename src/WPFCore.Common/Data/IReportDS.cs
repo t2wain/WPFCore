@@ -10,5 +10,6 @@ namespace WPFCore.Common.Data
         Task<DataView> GetReportData(ReportDefinition def);
         Task<List<ColumnDefinition>> GetUpdatedColumnDefinitions(ReportDefinition def);
         Task SaveReportDefinition(ReportDefinition def);
+        void ClearConnectionPool();
     }
 }

@@ -74,25 +74,32 @@ namespace WPFCore.Shared.UI.DG
         {
             return new List<RoutedUICommand>
             {
+                TNCommands.Refresh,
                 TNCommands.SelectAll,
                 TNCommands.UnselectAll,
+                ApplicationCommands.Paste,
             };
         }
 
         // determine which item allow to show context menu
-        virtual public bool IsContextMenuAllow(INotifyPropertyChanged di)
+        virtual public bool IsContextMenuAllow(INotifyPropertyChanged? di)
         {
             this.EnableContextMenu(di);
             return this.GridContextMenu.Count > 0;
         }
 
         // determine which menu is available for the item
-        virtual protected void EnableContextMenu(INotifyPropertyChanged di)  {  }
+        virtual protected void EnableContextMenu(INotifyPropertyChanged? di)  {  }
 
         // determine which menu can be executed for the item
-        virtual public bool IsCommandCanExecute(string cmdName, INotifyPropertyChanged di)
+        virtual public bool IsCommandCanExecute(string cmdName, INotifyPropertyChanged? di)
         {
-            var allowed = true;
+            var allowed = cmdName switch
+            {
+                TNCommands.RefreshMsg => true,
+                TNCommands.SelectAllMsg or TNCommands.UnselectAllMsg => !this.GridItemsView!.IsEmpty,
+                _ => false
+            };
             return allowed;
         }
 

@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Data;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
@@ -7,7 +9,7 @@ using RPT = WPFCore.Data.Report;
 
 namespace WPFCore.Shared.UI.DG
 {
-    public class DataGridUtility
+    public static class DataGridUtility
     {
 
         #region Columns
@@ -130,5 +132,102 @@ namespace WPFCore.Shared.UI.DG
 
         #endregion
 
+        #region DataGrid cell copy
+
+        internal static (bool InValid, string? NewVal) ParseCellData(string? data, bool isCsv = false)
+        {
+            var val = data;
+            bool invalid = false;
+            if (!string.IsNullOrWhiteSpace(val) 
+                && Regex.IsMatch(val, "[\u0022,\t\r\n]"))
+            {
+                val = val
+                    .Replace("\u0022", "\u0022\u0022")
+                    .Replace("\t", "\\t")
+                    .Replace("\n", "\\n")
+                    .Replace("\r", "\\r");
+                if (isCsv && Regex.IsMatch(val, "[\u0022,]"))
+                    val = $"\u0022{val}\u0022";
+                invalid = true;
+            }
+            return (invalid, val);
+        }
+
+        internal static (bool Invalid, IEnumerable<DataGridClipboardCellContent> Contents) ParseCellContent(
+            IEnumerable<DataGridClipboardCellContent> contents)
+        {
+            var invalid = contents.Select(c => ParseCellData(c.Content?.ToString())).Any(c => c.InValid);
+            if (invalid)
+            {
+                var q = contents.Select(c => new DataGridClipboardCellContent(c.Item, c.Column, 
+                        ParseCellData(c.Content?.ToString()).NewVal)).ToList();
+                return (true,  q);
+            }
+            else return (false, contents);
+        }
+
+        public static void PasteIntoRowsAndColumns(string v, DataGrid dgrid)
+        {
+            #region Split data
+
+            // split data into rows
+            var d = Regex.Replace(v, "\r\n$", "");
+            string[] drows = d.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
+            // spit data into columns
+            // when copy cell content via row-selection mode,
+            // each text line is prefix with a tab.
+            string[][] data = new string[drows.Length][];
+            int ridx = 0;
+            foreach (string drow in drows)
+            {
+                data[ridx++] = drow.Split('\t');
+            }
+
+            int drowCount = data.Length;
+            int dcolCount = data[0].Length;
+
+            #endregion
+
+            var cells = dgrid.SelectedCells;
+            var lstCell = new List<(DataGridCellInfo Cell, DataGridRow Row, int RowIndex, int ColIndex)>();
+            foreach (var cell in cells)
+            {
+                var dp = dgrid.ItemContainerGenerator.ContainerFromItem(cell.Item);
+
+                // ERROR - Possibly because row virtualization
+                // is enabled for DataGrid
+                if (dp == null) return; 
+
+                var dgrow = (DataGridRow)dp;
+                lstCell.Add((cell, dgrow, dgrow.GetIndex(), cell.Column.DisplayIndex));
+            }
+
+            // calculate the top-left cell row and column index
+            int initCellRowIdx = lstCell.Min(c => c.RowIndex);
+            int initCellColIdx = lstCell.Min(c => c.ColIndex);
+
+            foreach (var c in lstCell)
+            {
+                int drowIdx = (c.RowIndex - initCellRowIdx) % drowCount;
+                int dcolIdx = c.ColIndex - initCellColIdx;
+                if (!c.Cell.Column.IsReadOnly && drowIdx < drowCount && dcolIdx < dcolCount)
+                    UpdateDataGridCell(c.Cell.Item, c.Cell.Column, data[drowIdx][dcolIdx]);
+            }
+        }
+
+        static void UpdateDataGridCell(object boundItem, DataGridColumn column, object data)
+        {
+            if (boundItem is DataRowView dr)
+            {
+                if (column is DataGridTextColumn col && col.Binding is Binding b)
+                {
+                    var fn = b.Path.Path;
+                    dr[fn] = data;
+                }
+            }
+        }
+
+        #endregion
     }
 }

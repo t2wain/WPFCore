@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using ADOLib;
+using System.Data;
 using WPFCore.Common.Data;
 using WPFCore.Data.Report;
 
@@ -58,6 +59,12 @@ namespace WPFCore.Data.OleDb
 
         public Task SaveReportDefinition(ReportDefinition def) =>
             ReportUtil.SaveReportDefinition(def);
+
+        public void ClearConnectionPool()
+        {
+            OleDbDatabase.ClearOleDbConnectionPool();
+            ODBCDatabase.ClearOdbcConnectionPool();
+        }
     }
     
 }

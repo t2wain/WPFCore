@@ -16,6 +16,10 @@
             Grid.Row="1"
             Name="_dgData" 
             Grid.Column="0"
-            ItemsSource="{Binding Path=GridItemsView}" />
+            ItemsSource="{Binding Path=GridItemsView}">
+            <DataGrid.ContextMenu>
+                <ContextMenu ItemsSource="{Binding Path=GridContextMenu}"></ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
     </Grid>
 </UserControl>

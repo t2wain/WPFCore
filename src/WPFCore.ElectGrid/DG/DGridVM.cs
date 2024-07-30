@@ -69,6 +69,7 @@ namespace WPFCore.ElectGrid.DG
         protected override async Task PopulateData()
         {
             Utility.SetWaitCursor();
+            this.Name = this.ReportDef!.Name;
             try
             {
                 switch (this.ViewType)
@@ -77,7 +78,6 @@ namespace WPFCore.ElectGrid.DG
                         if (this.ReportDef != null)
                         {
                             this.GridData = await this._ds.GetReportData(this.ReportDef);
-                            this.Name = this.ReportDef.Name;
                         }
                         break;
                 }
@@ -85,6 +85,7 @@ namespace WPFCore.ElectGrid.DG
             catch (Exception ex)
             {
                 this.Name = ex.ToString();
+                //_ds.ClearConnectionPool();
             }
             finally { Utility.SetNormalCursor(); }
         }
