@@ -5,7 +5,6 @@ using WPFCore.Common.UI;
 using WPFCore.Data.Report;
 using WPFCore.ElectGrid.RPT;
 using WPFCore.Shared.UI.DG;
-using WPFCore.Shared.UI.DLG;
 
 namespace WPFCore.ElectGrid.DG
 {
@@ -82,7 +81,6 @@ namespace WPFCore.ElectGrid.DG
             if (success)
                 VM2.UpdateReportDef(dlrdef);
         }
-
 
         internal void ShowFilterWindow()
         {

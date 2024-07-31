@@ -183,6 +183,8 @@ namespace WPFCore.Shared.UI.DG
             else return (false, contents);
         }
 
+        public delegate void UpdateDataGridCell(object item, DataGridColumn column, object data);
+
         /// <summary>
         /// Update the selected cells in the DataGrid
         /// with tab-delimited data
@@ -191,12 +193,14 @@ namespace WPFCore.Shared.UI.DG
         /// and new lines typically from Windows clipborad</param>
         /// <param name="dgrid">DataGrid with selected cells</param>
         /// <returns>Success</returns>
-        public static bool PasteIntoRowsAndColumns(string v, DataGrid dgrid)
+        public static bool PasteIntoRowsAndColumns(string v, DataGrid dgrid, UpdateDataGridCell? updateAction = null)
         {
+            var updatefn = updateAction ?? UpdateDataGridCellImpl;
+
             #region Split data
 
-            // split data into rows
-            // default DataGrid copy command contain extra new line ending
+                // split data into rows
+                // default DataGrid copy command contain extra new line ending
             var d = Regex.Replace(v, "\r\n$", ""); 
             string[] drows = d.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
@@ -248,13 +252,13 @@ namespace WPFCore.Shared.UI.DG
                 int dcolIdx = c.ColIndex - initCellColIdx;
                 if (!c.Cell.Column.IsReadOnly && drowIdx < drowCount && dcolIdx < dcolCount)
                     // Update the bounding DataRowView
-                    UpdateDataGridCell(c.Cell.Item, c.Cell.Column, data[drowIdx][dcolIdx]);
+                    updatefn(c.Cell.Item, c.Cell.Column, data[drowIdx][dcolIdx]);
             }
 
             return true;
         }
 
-        static void UpdateDataGridCell(object boundItem, DataGridColumn column, object data)
+        static void UpdateDataGridCellImpl (object boundItem, DataGridColumn column, object data)
         {
             if (boundItem is DataRowView dr)
             {

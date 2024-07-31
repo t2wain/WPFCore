@@ -25,5 +25,5 @@ The ReportTabItem control listens for commands:
 The DataGrid and Listview listen for commands:
 
 - TNCommands.Refresh to refresh the DataView
-- Applications.Copu to clean-up data in DataGridCell befored copied into Windows clipboard
+- Applications.Copy to clean-up data in DataGridCell befored copied into Windows clipboard
 - Applications.Paste to paste data into DataGrid from Windows clipboard

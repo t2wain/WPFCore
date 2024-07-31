@@ -1,5 +1,10 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Data;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 using WPFCore.Shared.UI.DG;
 using R = WPFCore.Data.Report;
 
@@ -15,22 +20,27 @@ namespace WPFCore.ElectGrid.RPT
             InitializeComponent();
         }
 
-        public void Init(UReportDefVM vm)
+        UReportFilterVM VM { get; set; } = null!;
+
+        public void Init(UReportFilterVM vm)
         {
             this.DataContext = vm;
-            SetupReportColumnDG(_dgCol, vm.ReportDef!.Columns!);
+            VM = vm;
+            SetupReportColumnDG(_dgCol);
+            ConfigCommands(_dgCol);
         }
 
-        protected void SetupReportColumnDG(DataGrid dg, IEnumerable<R.ColumnDefinition> coldefs)
+        protected void SetupReportColumnDG(DataGrid dg)
         {
             dg.AutoGenerateColumns = false;
-            dg.ItemsSource = coldefs;
+            dg.ItemsSource = VM.ReportColumns;
             dg.HorizontalGridLinesBrush = SystemColors.ControlLightBrush;
             dg.VerticalGridLinesBrush = SystemColors.ControlLightBrush;
             dg.CanUserAddRows = false;
             dg.CanUserDeleteRows = false;
             dg.FrozenColumnCount = 1;
             dg.CanUserResizeRows = false;
+            dg.SelectionUnit = DataGridSelectionUnit.CellOrRowHeader;
 
             var cols = new List<DataGridColumn>()
             {
@@ -44,5 +54,39 @@ namespace WPFCore.ElectGrid.RPT
                 dg.Columns.Add(col);
         }
 
+        #region DataGrid paste
+
+        void ConfigCommands(DataGrid dg)
+        {
+            var cb = new CommandBinding(ApplicationCommands.Paste, this.OnPaste, (s, e) => e.CanExecute = true);
+            dg.CommandBindings.Add(cb);
+        }
+
+        void OnPaste(object sender, ExecutedRoutedEventArgs e)
+        {
+            var val = ParseData(Clipboard.GetText());
+            DataGridUtility.PasteIntoRowsAndColumns(val, _dgCol, UpdateDataGridCellImpl);
+            e.Handled = true;
+        }
+
+        string ParseData(string val)
+        {
+            var d = Regex.Replace(val, "\r\n$", "");
+            var drows = d.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            return string.Join(";", drows.Distinct());
+        }
+
+        void UpdateDataGridCellImpl(object boundItem, DataGridColumn column, object data)
+        {
+            if (boundItem is UReportFilterVM.FilterColumn coldef 
+                && column is DataGridTextColumn col 
+                && col.Binding is Binding b 
+                && b.Path.Path == "Filter")
+            {
+                coldef.Filter = data.ToString();
+            }
+        }
+
+        #endregion
     }
 }

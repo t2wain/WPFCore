@@ -111,10 +111,11 @@ namespace WPFCore.Shared.UI.DG
         /// Special paste into DataGridCell
         /// from Windows clipboard
         /// </summary>
-        private void OnPaste(object sender, ExecutedRoutedEventArgs e)
+        virtual protected void OnPaste(object sender, ExecutedRoutedEventArgs e)
         {
             var val = Clipboard.GetText();
             DataGridUtility.PasteIntoRowsAndColumns(val, this.GridControl);
+            e.Handled = true;
         }
 
         virtual protected void OnCommandCanExecuted(object sender, CanExecuteRoutedEventArgs e)

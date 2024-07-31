@@ -25,8 +25,7 @@ namespace WPFCore.ElectGrid.RPT
         {
             // Configure dialog window
             var c = new UReportFilter();
-            var dlvm = new UReportDefVM();
-            dlvm.ReportDef = reportDef;
+            var dlvm = new UReportFilterVM(reportDef);
             c.Init(dlvm);
 
             // Show dialog

@@ -7,7 +7,7 @@ The TreeView has a Context menu with several RoutedUICommand commands:
 - Refresh (Ctrl+R)
 - Collapse All (Ctrl+Left)
 - Expand All (Ctrl+Right)
-- 
+
 The ListBox has a Context menu with the following RoutedUICommand commands:
 
 - Select All (Ctrl+U)
