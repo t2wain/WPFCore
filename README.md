@@ -16,7 +16,11 @@ This demo application only uses out-of-the-box Microsoft dotNet libraries. For M
 
 ![Load List Worksheet](./Muliple%20DataGrid%20displayed%20in%20Tab%20View.png)
 
-*4. Report configuration*
+*4. Set report filter*
+
+![Load List Worksheet](./Set%20Report%20Filter.png)
+
+*5. Report configuration*
 
 ![Load List Worksheet](./Configuring%20Report.png)
 
