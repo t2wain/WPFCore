@@ -12,7 +12,9 @@ namespace WPFCore.Test
         public Context()
         {
             var host = new HostApplicationBuilder();
-            host.Services.AddOleDbData("Provider=Microsoft.ACE.OLEDB.16.0;Data Source=C:\\devgit\\Data\\SPEL.accdb");
+            host.Services.AddOleDbData("" +
+                "Provider=Microsoft.ACE.OLEDB.16.0;Data Source=C:\\devgit\\Data\\SPEL.accdb",
+                "C:\\devgit\\Data\\Reports");
             _host = host.Build();
         }
 

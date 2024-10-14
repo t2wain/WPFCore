@@ -10,6 +10,7 @@ namespace WPFCore.Data
         public static IServiceCollection AddSampleData(this IServiceCollection service)
         {
             service.AddTransient<IEquipRepo, MockEquipRepo>();
+            service.AddScoped<IReportDS, MockReportDS>();
             return service;
         }
     }
